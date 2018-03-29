@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     private Game() {
         service = Executors.newCachedThreadPool();
-        window = new Window(TITLE, 2, this);
+        window = new Window(TITLE, 3, this);
         addKeyListener(this);
         addMouseListener(this);
         requestFocus();
