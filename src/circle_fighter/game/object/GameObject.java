@@ -1,19 +1,21 @@
 package circle_fighter.game.object;
 
+import circle_fighter.functionaliy.Renderable;
+import circle_fighter.functionaliy.Updatable;
+import circle_fighter.game.object.functionality.Bounded;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.plane.Plane;
-import circle_fighter.functionaliy.Renderable;
-import circle_fighter.functionaliy.Updatable;
 
-import java.awt.*;
+import java.awt.geom.Area;
 
-public abstract class GameObject implements Renderable, Updatable {
+public abstract class GameObject implements Renderable, Updatable, Bounded {
     protected Position position;
     protected Vector vector;
     protected Plane plane;
     private BoundExitAction action;
     private final int team;
+
     public GameObject(Position position, Plane plane, BoundExitAction action, int team){
         vector = new Vector(0, 0, 0);
         this.position = position;
@@ -29,7 +31,6 @@ public abstract class GameObject implements Renderable, Updatable {
                 bottom = plane.getBounds().exceedsBottomBy(this),
                 left = plane.getBounds().exceedsLeftBy(this),
                 right = plane.getBounds().exceedsRightBy(this);
-
         switch (action){
             case BOUND:
                 position.setX(position.getX()+right-left);
@@ -37,9 +38,13 @@ public abstract class GameObject implements Renderable, Updatable {
                 break;
             case DESPAWN:
                 if(top!=0||bottom!=0||left!=0||right!=0)
-                    plane.getObjectManager().getUpdatableObjects().remove(this);
+                    despawn();
                 break;
         }
+    }
+
+    protected void despawn(){
+        plane.getObjectManager().getUpdatableObjects().remove(this);
     }
 
     public int getTeam() {
@@ -58,7 +63,7 @@ public abstract class GameObject implements Renderable, Updatable {
         return plane;
     }
 
-    public abstract Rectangle getBounds();
+    public abstract Area getBounds();
 
     public enum BoundExitAction {
         BOUND,

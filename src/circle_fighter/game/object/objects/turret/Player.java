@@ -1,13 +1,16 @@
 package circle_fighter.game.object.objects.turret;
 
+import circle_fighter.functionaliy.UserInputListener;
+import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.functionality.Damageable;
+import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.plane.Plane;
-import circle_fighter.functionaliy.UserInputListener;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
 
 public class Player extends TurretGameObject implements UserInputListener, Damageable {
     private Rectangle bounds;
@@ -18,8 +21,8 @@ public class Player extends TurretGameObject implements UserInputListener, Damag
     }
 
     @Override
-    public Rectangle getBounds() {
-        return bounds;
+    public Area getBounds() {
+        return new Area(bounds);
     }
 
     @Override
@@ -86,5 +89,16 @@ public class Player extends TurretGameObject implements UserInputListener, Damag
     @Override
     public void mouseReleased(MouseEvent e) {
 
+    }
+
+    @Override
+    public <T extends GameObject & Damaging> boolean damage(T damagingObject) {
+        Area intersect = damagingObject.getBounds();
+        intersect.intersect(this.getBounds());
+        Rectangle intersectBounds = intersect.getBounds();
+        if(intersectBounds.width==0||intersectBounds.height==0)
+            return false;
+        health-=damagingObject.damage();
+        return true;
     }
 }

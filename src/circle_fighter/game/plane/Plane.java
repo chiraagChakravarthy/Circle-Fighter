@@ -14,6 +14,7 @@ public abstract class Plane implements Updatable, Renderable, UserInputListener 
     protected final ObjectManager objectManager;
     protected final PlaneBounds bounds;
 
+
     public Plane(PlaneBounds bounds){
         background = new Background.PlainBackground();
         objectManager = new ObjectManager();

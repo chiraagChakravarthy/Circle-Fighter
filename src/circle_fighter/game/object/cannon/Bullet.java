@@ -1,10 +1,11 @@
 package circle_fighter.game.object.cannon;
 
-import circle_fighter.game.plane.Plane;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.plane.Plane;
 
 import java.awt.*;
+import java.awt.geom.Area;
 
 public class Bullet extends GameObject {
     private static final double LENGTH = 6;
@@ -32,7 +33,7 @@ public class Bullet extends GameObject {
     }
 
     @Override
-    public Rectangle getBounds() {
-        return bounds;
+    public Area getBounds() {
+        return new Area(bounds);
     }
 }
