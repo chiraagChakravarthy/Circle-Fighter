@@ -11,7 +11,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,7 +27,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     private Game() {
         service = Executors.newCachedThreadPool();
-        window = new Window(TITLE, 3, this);
+        window = new Window(TITLE, 2, this);
         addKeyListener(this);
         addMouseListener(this);
         requestFocus();
@@ -40,7 +39,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         gsm = new GameStateManager();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         instance = new Game();
         instance.initialize();
         instance.service.submit(instance);
@@ -52,7 +51,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             file.mkdir();
             try {
                 FileWriter writer = new FileWriter(file);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }

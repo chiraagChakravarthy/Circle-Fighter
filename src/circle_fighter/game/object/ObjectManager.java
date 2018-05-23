@@ -7,7 +7,6 @@ import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.properties.DamageableObject;
 import circle_fighter.game.object.properties.DamagingObject;
 import circle_fighter.game.object.properties.RenderableObject;
-import circle_fighter.game.object.properties.UpdatableObject;
 
 import java.awt.*;
 import java.lang.annotation.Annotation;
@@ -15,26 +14,26 @@ import java.util.*;
 import java.util.List;
 
 public class ObjectManager implements Updatable, Renderable{
-    private final Map<Annotation, AtomicList> objects;
+    private final Map<Class<? extends Annotation>, AtomicList> objects;
     private final Map<Class<?>, AtomicList> objectTypes;
 
     public ObjectManager(){
         objects = new HashMap<>();
         objectTypes = new HashMap<>();
-        put(getClass().getAnnotation(UpdatableObject.class), new AtomicList<Updatable>(), Updatable.class);
-        put(getClass().getAnnotation(RenderableObject.class), new AtomicList<Renderable>(), Renderable.class);
-        put(getClass().getAnnotation(DamagingObject.class), new AtomicList<Damaging>(), Damaging.class);
-        put(getClass().getAnnotation(DamageableObject.class), new AtomicList<Damageable>(), Damageable.class);
+        objectTypes.put(Updatable.class, new AtomicList<Updatable>());
+        put(RenderableObject.class, new AtomicList<Renderable>(), Renderable.class);
+        put(DamagingObject.class, new AtomicList<Damaging>(), Damaging.class);
+        put(DamageableObject.class, new AtomicList<Damageable>(), Damageable.class);
     }
 
-    private void put(Annotation annotation, AtomicList list, Class<?> functionality){
+    private void put(Class<? extends Annotation> annotation, AtomicList list, Class<?> functionality){
         objects.put(annotation, list);
         objectTypes.put(functionality, list);
     }
 
     @Override
     public void render(Graphics2D g) {
-        for(Renderable object : (List<Renderable>)objects.get(getClass().getAnnotation(RenderableObject.class)).get()){
+        for(Renderable object : (List<Renderable>)objectTypes.get(Renderable.class).get()){
             object.render(g);
         }
     }
@@ -44,13 +43,31 @@ public class ObjectManager implements Updatable, Renderable{
         for(Updatable object : (List<Updatable>) objectTypes.get(Updatable.class).get()){
             object.tick();
         }
-        for(Damageable damageable : (List<Damageable>)objectTypes.get(Damageable.class)){
 
+        for(Damageable damageable : (List<Damageable>)objectTypes.get(Damageable.class).get()){
+            for(Damaging damaging : (List<Damaging>)objectTypes.get(Damaging.class).get()){
+                damageable.damage(damaging);
+            }
         }
-        objects.entrySet().forEach((x)-> x.getValue().update());
+
+        objectTypes.forEach((key, value) -> value.update());
+    }
+
+    public void add(GameObject object){
+        for(Annotation annotation : object.getClass().getDeclaredAnnotations()){
+            Class<? extends  Annotation> type = annotation.annotationType();
+            if(objects.keySet().contains(type))
+                objects.get(type).add(object);
+        }
+        objectTypes.get(Updatable.class).add(object);
     }
 
     public void remove(GameObject object){
-
+        for(Annotation annotation : object.getClass().getDeclaredAnnotations()){
+            Class<? extends  Annotation> type = annotation.annotationType();
+            if(objects.keySet().contains(type))
+                objects.get(type).remove(object);
+        }
+        objectTypes.get(Updatable.class).remove(object);
     }
 }

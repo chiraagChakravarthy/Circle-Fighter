@@ -1,28 +1,35 @@
 package circle_fighter.game.object.objects.turret;
 
 import circle_fighter.functionaliy.UserInputListener;
-import circle_fighter.game.object.GameObject;
+import circle_fighter.game.object.bounds.Bound;
+import circle_fighter.game.object.bounds.CircularBound;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.properties.DamageableObject;
+import circle_fighter.game.object.properties.RenderableObject;
 import circle_fighter.game.plane.Plane;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 
+@DamageableObject
+@RenderableObject
 public class Player extends TurretGameObject implements UserInputListener, Damageable {
-    private Rectangle bounds;
+    private static final double RADIUS = 25;
+
+    private CircularBound bound;
     public Player(Position position, Plane plane) {
         super(position, 0.1, 0.05*Math.PI/180, 3, 3*Math.PI/180, 10, 0, plane);
-        bounds = new Rectangle((int)(position.getX()-25), (int) (position.getY()-25), 50, 50);
-        plane.getObjectManager().getDamageableObjects().add(this);
+        bound = new CircularBound(position, RADIUS);
     }
 
     @Override
-    public Area getBounds() {
-        return new Area(bounds);
+    public Bound getBound() {
+        return bound;
     }
 
     @Override
@@ -35,9 +42,6 @@ public class Player extends TurretGameObject implements UserInputListener, Damag
     @Override
     public void tick() {
         super.tick();
-        bounds.setLocation((int)position.getX()-25, (int)position.getY()-25);
-        position.setX(position.getX()-plane.getBounds().exceedsRightBy(this)+plane.getBounds().exceedsLeftBy(this));
-        position.setY(position.getY()-plane.getBounds().exceedsBottomBy(this)+plane.getBounds().exceedsTopBy(this));
     }
 
     @Override
@@ -56,7 +60,7 @@ public class Player extends TurretGameObject implements UserInputListener, Damag
                 movement.setRight(true);
                 break;
             case KeyEvent.VK_SPACE:
-                mainCannon.setFiring(true);
+                mainTurret.setFiring(true);
                 break;
         }
     }
@@ -77,7 +81,7 @@ public class Player extends TurretGameObject implements UserInputListener, Damag
                 movement.setRight(false);
                 break;
             case KeyEvent.VK_SPACE:
-                mainCannon.setFiring(false);
+                mainTurret.setFiring(false);
         }
     }
 
@@ -92,13 +96,11 @@ public class Player extends TurretGameObject implements UserInputListener, Damag
     }
 
     @Override
-    public <T extends GameObject & Damaging> boolean damage(T damagingObject) {
-        Area intersect = damagingObject.getBounds();
-        intersect.intersect(this.getBounds());
-        Rectangle intersectBounds = intersect.getBounds();
-        if(intersectBounds.width==0||intersectBounds.height==0)
-            return false;
-        health-=damagingObject.damage();
-        return true;
+    public boolean damage(Damaging damagingObject) {
+        if(damagingObject.getBound().intersects(bound)&&damagingObject.getTeam()!=getTeam()){
+            health-=damagingObject.damage();
+            return true;
+        }
+        return false;
     }
 }

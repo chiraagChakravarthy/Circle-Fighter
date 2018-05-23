@@ -40,7 +40,7 @@ public class Position {
                 h = Math.sqrt(a*a+o*o),
                 c = a/h,
                 t = Math.acos(c);
-        return o<0?t:o<0?t+180:a>0?0:180;
+        return o<0?(360-t-90):o>0?t:a>0?0:180;
     }
 
     public Position apply(Vector vector){
@@ -104,5 +104,10 @@ public class Position {
 
     public static void setYOffset(double yOffset) {
         Position.yOffset = yOffset;
+    }
+
+    public static double distance(double x, double y, double x1, double y1) {
+        double dx = x-x1, dy = y-y1;
+        return Math.sqrt(dx*dx+dy*dy);
     }
 }

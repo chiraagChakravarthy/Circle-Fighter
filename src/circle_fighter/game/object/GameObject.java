@@ -2,14 +2,16 @@ package circle_fighter.game.object;
 
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
+import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.functionality.Bounded;
+import circle_fighter.game.object.functionality.Polarized;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.plane.Plane;
 
 import java.awt.geom.Area;
 
-public abstract class GameObject implements Renderable, Updatable, Bounded {
+public abstract class GameObject implements Renderable, Updatable, Bounded, Polarized {
     protected Position position;
     protected Vector vector;
     protected Plane plane;
@@ -20,7 +22,7 @@ public abstract class GameObject implements Renderable, Updatable, Bounded {
         vector = new Vector(0, 0, 0);
         this.position = position;
         this.plane = plane;
-        plane.getObjectManager().getUpdatableObjects().add(this);
+        plane.getObjectManager().add(this);
         this.action = action;
         this.team = team;
     }
@@ -33,8 +35,8 @@ public abstract class GameObject implements Renderable, Updatable, Bounded {
                 right = plane.getBounds().exceedsRightBy(this);
         switch (action){
             case BOUND:
-                position.setX(position.getX()+right-left);
-                position.setY(position.getY()+top-bottom);
+                position.setX(position.getX()-right-left);
+                position.setY(position.getY()-top-bottom);
                 break;
             case DESPAWN:
                 if(top!=0||bottom!=0||left!=0||right!=0)
@@ -44,7 +46,7 @@ public abstract class GameObject implements Renderable, Updatable, Bounded {
     }
 
     protected void despawn(){
-        plane.getObjectManager().getUpdatableObjects().remove(this);
+        plane.getObjectManager().remove(this);
     }
 
     public int getTeam() {
@@ -62,8 +64,6 @@ public abstract class GameObject implements Renderable, Updatable, Bounded {
     public Plane getPlane() {
         return plane;
     }
-
-    public abstract Area getBounds();
 
     public enum BoundExitAction {
         BOUND,

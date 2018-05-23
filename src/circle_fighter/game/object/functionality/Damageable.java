@@ -1,7 +1,5 @@
 package circle_fighter.game.object.functionality;
 
-import circle_fighter.game.object.GameObject;
-
-public interface Damageable{
-    <T extends GameObject & Damaging> boolean damage(T damagingObject);
+public interface Damageable extends Bounded, Polarized{
+    boolean damage(Damaging damagingObject);
 }

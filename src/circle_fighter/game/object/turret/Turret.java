@@ -1,4 +1,4 @@
-package circle_fighter.game.object.cannon;
+package circle_fighter.game.object.turret;
 
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.objects.turret.TurretGameObject;
@@ -7,13 +7,13 @@ import circle_fighter.functionaliy.Updatable;
 
 import java.awt.*;
 
-public class Cannon implements Updatable, Renderable {
+public class Turret implements Updatable, Renderable {
     private TurretGameObject object;
     private final double maximumAng, length, girth, shootRate;
     private double relativeAng;
     private long lastTime;
     private boolean firing;
-    public Cannon(TurretGameObject object, double maximumAng, double length, double girth, double shootRate){
+    public Turret(TurretGameObject object, double maximumAng, double length, double girth, double shootRate){
         this.object = object;
         this.maximumAng = maximumAng;
         this.length = length;
@@ -49,7 +49,7 @@ public class Cannon implements Updatable, Renderable {
         double angle = relativeAng+object.getPosition().getRotation();
         if((now-lastTime)/1.0e9>1/shootRate&&firing){
             lastTime = now;
-            new Bullet(object.getPosition().clone().apply(new Vector(Math.cos(angle)*length, Math.sin(angle)*length, 0)), object.getPlane(), 10, 0, object.getTeam());
+            new Bullet(object.getPosition().clone().apply(new Vector(Math.cos(angle)*length, Math.sin(angle)*length, 0)), object.getPlane(), 10, 5, object.getTeam());
         }
     }
 

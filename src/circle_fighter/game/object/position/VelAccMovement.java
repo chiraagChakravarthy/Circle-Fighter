@@ -20,6 +20,7 @@ public class VelAccMovement extends MovementVector {
 
         vector.setVelX(Math.cos(position.getRotation())*velocity);
         vector.setVelY(Math.sin(position.getRotation())*velocity);
+        position.apply(vector);
     }
 
     public VelAccMovement setFront(boolean front) {

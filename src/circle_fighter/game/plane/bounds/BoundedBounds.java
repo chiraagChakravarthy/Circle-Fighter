@@ -14,25 +14,25 @@ public class BoundedBounds extends PlaneBounds {
     }
     @Override
     public double exceedsLeftBy(GameObject object) {
-        double width = object.getBounds().getWidth();
+        double width = object.getBound().outerBounds().getWidth();
         return Math.min(object.getPosition().getX()-width/2-x, 0);
     }
 
     @Override
     public double exceedsRightBy(GameObject object) {
-        double width = object.getBounds().getWidth();
+        double width = object.getBound().outerBounds().getWidth();
         return Math.max(object.getPosition().getX()+width/2-(x+this.width), 0);
     }
 
     @Override
     public double exceedsTopBy(GameObject object) {
-        double height = object.getBounds().getHeight();
+        double height = object.getBound().outerBounds().getHeight();
         return Math.max(object.getPosition().getY()+height/2-(y+this.height), 0);
     }
 
     @Override
     public double exceedsBottomBy(GameObject object) {
-        double height = object.getBounds().getHeight();
+        double height = object.getBound().outerBounds().getHeight();
         return Math.min(object.getPosition().getY()-height/2-y, 0);
     }
 

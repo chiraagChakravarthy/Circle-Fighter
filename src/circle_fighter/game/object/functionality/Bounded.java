@@ -1,7 +1,7 @@
 package circle_fighter.game.object.functionality;
 
-import java.awt.geom.Area;
+import circle_fighter.game.object.bounds.Bound;
 
 public interface Bounded {
-    Area getBounds();
+    Bound getBound();
 }
