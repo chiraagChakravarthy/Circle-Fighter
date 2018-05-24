@@ -4,17 +4,14 @@ import circle_fighter.gameState.GameStateManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseWheelListener {
     private static Game instance;
     public final String TITLE = "Circle Fighter";
     private Window window;
@@ -30,9 +27,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         window = new Window(TITLE, 2, this);
         addKeyListener(this);
         addMouseListener(this);
+        addMouseWheelListener(this);
         requestFocus();
         running = true;
-        initializeDirectory();
     }
 
     private void initialize(){
@@ -43,18 +40,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         instance = new Game();
         instance.initialize();
         instance.service.submit(instance);
-    }
-
-    private void initializeDirectory() {
-        File file = new File("files");
-        if (!file.exists()) {
-            file.mkdir();
-            try {
-                FileWriter writer = new FileWriter(file);
-            } catch (Exception ignored) {
-
-            }
-        }
     }
 
     public void run() {
@@ -119,9 +104,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         gsm.render(g);
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.PLAIN, 100));
-        g.drawString(frames  + "", 100, 100);
         g.dispose();
         bs.show();
     }
@@ -188,5 +170,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public static Game getInstance() {
         return instance;
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        gsm.mouseScrolled(e);
     }
 }

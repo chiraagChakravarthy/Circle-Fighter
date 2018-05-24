@@ -14,8 +14,9 @@ public class LineSegmentBound extends Bound {
     }
 
     //Local
-    //FIXME i don't work
+    //TODO fix this algorithm
     @Override
+    @Deprecated
     public boolean intersects(CircularBound bound) {
         double cx = bound.getCenterPoint().getX(),
                 cy = bound.getCenterPoint().getY(),

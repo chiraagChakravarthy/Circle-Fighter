@@ -1,17 +1,20 @@
 package circle_fighter.game.plane;
 
 import circle_fighter.game.object.position.Position;
-import circle_fighter.game.object.objects.turret.Player;
+import circle_fighter.game.object.objects.Player;
 import circle_fighter.game.plane.bounds.PlaneBounds;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 
 public abstract class PlayerPlane extends Plane {
     private Player player;
-    public PlayerPlane(Position playerPosition, PlaneBounds bounds){
+    private Position initialPlayerPosition;
+    public PlayerPlane(Position initialPlayerPosition, PlaneBounds bounds){
         super(bounds);
-        player = new Player(playerPosition, this);
+        this.initialPlayerPosition = initialPlayerPosition;
+        reset();
     }
 
     @Override
@@ -49,5 +52,16 @@ public abstract class PlayerPlane extends Plane {
     @Override
     public void mouseReleased(MouseEvent e) {
         player.mouseReleased(e);
+    }
+
+    @Override
+    public void mouseScrolled(MouseWheelEvent e) {
+        player.mouseScrolled(e);
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        player = new Player(initialPlayerPosition, this);
     }
 }

@@ -11,6 +11,7 @@ import circle_fighter.menu.base.component.TextBox;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 public abstract class Menu implements Updatable, Renderable, UserInputListener{
@@ -18,7 +19,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     private ArrayList<Option> options;
 
     protected static final int COMPONENT_SPACING = 20;
-    private static final float TRANSITION_RATE = 1f, SCROLLING_RATE = 2;
+    private static final float TRANSITION_RATE = 1f, SCROLLING_RATE = 20;
     private int selectedOption;
     private float activeOption;
     private float scrollingOffset;
@@ -60,14 +61,6 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
         }
         else if(progression.equals(MenuProgression.DEFAULT)){
             if (selectedOption >= 0 && selectedOption < options.size()) options.get(selectedOption).select();
-            if(Game.getInstance().mouseLocation().y > Game.getInstance().getGameHeight()*9/10
-                    && getLowestY() + COMPONENT_SPACING + scrollingOffset > Game.getInstance().getGameHeight()){
-                scrollingOffset -= SCROLLING_RATE;
-            }
-            if(Game.getInstance().mouseLocation().y < Game.getInstance().getGameHeight()/10
-                    && getHighestY() - COMPONENT_SPACING + scrollingOffset < 0){
-                scrollingOffset += SCROLLING_RATE;
-            }
             Point mouse = Game.getInstance().mouseLocation();
             for (int i = 0; i < options.size(); i++) {
                 if(options.get(i).getArea(true).contains(mouse)){
@@ -120,6 +113,11 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
 
     public void mouseReleased(MouseEvent e){
 
+    }
+
+    @Override
+    public void mouseScrolled(MouseWheelEvent e) {
+        if(progression.equals(MenuProgression.DEFAULT))scrollingOffset = -Math.max(Math.min(Math.abs(scrollingOffset)+SCROLLING_RATE*e.getUnitsToScroll(), getLowestY()+COMPONENT_SPACING-Game.getInstance().getGameHeight()), 0);
     }
 
     protected void addComponent(MenuComponent menuComponent){

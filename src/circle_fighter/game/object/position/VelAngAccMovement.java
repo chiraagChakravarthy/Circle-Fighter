@@ -17,6 +17,7 @@ public class VelAngAccMovement extends VelAccMovement {
         super.tick();
         vector.setVelAng(right?Math.min(vector.getVelAng()+accAng, maxVelAng):vector.getVelAng()>0?Math.max(vector.getVelAng()-accAng, 0):vector.getVelAng());
         vector.setVelAng(left?Math.max(vector.getVelAng()-accAng, -maxVelAng):vector.getVelAng()<0?Math.min(vector.getVelAng()+accAng, 0):vector.getVelAng());
+        position.apply(vector);
     }
 
     @Override

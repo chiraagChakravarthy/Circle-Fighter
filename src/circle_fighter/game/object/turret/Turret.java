@@ -1,19 +1,20 @@
 package circle_fighter.game.object.turret;
 
-import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.objects.turret.TurretGameObject;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
+import circle_fighter.game.object.GameObject;
+import circle_fighter.game.object.objects.Bullet;
+import circle_fighter.game.object.position.Vector;
 
 import java.awt.*;
 
 public class Turret implements Updatable, Renderable {
-    private TurretGameObject object;
+    private GameObject object;
     private final double maximumAng, length, girth, shootRate;
     private double relativeAng;
     private long lastTime;
     private boolean firing;
-    public Turret(TurretGameObject object, double maximumAng, double length, double girth, double shootRate){
+    public Turret(GameObject object, double maximumAng, double length, double girth, double shootRate){
         this.object = object;
         this.maximumAng = maximumAng;
         this.length = length;

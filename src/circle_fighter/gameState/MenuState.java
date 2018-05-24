@@ -1,12 +1,15 @@
 package circle_fighter.gameState;
 
 import circle_fighter.background.Background;
+import circle_fighter.color.Rainbow;
+import circle_fighter.menu.CreditsMenu;
 import circle_fighter.menu.MainMenu;
 import circle_fighter.menu.OptionsMenu;
 import circle_fighter.menu.base.Menu;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +22,8 @@ public class MenuState extends GameState {
         menus = new ArrayList<>();
         menus.add(new MainMenu(this));
         menus.add(new OptionsMenu(this));
-        background = new Background.PlainBackground();
+        menus.add(new CreditsMenu(this));
+        background = new Background.PlainBackground(new Rainbow(0.5, 10));
     }
 
     @Override
@@ -56,6 +60,12 @@ public class MenuState extends GameState {
     public void mouseReleased(MouseEvent e) {
         background.mouseReleased(e);
         menus.get(menu).mouseReleased(e);
+    }
+
+    @Override
+    public void mouseScrolled(MouseWheelEvent e) {
+        background.mouseScrolled(e);
+        menus.get(menu).mouseScrolled(e);
     }
 
     public void setMenu(int menu) {

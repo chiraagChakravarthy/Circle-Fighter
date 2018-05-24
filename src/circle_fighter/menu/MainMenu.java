@@ -6,6 +6,7 @@ import circle_fighter.gameState.GameStateManager;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.StateMenu;
+import circle_fighter.menu.base.component.MenuComponent;
 import circle_fighter.menu.base.component.Option;
 
 public class MainMenu extends StateMenu {
@@ -13,6 +14,7 @@ public class MainMenu extends StateMenu {
         super(state, Game.getInstance().TITLE);
         addComponent(new Option("Play", getLowestY() + Menu.COMPONENT_SPACING, this));
         addComponent(new Option("Options", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new Option("Credits", getLowestY() + Menu.COMPONENT_SPACING, this));
         addComponent(new Option("Quit", getLowestY() + Menu.COMPONENT_SPACING, this));
     }
 
@@ -31,6 +33,9 @@ public class MainMenu extends StateMenu {
                 state.setMenu(1);
                 break;
             case 2:
+                state.setMenu(2);
+                break;
+            case 3:
                 Game.getInstance().stop();
                 System.exit(0);
                 break;

@@ -4,9 +4,9 @@ import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
-import circle_fighter.game.object.properties.DamageableObject;
-import circle_fighter.game.object.properties.DamagingObject;
-import circle_fighter.game.object.properties.RenderableObject;
+import circle_fighter.game.object.implementations.DamageableObject;
+import circle_fighter.game.object.implementations.DamagingObject;
+import circle_fighter.game.object.implementations.RenderableObject;
 
 import java.awt.*;
 import java.lang.annotation.Annotation;
@@ -69,5 +69,11 @@ public class ObjectManager implements Updatable, Renderable{
                 objects.get(type).remove(object);
         }
         objectTypes.get(Updatable.class).remove(object);
+    }
+
+    public void clearAll(){
+        for(Map.Entry<Class<?>, AtomicList> set : objectTypes.entrySet()){
+            set.getValue().clear();
+        }
     }
 }

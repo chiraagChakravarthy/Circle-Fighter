@@ -1,27 +1,29 @@
 package circle_fighter.menu.base.component;
 
+import circle_fighter.color.DynamicColor;
+import circle_fighter.color.SolidColor;
 import circle_fighter.engine.Game;
 import circle_fighter.menu.base.Menu;
 
 import java.awt.*;
 
 public class Option extends MenuComponent {
-    public static final int HORIZONTAL_PADDING = 50,
+    private static final int HORIZONTAL_PADDING = 50,
             VERTICAL_PADDING = 2,
             INCLINE_WIDTH = 5,
             SELECTED_EXTENSION = 60,
             SELECTED_VELOCITY = 10,
             FONT_SIZE = 40;
 
-    public static final FontMetrics metrics = new FontMetrics(new Font("Arial", Font.PLAIN, FONT_SIZE)) {};
-    public static final Color BACKING_COLOR = new Color(0, 0, 0, 0.5f);
+    private static final FontMetrics metrics = new FontMetrics(new Font("Arial", Font.PLAIN, FONT_SIZE)) {};
+    private static final Color BACKING_COLOR = new Color(0, 0, 0, 0.5f);
 
     private boolean selected;
     private int selectedOffset, textX, textY, topY, bottomY, topWidth, bottomWidth, x;
     private String message;
-    private Color color;
+    private DynamicColor color;
 
-    public Option(String message, int y, Menu menu, Color color) {
+    public Option(String message, int y, Menu menu, DynamicColor color) {
         super();
         this.color = color;
         setMessage(message);
@@ -33,13 +35,14 @@ public class Option extends MenuComponent {
     }
 
     public Option(String message, int y, Menu menu) {
-        this(message, y, menu, Color.WHITE);
+        this(message, y, menu, new SolidColor(255, 255, 255));
     }
 
     @Override
     public void tick() {
         selectedOffset = selected ? selectedOffset >= SELECTED_EXTENSION ? SELECTED_EXTENSION : selectedOffset + SELECTED_VELOCITY :
                 selectedOffset <= 0 ? 0 : selectedOffset - SELECTED_VELOCITY;
+        color.tick();
         super.tick();
         selected = false;
     }
@@ -52,7 +55,7 @@ public class Option extends MenuComponent {
             g.fillRect(0, topY + scrollingOffset, Game.getInstance().getGameWidth(), bottomY-topY);
         }
 
-        g.setColor(color);
+        g.setColor(color.get());
         g.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
 
         g.drawLine(x, topY + scrollingOffset, x + topWidth, topY + scrollingOffset);
@@ -73,7 +76,7 @@ public class Option extends MenuComponent {
     }
 
     public void setMessage(String message){
-        if(this.message!=message || !this.message.equals(message)) {
+        if(!this.message.equals(message)) {
             this.message = message;
             int stringWidth = (int) metrics.getStringBounds(message, null).getWidth();
             bottomWidth = textX + stringWidth + HORIZONTAL_PADDING*2 + INCLINE_WIDTH + SELECTED_EXTENSION;

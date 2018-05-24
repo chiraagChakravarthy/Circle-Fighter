@@ -6,6 +6,7 @@ import circle_fighter.functionaliy.UserInputListener;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 public class GameStateManager implements Renderable, Updatable, UserInputListener{
@@ -43,6 +44,11 @@ public class GameStateManager implements Renderable, Updatable, UserInputListene
         states.get(gameState).mouseReleased(e);
     }
 
+    @Override
+    public void mouseScrolled(MouseWheelEvent e) {
+        states.get(gameState).mouseScrolled(e);
+    }
+
     public void setGameState(int gameState) {
         if (gameState < states.size()&&gameState>=0)
             this.gameState = gameState;
@@ -52,6 +58,6 @@ public class GameStateManager implements Renderable, Updatable, UserInputListene
 
     private void registerStates() {
         states.add(new MenuState(this));
-        states.add(new PlayState(this));
+        states.add(new LevelState(this));
     }
 }

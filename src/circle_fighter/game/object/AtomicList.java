@@ -23,6 +23,10 @@ public class AtomicList<T> {
         removed.add(object);
     }
 
+    public void clear(){
+        removed.addAll(list);
+    }
+
     public void update(){
         list.addAll(added);
         list.removeAll(removed);
