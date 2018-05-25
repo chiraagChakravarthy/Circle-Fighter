@@ -22,9 +22,9 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
         vector = new Vector(0, 0, 0);
         this.position = position;
         this.plane = plane;
-        plane.getObjectManager().add(this);
         this.action = action;
         this.team = team;
+        plane.getObjectManager().add(this);
     }
 
     @Override

@@ -10,16 +10,20 @@ import circle_fighter.game.object.implementations.RenderableObject;
 
 import java.awt.*;
 import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ObjectManager implements Updatable, Renderable{
     private final Map<Class<? extends Annotation>, AtomicList> objects;
     private final Map<Class<?>, AtomicList> objectTypes;
+    private final Map<Integer, AtomicList<GameObject>> teams;
 
     public ObjectManager(){
         objects = new HashMap<>();
         objectTypes = new HashMap<>();
+        teams = new HashMap<>();
+
         objectTypes.put(Updatable.class, new AtomicList<Updatable>());
         put(RenderableObject.class, new AtomicList<Renderable>(), Renderable.class);
         put(DamagingObject.class, new AtomicList<Damaging>(), Damaging.class);
@@ -51,6 +55,9 @@ public class ObjectManager implements Updatable, Renderable{
         }
 
         objectTypes.forEach((key, value) -> value.update());
+        for(Map.Entry<Integer, AtomicList<GameObject>> team : teams.entrySet()){
+            team.getValue().update();
+        }
     }
 
     public void add(GameObject object){
@@ -59,6 +66,9 @@ public class ObjectManager implements Updatable, Renderable{
             if(objects.keySet().contains(type))
                 objects.get(type).add(object);
         }
+        if(!teams.containsKey(object.getTeam()))
+            teams.put(object.getTeam(), new AtomicList<>());
+        teams.get(object.getTeam()).add(object);
         objectTypes.get(Updatable.class).add(object);
     }
 
@@ -68,6 +78,7 @@ public class ObjectManager implements Updatable, Renderable{
             if(objects.keySet().contains(type))
                 objects.get(type).remove(object);
         }
+        teams.get(object.getTeam()).remove(object);
         objectTypes.get(Updatable.class).remove(object);
     }
 
@@ -75,5 +86,9 @@ public class ObjectManager implements Updatable, Renderable{
         for(Map.Entry<Class<?>, AtomicList> set : objectTypes.entrySet()){
             set.getValue().clear();
         }
+    }
+
+    public AtomicList<GameObject> getTeam(int team){
+        return teams.get(team);
     }
 }

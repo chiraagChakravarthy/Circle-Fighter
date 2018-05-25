@@ -13,7 +13,6 @@ import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 public class Stage3 extends TutorialStage {
-    private TutorialBot tutorialBot;
     private Position playerPosition;
     private ArrayList<TextHint> hints;
     private int hint;
@@ -27,7 +26,7 @@ public class Stage3 extends TutorialStage {
 
     @Override
     public void reset() {
-        tutorialBot = new TutorialBot(new Position(0, 0), tutorial, 1);
+        new TutorialBot(new Position(0, 0), tutorial, 1);
         playerPosition = new Position(Game.getInstance().getGameWidth()/4, -Game.getInstance().getGameHeight()/4);
         for(TextHint hint : hints){
             hint.reset();
@@ -43,8 +42,9 @@ public class Stage3 extends TutorialStage {
 
     @Override
     public void tick() {
-        if(tutorialBot.getHealth().get()<=0)
+        if(tutorial.getObjectManager().getTeam(1).size()==0) {
             tutorial.advance();
+        }
         else {
             if(hint < hints.size()) {
                 hints.get(hint).tick();

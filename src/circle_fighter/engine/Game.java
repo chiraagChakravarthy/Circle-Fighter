@@ -20,11 +20,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     private boolean running;
     private GameStateManager gsm;
-    private int frames;
 
     private Game() {
         service = Executors.newCachedThreadPool();
-        window = new Window(TITLE, 2, this);
+        window = new Window(TITLE, 3, this);
         addKeyListener(this);
         addMouseListener(this);
         addMouseWheelListener(this);
@@ -70,7 +69,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             if (System.currentTimeMillis() - timer >= 1000) {
                 System.out.println("FPS: " + frames + ", Ticks: " + updates);
                 updates = 0;
-                this.frames = frames;
                 frames = 0;
                 timer += 1000;
                 //Logs the Frames and the ticks that have passed since the last logging. The minimum time between each

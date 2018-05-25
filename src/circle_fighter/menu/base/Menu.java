@@ -23,7 +23,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     private int selectedOption;
     private float activeOption;
     private float scrollingOffset;
-    private MenuProgression progression;
+    protected MenuProgression progression;
 
     private TextBox title;
 

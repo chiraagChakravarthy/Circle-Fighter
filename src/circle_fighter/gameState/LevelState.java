@@ -22,6 +22,7 @@ public class LevelState extends GameState {
     private SubState state;
     private Background background;
 
+
     public LevelState(GameStateManager gsm) {
         super(gsm);
         level = 0;
@@ -128,6 +129,10 @@ public class LevelState extends GameState {
                 levels.get(level).mouseScrolled(e);
                 break;
         }
+    }
+
+    public Plane getCurrentLevel(){
+        return levels.get(level);
     }
 
     public SubState getState() {

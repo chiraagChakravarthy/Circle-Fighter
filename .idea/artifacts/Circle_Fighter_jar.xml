@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Circle Fighter:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Circle_Fighter_jar</output-path>
+    <root id="archive" name="Circle Fighter.jar">
+      <element id="module-output" name="Circle Fighter" />
+    </root>
+  </artifact>
+</component>

@@ -33,4 +33,8 @@ public class AtomicList<T> {
         added.clear();
         removed.clear();
     }
+
+    public int size() {
+        return list.size();
+    }
 }

@@ -1,5 +1,6 @@
 package circle_fighter.level;
 
+import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.plane.PlayerPlane;
 import circle_fighter.game.plane.bounds.BoundedBounds;
@@ -7,7 +8,7 @@ import circle_fighter.game.plane.bounds.BoundedBounds;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class LevelPlane extends PlayerPlane {
+public abstract class LevelPlane extends PlayerPlane {
     public LevelPlane(int width, int height) {
         super(new Position(0, 0), new BoundedBounds(-width/2, -height/2, width, height));
     }
@@ -40,5 +41,9 @@ public class LevelPlane extends PlayerPlane {
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
+    }
+
+    protected <T extends GameObject, Damageable>void addEnemy(T enemy){
+        objectManager.add(enemy);
     }
 }
