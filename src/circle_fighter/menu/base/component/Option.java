@@ -18,13 +18,14 @@ public class Option extends MenuComponent {
     private static final FontMetrics metrics = new FontMetrics(new Font("Arial", Font.PLAIN, FONT_SIZE)) {};
     private static final Color BACKING_COLOR = new Color(0, 0, 0, 0.5f);
 
-    private boolean selected;
+    private boolean selected, enabled;
     private int selectedOffset, textX, textY, topY, bottomY, topWidth, bottomWidth, x;
     private String message;
     private DynamicColor color;
 
     public Option(String message, int y, Menu menu, DynamicColor color) {
         super();
+        enabled = true;
         this.color = color;
         setMessage(message);
         this.topY = y;
@@ -72,7 +73,7 @@ public class Option extends MenuComponent {
     }
 
     public void select(){
-        selected = true;
+        if(enabled)selected = true;
     }
 
     public void setMessage(String message){
@@ -80,5 +81,18 @@ public class Option extends MenuComponent {
         int stringWidth = (int) metrics.getStringBounds(message, null).getWidth();
         bottomWidth = textX + stringWidth + HORIZONTAL_PADDING*2 + INCLINE_WIDTH + SELECTED_EXTENSION;
         topWidth = bottomWidth - INCLINE_WIDTH + SELECTED_EXTENSION+HORIZONTAL_PADDING;
+    }
+
+    public void setEnabled(boolean enabled) {
+        color.setBrightness(enabled?1:0.2);
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setColor(DynamicColor color) {
+        this.color = color;
     }
 }

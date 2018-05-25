@@ -6,8 +6,9 @@ import circle_fighter.game.object.position.Position;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.level.LevelPlane;
 
-public class Level1 extends LevelPlane {
-    public Level1(LevelState state) {
+public class Level2 extends LevelPlane {
+
+    public Level2(LevelState state) {
         super(Game.getInstance().getGameWidth(), Game.getInstance().getGameHeight(), state);
     }
 
@@ -23,6 +24,7 @@ public class Level1 extends LevelPlane {
     @Override
     public void reset() {
         super.reset();
-        objectManager.add(new Bot(new Position(400, 400), this, 1));
+        new Bot(new Position(-200, 0), this, 1);
+        new Bot(new Position(200, 0), this, 1);
     }
 }

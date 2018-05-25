@@ -38,7 +38,7 @@ public class TutorialBot extends GameObject implements Damageable {
         super.tick();
         health.tick();
         if(health.get()<=0)
-            plane.getObjectManager().remove(this);
+            despawn();
     }
 
     @Override

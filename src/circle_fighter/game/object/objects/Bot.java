@@ -1,5 +1,6 @@
 package circle_fighter.game.object.objects;
 
+import circle_fighter.color.DynamicColor;
 import circle_fighter.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -25,13 +26,15 @@ public class Bot extends GameObject implements Damaging, Damageable{
     private Vector vector;
     private PlayerPlane plane;
     private Health health;
+    private DynamicColor color;
     public Bot(Position position, PlayerPlane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
         bound = new CircularBound(position, 10);
         vector = new Vector(0, 0, 0);
-        movement = new VelAccMovement(position, vector, 0.1, 3);
+        movement = new VelAccMovement(position, vector, 0.1, 1);
         movement.setFront(true);
         health = new Health(1, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
+        color = new SolidColor(128, 0, 0);
         this.plane = plane;
     }
 
@@ -40,8 +43,9 @@ public class Bot extends GameObject implements Damaging, Damageable{
         super.tick();
         position.setRotation(position.angleTo(plane.getPlayer().getPosition()));
         health.tick();
+        color.tick();
         if(health.get()<=0)
-            plane.getObjectManager().remove(this);
+            despawn();
         movement.tick();
     }
 
@@ -49,6 +53,8 @@ public class Bot extends GameObject implements Damaging, Damageable{
     public void render(Graphics2D g) {
         g.setColor(Color.BLACK);
         g.fillOval((int)(position.getScrX()-10), (int)(position.getScrY()-10), 20, 20);
+        g.setColor(color.get());
+        g.fillOval((int)(position.getScrX()-8), (int)(position.getScrY()-8), 16, 16);
         health.render(g);
     }
 

@@ -53,11 +53,8 @@ public class ObjectManager implements Updatable, Renderable{
                 damageable.damage(damaging);
             }
         }
-
         objectTypes.forEach((key, value) -> value.update());
-        for(Map.Entry<Integer, AtomicList<GameObject>> team : teams.entrySet()){
-            team.getValue().update();
-        }
+        teams.forEach((key, value)->value.update());
     }
 
     public void add(GameObject object){
@@ -83,9 +80,14 @@ public class ObjectManager implements Updatable, Renderable{
     }
 
     public void clearAll(){
-        for(Map.Entry<Class<?>, AtomicList> set : objectTypes.entrySet()){
-            set.getValue().clear();
-        }
+        objectTypes.forEach((key, value) -> {
+            value.clear();
+            value.update();
+        });
+        teams.forEach((key, value)->{
+            value.clear();
+            value.update();
+        });
     }
 
     public AtomicList<GameObject> getTeam(int team){

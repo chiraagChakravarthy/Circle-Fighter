@@ -61,6 +61,6 @@ public abstract class PlayerPlane extends Plane {
     @Override
     public void reset() {
         super.reset();
-        player = new Player(initialPlayerPosition, this);
+        player = new Player(initialPlayerPosition.clone(), this);
     }
 }

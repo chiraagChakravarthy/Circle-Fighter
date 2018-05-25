@@ -1,8 +1,11 @@
 package circle_fighter.level.menu;
 
+import circle_fighter.color.SolidColor;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.component.Option;
+
+import java.util.ArrayList;
 
 public class LevelMenu extends Menu {
     private LevelState state;
@@ -36,6 +39,21 @@ public class LevelMenu extends Menu {
 
     @Override
     protected void onOpen(int selectedOption) {
-
+        ArrayList<Option> options = getOptions();
+        for (int i = 0; i < options.size(); i++) {
+            if(i<state.getHighestLevel()) {
+                options.get(i).setEnabled(true);
+                options.get(i).setColor(new SolidColor(255, 255, 255));
+            }
+            else if(i==state.getHighestLevel()){
+                options.get(i).setEnabled(true);
+                options.get(i).setColor(new SolidColor(255, 0, 0));
+            }
+            else {
+                options.get(i).setColor(new SolidColor(255, 255, 255));
+                options.get(i).setEnabled(i==options.size()-1);
+            }
+        }
+        options.get(options.size()-1).setColor(new SolidColor(255, 255, 255));
     }
 }

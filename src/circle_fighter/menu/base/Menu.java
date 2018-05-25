@@ -100,7 +100,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
         else if(k==KeyEvent.VK_DOWN){
             if(progression.equals(MenuProgression.DEFAULT))selectedOption = selectedOption < 0 ? 0 : selectedOption==options.size()-1 ? 0 : selectedOption + 1;
         }
-        else if(k==KeyEvent.VK_ENTER && selectedOption != -1) onSelect(selectedOption);
+        else if(k==KeyEvent.VK_ENTER && selectedOption != -1&&options.get(selectedOption).isEnabled()) onSelect(selectedOption);
     }
 
     public void keyReleased(int k){
@@ -108,7 +108,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     }
 
     public void mousePressed(MouseEvent e) {
-        if(progression.equals(MenuProgression.DEFAULT) && selectedOption != -1) onSelect(selectedOption);
+        if(progression.equals(MenuProgression.DEFAULT) && selectedOption != -1&&options.get(selectedOption).isEnabled()) onSelect(selectedOption);
     }
 
     public void mouseReleased(MouseEvent e){

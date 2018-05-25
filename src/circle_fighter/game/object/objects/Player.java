@@ -1,5 +1,6 @@
 package circle_fighter.game.object.objects;
 
+import circle_fighter.color.DynamicColor;
 import circle_fighter.color.SolidColor;
 import circle_fighter.functionaliy.UserInputListener;
 import circle_fighter.game.object.GameObject;
@@ -30,6 +31,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
     private VelAngAccMovement movement;
     private Vector vector;
     private Turret mainTurret;
+    private DynamicColor color;
 
     public Player(Position position, Plane plane) {
         super(position, plane, BoundExitAction.BOUND, 0);
@@ -38,6 +40,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
         bound = new CircularBound(position, RADIUS);
         health = new Health(10, position, 50, 10, -50, 2000, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
         mainTurret = new Turret(this, Math.PI/9, 40, 5, 10);
+        color = new SolidColor(255, 0, 0);
     }
 
     @Override
@@ -47,8 +50,10 @@ public class Player extends GameObject implements UserInputListener, Damageable 
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.RED);
+        g.setColor(Color.BLACK);
         g.fillOval((int)position.getScrX()-25, (int)position.getScrY()-25, 50, 50);
+        g.setColor(color.get());
+        g.fillOval((int)position.getScrX()-23, (int)position.getScrY()-23, 46, 46);
         mainTurret.render(g);
         health.render(g);
     }
@@ -58,6 +63,8 @@ public class Player extends GameObject implements UserInputListener, Damageable 
         health.tick();
         mainTurret.tick();
         movement.tick();
+        if(health.get()<=0)
+            despawn();
         super.tick();
     }
 

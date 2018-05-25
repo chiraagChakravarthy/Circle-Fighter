@@ -8,7 +8,7 @@ import java.awt.*;
 public abstract class MenuComponent {
 
     public static final int TRANSITION_VELOCITY = 200,
-    TRANSITION_DISTANCE= 2000;
+    TRANSITION_DISTANCE = 2000;
 
     protected int transitionOffset, scrollingOffset;
 

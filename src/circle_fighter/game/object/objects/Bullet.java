@@ -45,7 +45,7 @@ public class Bullet extends GameObject implements Damaging{
 
     @Override
     public double damage() {
-        plane.getObjectManager().remove(this);
+        despawn();
         return 1;
     }
 }

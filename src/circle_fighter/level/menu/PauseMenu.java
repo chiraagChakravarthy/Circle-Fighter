@@ -13,7 +13,7 @@ public class PauseMenu extends Menu {
         super("Paused");
         this.state = state;
         addComponent(new Option("Continue", getLowestY()+Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Restart", getLowestY()+Menu.COMPONENT_SPACING, this));
+        addComponent(new Option("Reset Level", getLowestY()+Menu.COMPONENT_SPACING, this));
         addComponent(new Option("Exit to Level Select", getLowestY()+Menu.COMPONENT_SPACING, this));
     }
 

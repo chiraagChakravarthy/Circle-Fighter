@@ -21,9 +21,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private boolean running;
     private GameStateManager gsm;
 
+    public static final boolean DEBUG = true;
+
     private Game() {
         service = Executors.newCachedThreadPool();
-        window = new Window(TITLE, 3, this);
+        window = new Window(TITLE, 2, this);
         addKeyListener(this);
         addMouseListener(this);
         addMouseWheelListener(this);

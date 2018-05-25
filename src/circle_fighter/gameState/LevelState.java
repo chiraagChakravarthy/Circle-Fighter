@@ -2,7 +2,10 @@ package circle_fighter.gameState;
 
 import circle_fighter.background.Background;
 import circle_fighter.color.Rainbow;
+import circle_fighter.engine.Game;
 import circle_fighter.game.plane.Plane;
+import circle_fighter.level.level.Level1;
+import circle_fighter.level.level.Level2;
 import circle_fighter.level.level.tutorial.Tutorial;
 import circle_fighter.level.menu.DeathMenu;
 import circle_fighter.level.menu.LevelMenu;
@@ -16,20 +19,20 @@ import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 public class LevelState extends GameState {
-    private int level, menu;
+    private int level, menu, highestLevel;
     private ArrayList<Plane> levels;
     private ArrayList<Menu> menus;
     private SubState state;
     private Background background;
 
-
     public LevelState(GameStateManager gsm) {
         super(gsm);
         level = 0;
         menu = 0;
-
         levels = new ArrayList();
         levels.add(new Tutorial(this));
+        levels.add(new Level1(this));
+        levels.add(new Level2(this));
         menus = new ArrayList<>();
         menus.add(new LevelMenu(this, levels.size()-1));
         menus.add(new DeathMenu(this));
@@ -38,6 +41,7 @@ public class LevelState extends GameState {
 
         state = SubState.MENU;
         background = new Background.PlainBackground(new Rainbow(0.5, 10));
+        highestLevel = Game.DEBUG?levels.size():0;
     }
 
     @Override
@@ -135,6 +139,14 @@ public class LevelState extends GameState {
         return levels.get(level);
     }
 
+    public int getHighestLevel() {
+        return highestLevel;
+    }
+
+    public void setHighestLevel(int highestLevel) {
+        this.highestLevel = Math.max(this.highestLevel, highestLevel);
+    }
+
     public SubState getState() {
         return state;
     }
@@ -148,8 +160,14 @@ public class LevelState extends GameState {
     }
 
     public void setLevel(int level) {
-        this.level = level;
-        levels.get(level).reset();
+        if(level<levels.size()&&level>=0) {
+            this.level = level;
+            levels.get(level).reset();
+        }
+        else {
+            menu = 0;
+            state = SubState.MENU;
+        }
     }
 
     public int getMenu() {
