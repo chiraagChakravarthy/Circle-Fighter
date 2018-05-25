@@ -76,11 +76,9 @@ public class Option extends MenuComponent {
     }
 
     public void setMessage(String message){
-        if(!this.message.equals(message)) {
-            this.message = message;
-            int stringWidth = (int) metrics.getStringBounds(message, null).getWidth();
-            bottomWidth = textX + stringWidth + HORIZONTAL_PADDING*2 + INCLINE_WIDTH + SELECTED_EXTENSION;
-            topWidth = bottomWidth - INCLINE_WIDTH + SELECTED_EXTENSION+HORIZONTAL_PADDING;
-        }
+        this.message = message;
+        int stringWidth = (int) metrics.getStringBounds(message, null).getWidth();
+        bottomWidth = textX + stringWidth + HORIZONTAL_PADDING*2 + INCLINE_WIDTH + SELECTED_EXTENSION;
+        topWidth = bottomWidth - INCLINE_WIDTH + SELECTED_EXTENSION+HORIZONTAL_PADDING;
     }
 }

@@ -14,7 +14,6 @@ public abstract class PlayerPlane extends Plane {
     public PlayerPlane(Position initialPlayerPosition, PlaneBounds bounds){
         super(bounds);
         this.initialPlayerPosition = initialPlayerPosition;
-        reset();
     }
 
     @Override

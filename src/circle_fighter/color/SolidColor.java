@@ -9,4 +9,9 @@ public class SolidColor extends DynamicColor {
     public void tick() {
         //ignored
     }
+
+    @Override
+    public void reset() {
+        //ignored
+    }
 }

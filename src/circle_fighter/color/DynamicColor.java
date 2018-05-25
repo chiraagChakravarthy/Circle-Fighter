@@ -27,6 +27,8 @@ public abstract class DynamicColor {
         this.o = o;
     }
 
+    public abstract void reset();
+
     public Color get(){
         return new Color((int)(r*brightness), (int)(g*brightness), (int)((b*brightness)), (int)(o*255));
     }

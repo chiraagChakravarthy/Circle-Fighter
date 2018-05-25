@@ -1,6 +1,9 @@
 package circle_fighter.gameState;
 
+import circle_fighter.background.Background;
+import circle_fighter.color.Rainbow;
 import circle_fighter.game.plane.Plane;
+import circle_fighter.level.level.tutorial.Tutorial;
 import circle_fighter.level.menu.DeathMenu;
 import circle_fighter.level.menu.LevelMenu;
 import circle_fighter.level.menu.PauseMenu;
@@ -17,6 +20,7 @@ public class LevelState extends GameState {
     private ArrayList<Plane> levels;
     private ArrayList<Menu> menus;
     private SubState state;
+    private Background background;
 
     public LevelState(GameStateManager gsm) {
         super(gsm);
@@ -24,20 +28,22 @@ public class LevelState extends GameState {
         menu = 0;
 
         levels = new ArrayList();
-
+        levels.add(new Tutorial(this));
         menus = new ArrayList<>();
-        menus.add(new LevelMenu(this));
+        menus.add(new LevelMenu(this, levels.size()-1));
         menus.add(new DeathMenu(this));
         menus.add(new WinMenu(this));
         menus.add(new PauseMenu(this));
 
         state = SubState.MENU;
+        background = new Background.PlainBackground(new Rainbow(0.5, 10));
     }
 
     @Override
     public void render(Graphics2D g) {
         switch (state){
             case MENU:
+                background.render(g);
                 menus.get(menu).render(g);
                 break;
             case LEVEL:
@@ -51,6 +57,7 @@ public class LevelState extends GameState {
         switch (state){
             case MENU:
                 menus.get(menu).tick();
+                background.tick();
                 break;
             case LEVEL:
                 levels.get(level).tick();
@@ -63,6 +70,7 @@ public class LevelState extends GameState {
         switch (state){
             case MENU:
                 menus.get(menu).keyPressed(k);
+                background.keyPressed(k);
                 break;
             case LEVEL:
                 levels.get(level).keyPressed(k);
@@ -75,6 +83,7 @@ public class LevelState extends GameState {
         switch (state){
             case MENU:
                 menus.get(menu).keyReleased(k);
+                background.keyReleased(k);
                 break;
             case LEVEL:
                 levels.get(level).keyReleased(k);
@@ -87,6 +96,7 @@ public class LevelState extends GameState {
         switch (state){
             case MENU:
                 menus.get(menu).mousePressed(e);
+                background.mousePressed(e);
                 break;
             case LEVEL:
                 levels.get(level).mousePressed(e);
@@ -99,6 +109,7 @@ public class LevelState extends GameState {
         switch (state){
             case MENU:
                 menus.get(menu).mouseReleased(e);
+                background.mouseReleased(e);
                 break;
             case LEVEL:
                 levels.get(level).mouseReleased(e);
@@ -111,6 +122,7 @@ public class LevelState extends GameState {
         switch (state){
             case MENU:
                 menus.get(menu).mouseScrolled(e);
+                background.mouseScrolled(e);
                 break;
             case LEVEL:
                 levels.get(level).mouseScrolled(e);
@@ -132,6 +144,7 @@ public class LevelState extends GameState {
 
     public void setLevel(int level) {
         this.level = level;
+        levels.get(level).reset();
     }
 
     public int getMenu() {
@@ -142,7 +155,7 @@ public class LevelState extends GameState {
         this.menu = menu;
     }
 
-    private enum SubState {
+    public enum SubState {
         MENU,
         LEVEL
     }

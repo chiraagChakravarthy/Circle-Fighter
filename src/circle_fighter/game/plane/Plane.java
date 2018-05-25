@@ -22,7 +22,6 @@ public abstract class Plane implements Updatable, Renderable, UserInputListener 
         background = new Background.CheckeredBackground(new Rainbow(0.5, 1), new SolidColor(128, 128, 128), 100, new Position(0, 0));
         objectManager = new ObjectManager();
         this.bounds = bounds;
-        reset();
     }
 
     @Override

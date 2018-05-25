@@ -6,7 +6,6 @@ import circle_fighter.functionaliy.UserInputListener;
 
 public abstract class GameState implements Updatable, Renderable, UserInputListener{
     protected GameStateManager gsm;
-
     public GameState(GameStateManager gsm) {
         this.gsm = gsm;
     }

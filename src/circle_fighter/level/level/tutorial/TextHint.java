@@ -7,41 +7,47 @@ import circle_fighter.functionaliy.Updatable;
 
 import java.awt.*;
 
-public class TextHint implements Updatable, Renderable{
-    private String text;
-    private Font font;
-    private long lastTime, duration;
-    private int x, y;
-    private DynamicColor textColor;
-    public TextHint(Font font, String text, int y, DynamicColor color, long duration){
-        this.y = y;
+public class TextHint implements Updatable, Renderable {
+    private final DynamicColor color;
+    private final long duration;
+    private final String text;
+    private final Font font;
+    private final int x, y;
+    private long lastTime;
+
+    public TextHint(String text, Font font, long duration, DynamicColor color, int y){
+        this.text = text;
         this.font = font;
-        this.textColor = color;
-        FontMetrics metrics = new FontMetrics(font) {};
-        int width = (int) metrics.getStringBounds(text, null).getWidth();
-        x = (Game.getInstance().getGameWidth()-width)/2;
         this.duration = duration;
+        this.color = color;
+        int width = (int) new FontMetrics(font){}.getStringBounds(text, null).getWidth();
+        x = (Game.getInstance().getGameWidth()-width)/2;
+        this.y=y;
+        reset();
     }
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(textColor.get());
         g.setFont(font);
+        g.setColor(color.get());
         g.drawString(text, x, y);
     }
 
     @Override
     public void tick() {
+        color.tick();
         if(lastTime==0)
             lastTime = System.currentTimeMillis();
-        textColor.setO(Math.max(0, 1-(double)(System.currentTimeMillis()-lastTime)/ duration));
-    }
-
-    public boolean finished(){
-        return System.currentTimeMillis()-lastTime > duration&&lastTime!=0;
+        else {
+            color.setO(1.0-(double)(System.currentTimeMillis()-lastTime)/duration);
+        }
     }
 
     public void reset(){
         lastTime = 0;
+    }
+
+    public boolean isFinished(){
+        return System.currentTimeMillis()-lastTime>duration;
     }
 }

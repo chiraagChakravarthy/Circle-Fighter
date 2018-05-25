@@ -5,7 +5,6 @@ public class Rainbow extends DynamicColor {
     private double rate;
     public Rainbow(double brightness, double rate) {
         super(255, 0, 0, brightness);
-        stage = 0;
         this.rate = rate;
     }
 
@@ -44,6 +43,14 @@ public class Rainbow extends DynamicColor {
                     stage=0;
                 }
         }
+    }
+
+    @Override
+    public void reset() {
+        r=255;
+        g=0;
+        b=0;
+        stage = 0;
     }
 
     public int getStage() {
