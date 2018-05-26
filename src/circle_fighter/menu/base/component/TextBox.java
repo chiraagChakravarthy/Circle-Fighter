@@ -1,55 +1,48 @@
 package circle_fighter.menu.base.component;
 
+import circle_fighter.color.DynamicColor;
 import circle_fighter.engine.Game;
+import circle_fighter.text.Text;
+import circle_fighter.text.TextBuilder;
 
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 
 public class TextBox extends MenuComponent {
-    public static final int FONT_SIZE = 40;
-    public static final FontMetrics metrics = new FontMetrics(new Font("Arial", Font.PLAIN, FONT_SIZE)) {};
-    public static final int HORIZONTAL_PADDING = 50,
-            VERTICAL_PADDING = 2,
-            Y = 20,
-            ARCH = 10;
-
-    public static final Color LABEL_COLOR = Color.WHITE;
-
-    private int width, x, labelX, y, textY, bottomY;
-
-    private String message;
-
-
-    public TextBox(String message, int y){
+    private Text text;
+    private int x;
+    //TODO fix glitch where this appears in unopened menus for a frame
+    public TextBox(String message, int y, int width, DynamicColor color, boolean showBorder){
         super();
-        this.y = y;
-        textY = y + VERTICAL_PADDING+FONT_SIZE;
-        bottomY = (int) (y + VERTICAL_PADDING*2+FONT_SIZE*1.25);
-        setMessage(message);
+        x = (Game.getInstance().getGameWidth()-width)/2;
+        text = new TextBuilder()
+                .setTextAlign(Text.Alignment.CENTER)
+                .setText(message)
+                .setWidth(width)
+                .setY(y)
+                .setColor(color)
+                .setX((Game.getInstance().getGameWidth()-width)/2)
+                .setShowBorder(showBorder).get();
+    }
+
+    public TextBox(String message, int y, int width, DynamicColor color){
+        this(message, y, width, color, true);
     }
 
     public void tick() {
         super.tick();
+        text.setX(x+transitionOffset);
     }
 
     public void render(Graphics2D g){
-        x = transitionOffset + labelX;
-        g.setColor(LABEL_COLOR);
-        g.draw(new RoundRectangle2D.Float(x, y + scrollingOffset, width, bottomY-y, ARCH, ARCH));
-
-        g.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
-        g.drawString(message, HORIZONTAL_PADDING + x, textY + scrollingOffset);
+       text.render(g);
     }
 
     @Override
     public Rectangle getArea(boolean onScreen) {
-        return new Rectangle(0, Y + (onScreen ? scrollingOffset : 0), Game.getInstance().getGameWidth(), bottomY-y);
+        return new Rectangle(text.getX(), text.getY() + (onScreen ? scrollingOffset : 0), text.getWidth(), text.getHeight());
     }
 
-    public void setMessage(String message){
-        this.message = message;
-        int stringWidth = (int) metrics.getStringBounds(message, null).getWidth();
-        labelX = (Game.getInstance().getGameWidth() - stringWidth)/2 - HORIZONTAL_PADDING;
-        width = stringWidth + HORIZONTAL_PADDING * 2;
+    public void setMessage(String message) {
+        text.setText(message);
     }
 }

@@ -16,7 +16,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private static Game instance;
     public final String TITLE = "Circle Fighter";
     private Window window;
-    private int runningTime = 0, width, height;
+    private int runningTime = 0;
     private final ExecutorService service;
 
     private boolean running;
@@ -31,18 +31,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         addMouseListener(this);
         addMouseWheelListener(this);
         requestFocus();
-        if((double)getGameHeight()/getGameWidth()>(double)window.getHeight()/window.getWidth()){
-            width = window.getWidth();
-            height = (int) ((double)getGameHeight()/getGameWidth()*width);
-        }
-        else if((double)getGameHeight()/getGameWidth()<(double)window.getHeight()/window.getWidth()){
-            height = window.getHeight();
-            width = (int) ((double)getGameWidth()/getGameHeight()*height);
-        }
-        else {
-            width = window.getWidth();
-            height = window.getHeight();
-        }
         running = true;
     }
 
@@ -116,9 +104,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             return;
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        BufferedImage gameRender = new BufferedImage(getGameWidth(), getGameHeight(), BufferedImage.TYPE_INT_RGB);
-        gsm.render((Graphics2D) gameRender.getGraphics());
-        g.drawImage(gameRender, (getGameWidth()-width)/2, (getGameHeight()-height)/2, width, height, null);
+
+        gsm.render(g);
+
         g.dispose();
         bs.show();
     }
@@ -166,11 +154,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 
     public int getGameWidth() {
-        return 1920;
+        return window.getWidth();
     }
 
     public int getGameHeight() {
-        return 1080;
+        return window.getHeight();
     }
 
     public Point mouseLocation(){

@@ -1,5 +1,6 @@
 package circle_fighter.menu.base;
 
+import circle_fighter.color.SolidColor;
 import circle_fighter.engine.Game;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
@@ -28,7 +29,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     private TextBox title;
 
     public Menu(String title){
-        this.title = new TextBox(title, TextBox.Y);
+        this.title = new TextBox(title, 100, (int) (Game.getInstance().getGameWidth()*2.0/3), new SolidColor(255, 255, 255));
         menuComponents = new ArrayList<>();
         options = new ArrayList<>();
         addComponent(this.title);

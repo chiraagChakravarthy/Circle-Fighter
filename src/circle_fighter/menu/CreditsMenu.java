@@ -1,5 +1,7 @@
 package circle_fighter.menu;
 
+import circle_fighter.color.SolidColor;
+import circle_fighter.engine.Game;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.component.Option;
@@ -9,7 +11,8 @@ public class CreditsMenu extends Menu {
     private MenuState state;
     public CreditsMenu(MenuState state) {
         super("Credits");
-        addComponent(new TextBox("All credit for the elements and concepts present in this game go to Chiraag Chakravarthy", getLowestY()+Menu.COMPONENT_SPACING));
+        addComponent(new TextBox("All credit for the elements and concepts present in this game go to Chiraag Chakravarthy",
+                getLowestY()+Menu.COMPONENT_SPACING, Game.getInstance().getGameWidth()*2/3, new SolidColor(255, 255, 255), false));
         addComponent(new Option("Back", 400, this));
         this.state = state;
     }

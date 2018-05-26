@@ -13,7 +13,6 @@ public class GameStateManager implements Renderable, Updatable, UserInputListene
     public static final int MENU_STATE = 0, PLAY_STATE = 1;
     private ArrayList<GameState> states;
     private int gameState;
-
     public GameStateManager() {
         gameState = MENU_STATE;
         states = new ArrayList<>();
