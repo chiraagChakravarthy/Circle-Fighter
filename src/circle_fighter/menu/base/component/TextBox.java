@@ -10,10 +10,8 @@ import java.awt.*;
 public class TextBox extends MenuComponent {
     private Text text;
     private int x;
-    //TODO fix glitch where this appears in unopened menus for a frame
     public TextBox(String message, int y, int width, DynamicColor color, boolean showBorder){
         super();
-        x = (Game.getInstance().getGameWidth()-width)/2;
         text = new TextBuilder()
                 .setTextAlign(Text.Alignment.CENTER)
                 .setText(message)
@@ -21,7 +19,10 @@ public class TextBox extends MenuComponent {
                 .setY(y)
                 .setColor(color)
                 .setX((Game.getInstance().getGameWidth()-width)/2)
-                .setShowBorder(showBorder).get();
+                .setShowBorder(showBorder)
+                .setCenter(true).get();
+        this.x  = text.getX();
+        text.setX(x+transitionOffset);
     }
 
     public TextBox(String message, int y, int width, DynamicColor color){

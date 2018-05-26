@@ -1,6 +1,7 @@
 package circle_fighter.text;
 
 import circle_fighter.color.DynamicColor;
+import circle_fighter.engine.Game;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 
@@ -15,12 +16,12 @@ public class Text implements Updatable, Renderable {
     private ArrayList<Line> lines;
     private Font font;
     private DynamicColor color;
-    private boolean showBorder;
+    private boolean showBorder, minimizeWidth, center;
     private RoundRectangle2D border;
     private int width, height;
     private Alignment alignment;
 
-    public Text(String text, int x, int y, int width, Font font, DynamicColor color, Alignment alignment, boolean showBorder){
+    public Text(String text, int x, int y, int width, Font font, DynamicColor color, Alignment alignment, boolean showBorder, boolean minimizeWidth, boolean center){
         this.font = font;
         this.color = color;
         this.x = x;
@@ -28,6 +29,8 @@ public class Text implements Updatable, Renderable {
         this.showBorder = showBorder;
         this.width = width;
         this.alignment = alignment;
+        this.minimizeWidth = minimizeWidth;
+        this.center = center;
         setText(text);
     }
 
@@ -107,6 +110,13 @@ public class Text implements Updatable, Renderable {
         if(line.length()!=0)
             addLine(line.toString(), lineWidth, textWidth, padding, alignment);
         height = lines.size() * (font.getSize() + 2 * padding);
+        if(lines.size()==1&& minimizeWidth) {
+            width = lineWidth + padding * 2;
+            if(center){
+                x = (Game.getInstance().getGameWidth()-width)/2;
+                lines.get(0).setX(padding);
+            }
+        }
         border = new RoundRectangle2D.Double(x, y, width, height, font.getSize(), font.getSize());
     }
 

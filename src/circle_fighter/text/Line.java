@@ -21,4 +21,8 @@ public class Line {
     public int getY() {
         return y;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
 }
