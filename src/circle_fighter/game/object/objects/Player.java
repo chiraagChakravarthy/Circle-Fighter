@@ -13,7 +13,7 @@ import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.position.VelAngAccMovement;
-import circle_fighter.game.object.turret.Turret;
+import circle_fighter.game.object.wrapper.Turret;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.Plane;
 

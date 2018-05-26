@@ -1,4 +1,4 @@
-package circle_fighter.game.object.turret;
+package circle_fighter.game.object.wrapper;
 
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;

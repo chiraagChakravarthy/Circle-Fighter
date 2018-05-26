@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.concurrent.ExecutorService;
@@ -15,7 +16,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private static Game instance;
     public final String TITLE = "Circle Fighter";
     private Window window;
-    private int runningTime = 0;
+    private int runningTime = 0, width, height;
     private final ExecutorService service;
 
     private boolean running;
@@ -30,6 +31,18 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         addMouseListener(this);
         addMouseWheelListener(this);
         requestFocus();
+        if((double)getGameHeight()/getGameWidth()>(double)window.getHeight()/window.getWidth()){
+            width = window.getWidth();
+            height = (int) ((double)getGameHeight()/getGameWidth()*width);
+        }
+        else if((double)getGameHeight()/getGameWidth()<(double)window.getHeight()/window.getWidth()){
+            height = window.getHeight();
+            width = (int) ((double)getGameWidth()/getGameHeight()*height);
+        }
+        else {
+            width = window.getWidth();
+            height = window.getHeight();
+        }
         running = true;
     }
 
@@ -103,7 +116,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             return;
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        gsm.render(g);
+        BufferedImage gameRender = new BufferedImage(getGameWidth(), getGameHeight(), BufferedImage.TYPE_INT_RGB);
+        gsm.render((Graphics2D) gameRender.getGraphics());
+        g.drawImage(gameRender, (getGameWidth()-width)/2, (getGameHeight()-height)/2, width, height, null);
         g.dispose();
         bs.show();
     }
@@ -151,11 +166,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 
     public int getGameWidth() {
-        return window.getWidth();
+        return 1920;
     }
 
     public int getGameHeight() {
-        return window.getHeight();
+        return 1080;
     }
 
     public Point mouseLocation(){

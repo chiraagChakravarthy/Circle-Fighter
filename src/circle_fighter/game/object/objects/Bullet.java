@@ -16,13 +16,14 @@ public class Bullet extends GameObject implements Damaging{
 
     private static final double LENGTH = 10;
     private PointBound bound;
-
+    private double damage;
     public Bullet(Position position, Plane plane, double velocity, double error, int team) {
         super(position, plane, BoundExitAction.DESPAWN, team);
         position.setRotation(position.getRotation()+Math.toRadians((Math.random()-0.5)*2*error));
         vector.setVelX(Math.cos(position.getRotation())*velocity);
         vector.setVelY(Math.sin(position.getRotation())*velocity);
         bound = new PointBound(position);
+        damage = 1;
     }
 
     @Override
@@ -45,7 +46,12 @@ public class Bullet extends GameObject implements Damaging{
 
     @Override
     public double damage() {
-        despawn();
-        return 1;
+        if(damage>0) {
+            damage--;
+            if(damage<=0)
+                despawn();
+            return 1;
+        }
+        return 0;
     }
 }
