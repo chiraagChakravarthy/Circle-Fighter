@@ -39,7 +39,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
         vector = new Vector(0, 0, 0);
         movement = new VelAngAccMovement(position, vector, 0.1, 3, Math.toRadians(0.05), Math.toRadians(3));
         bound = new CircularBound(position, RADIUS);
-        health = new Health(5, position, 50, 10, -50, 2000, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
+        health = new Health(5, position, 50, 10, -50, 1000, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
         mainTurret = new Turret(this, Math.PI/9, 40, 5, 10, new SolidColor(0, 0, 255));
         base = new CircularBase(RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0), position);
     }

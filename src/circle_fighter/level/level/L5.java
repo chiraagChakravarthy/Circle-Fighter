@@ -9,7 +9,7 @@ import circle_fighter.level.LevelPlane;
 
 public class L5 extends LevelPlane {
     public L5(LevelState state) {
-        super(Game.getInstance().getGameWidth(), Game.getInstance().getGameHeight(), state);
+        super(1920, 1080, state);
     }
 
     @Override

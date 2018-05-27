@@ -16,7 +16,7 @@ public class LevelMenu extends Menu {
         this.levels = levels;
         addComponent(new Option("Tutorial", getLowestY()+Menu.COMPONENT_SPACING, this));
         for (int i = 0; i < levels; i++) {
-            addComponent(new Option("Level" + (i+1), getLowestY()+Menu.COMPONENT_SPACING, this));
+            addComponent(new Option("Level " + (i+1), getLowestY()+Menu.COMPONENT_SPACING, this));
         }
         addComponent(new Option("Back", getLowestY()+COMPONENT_SPACING, this));
     }

@@ -11,7 +11,7 @@ public class CreditsMenu extends Menu {
     private MenuState state;
     public CreditsMenu(MenuState state) {
         super("Credits");
-        addComponent(new TextBox("All credit for the elements and concepts present in this game go to Chiraag Chakravarthy",
+        addComponent(new TextBox("All credit for the elements and concepts present in \nthis game go to Chiraag Chakravarthy",
                 getLowestY()+Menu.COMPONENT_SPACING, Game.getInstance().getGameWidth()*2/3, new SolidColor(255, 255, 255), false));
         addComponent(new Option("Back", getLowestY()+Menu.COMPONENT_SPACING, this));
         this.state = state;

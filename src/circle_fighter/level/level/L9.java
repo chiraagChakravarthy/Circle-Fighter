@@ -1,15 +1,14 @@
 package circle_fighter.level.level;
 
-import circle_fighter.engine.Game;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.objects.bots.BotM3;
-import circle_fighter.game.object.objects.turret.TurretBotM1;
+import circle_fighter.game.object.objects.bots.BotM4;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.level.LevelPlane;
 
-public class L6 extends LevelPlane {
-    public L6(LevelState state) {
+public class L9 extends LevelPlane {
+    public L9(LevelState state) {
         super(1920, 1080, state);
     }
 
@@ -25,7 +24,12 @@ public class L6 extends LevelPlane {
     @Override
     public void reset() {
         super.reset();
-        new BotM3(new Position(-250, -300), this, 1);
-        new BotM3(new Position(450, -300), this, 1);
+        for (int i = 0; i < 4; i++) {
+            double radians = i/4.0*Math.PI/2;
+            new BotM4(new Position(Math.cos(radians)*400, Math.sin(radians)*400), this, 1);
+        }
+
+        new BotM3(new Position(-200, -200), this, 1);
+        new BotM3(new Position(200, 200), this, 1);
     }
 }

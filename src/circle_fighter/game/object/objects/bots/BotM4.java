@@ -13,7 +13,6 @@ import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.position.MultiDirectionalMovement;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.position.OmniDirectionalMovement;
 import circle_fighter.game.object.wrapper.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
@@ -24,8 +23,8 @@ import java.awt.*;
 @DamagingObject
 @RenderableObject
 @CharacterObject
-public class BotM3 extends GameObject implements Damaging, Damageable{
-    private static final double RADIUS = 15;
+public class BotM4 extends GameObject implements Damaging, Damageable{
+    private static final double RADIUS = 19;
 
     private CircularBound bound;
     private MultiDirectionalMovement movement;
@@ -33,13 +32,13 @@ public class BotM3 extends GameObject implements Damaging, Damageable{
     private Health health;
     private CircularBase base;
 
-    public BotM3(Position position, PlayerPlane plane, int team) {
+    public BotM4(Position position, PlayerPlane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
         bound = new CircularBound(position, RADIUS);
         vector = new Vector(0, 0, 0);
-        movement = new MultiDirectionalMovement(position, vector, 0.01, 0.05, 100, 4);
-        health = new Health(4, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
-        base = new CircularBase(RADIUS, new SolidColor(0, 0, 128), new SolidColor(0, 0, 0), position);
+        movement = new MultiDirectionalMovement(position, vector, 0.03, 0.1, 100, 4);
+        health = new Health(10, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
+        base = new CircularBase(RADIUS, new SolidColor(0, 0, 255), new SolidColor(0, 0, 128), position);
         this.plane = plane;
     }
 
