@@ -35,12 +35,12 @@ public abstract class PlayerPlane extends Plane {
 
     @Override
     public void keyPressed(int k) {
-        player.keyPressed(k);
+        if(player != null) player.keyPressed(k);
     }
 
     @Override
     public void keyReleased(int k) {
-        player.keyReleased(k);
+        if(player != null) player.keyReleased(k);
     }
 
     @Override

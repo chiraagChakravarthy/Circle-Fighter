@@ -13,7 +13,7 @@ public class CreditsMenu extends Menu {
         super("Credits");
         addComponent(new TextBox("All credit for the elements and concepts present in this game go to Chiraag Chakravarthy",
                 getLowestY()+Menu.COMPONENT_SPACING, Game.getInstance().getGameWidth()*2/3, new SolidColor(255, 255, 255), false));
-        addComponent(new Option("Back", 400, this));
+        addComponent(new Option("Back", getLowestY()+Menu.COMPONENT_SPACING, this));
         this.state = state;
     }
 

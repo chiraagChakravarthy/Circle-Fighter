@@ -134,7 +134,11 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     }
 
     protected int getLowestY(){
-        return (int) menuComponents.get(menuComponents.size()-1).getArea(false).getMaxY();
+        double maxY = 0;
+        for(MenuComponent component : menuComponents){
+            maxY = Math.max(component.getArea(false).getMaxY(), maxY);
+        }
+        return (int)maxY;
     }
 
     private int getHighestY(){

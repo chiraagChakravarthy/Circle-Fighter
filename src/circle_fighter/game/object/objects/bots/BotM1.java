@@ -1,6 +1,5 @@
-package circle_fighter.game.object.objects;
+package circle_fighter.game.object.objects.bots;
 
-import circle_fighter.color.DynamicColor;
 import circle_fighter.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -9,10 +8,12 @@ import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.DamagingObject;
+import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.position.VelAccMovement;
+import circle_fighter.game.object.position.OmniDirectionalMovement;
+import circle_fighter.game.object.wrapper.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
 
@@ -20,21 +21,24 @@ import java.awt.*;
 @DamageableObject
 @DamagingObject
 @RenderableObject
-public class Bot extends GameObject implements Damaging, Damageable{
+@CharacterObject
+public class BotM1 extends GameObject implements Damaging, Damageable{
+    private static final double RADIUS = 10;
+
     private CircularBound bound;
-    private VelAccMovement movement;
-    private Vector vector;
+    private OmniDirectionalMovement movement;
     private PlayerPlane plane;
     private Health health;
-    private DynamicColor color;
-    public Bot(Position position, PlayerPlane plane, int team) {
+    private CircularBase base;
+
+    public BotM1(Position position, PlayerPlane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
-        bound = new CircularBound(position, 10);
+        bound = new CircularBound(position, RADIUS);
         vector = new Vector(0, 0, 0);
-        movement = new VelAccMovement(position, vector, 0.1, 1);
+        movement = new OmniDirectionalMovement(position, vector, 0.1, 1);
         movement.setFront(true);
         health = new Health(1, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
-        color = new SolidColor(128, 0, 0);
+        base = new CircularBase(RADIUS, new SolidColor(128, 0, 0), new SolidColor(0, 0, 0), position);
         this.plane = plane;
     }
 
@@ -43,7 +47,7 @@ public class Bot extends GameObject implements Damaging, Damageable{
         super.tick();
         position.setRotation(position.angleTo(plane.getPlayer().getPosition()));
         health.tick();
-        color.tick();
+        base.tick();
         if(health.get()<=0)
             despawn();
         movement.tick();
@@ -51,10 +55,7 @@ public class Bot extends GameObject implements Damaging, Damageable{
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.BLACK);
-        g.fillOval((int)(position.getScrX()-10), (int)(position.getScrY()-10), 20, 20);
-        g.setColor(color.get());
-        g.fillOval((int)(position.getScrX()-8), (int)(position.getScrY()-8), 16, 16);
+        base.render(g);
         health.render(g);
     }
 

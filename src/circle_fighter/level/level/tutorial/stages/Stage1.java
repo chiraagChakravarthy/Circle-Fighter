@@ -16,9 +16,10 @@ public class Stage1 extends TutorialStage {
         super(tutorial);
         hintList = new ArrayList<>();
         hintList.add(new TextHint("Welcome to Circle Fighter!", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
+        hintList.add(new TextHint("You may hit [Esc] to enter pause menu", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         hintList.add(new TextHint("Hold [W] to move forward, and [S] to move back.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         hintList.add(new TextHint("Hold [A] or [D] to Rotate.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
-        hintList.add(new TextHint("Press Space to Shoot.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
+        hintList.add(new TextHint("Hold [Space] to Shoot.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         hintList.add(new TextHint("Take a second to get a handle on the controls", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         reset();
     }

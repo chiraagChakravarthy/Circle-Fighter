@@ -40,7 +40,7 @@ public class Position {
                 h = Math.sqrt(a*a+o*o),
                 c = a/h,
                 t = Math.acos(c);
-        return o<0?(360-t-90):o>0?t:a>0?0:180;
+        return o<0?(2*Math.PI-t):o>0?t:a>0?0:Math.PI;
     }
 
     public Position apply(Vector vector){

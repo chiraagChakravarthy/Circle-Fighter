@@ -2,7 +2,7 @@ package circle_fighter.level.level.tutorial.stages;
 
 import circle_fighter.color.SolidColor;
 import circle_fighter.engine.Game;
-import circle_fighter.game.object.objects.TutorialBot;
+import circle_fighter.game.object.objects.bots.TutorialBot;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.level.level.tutorial.TextHint;
 import circle_fighter.level.level.tutorial.Tutorial;
@@ -20,7 +20,7 @@ public class Stage3 extends TutorialStage {
     public Stage3(Tutorial tutorial) {
         super(tutorial);
         hints = new ArrayList<>();
-        hints.add(new TextHint("This is a Bot. It wants to kill you, and can do so by touching you.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
+        hints.add(new TextHint("This is a BotM1. It wants to kill you, and can do so by touching you.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         hints.add(new TextHint("You don't want that to happen. You know what to do.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
     }
 
@@ -42,7 +42,7 @@ public class Stage3 extends TutorialStage {
 
     @Override
     public void tick() {
-        if(tutorial.getObjectManager().getTeam(1).size()==0) {
+        if(tutorial.getObjectManager().getBy(1).size()==0) {
             tutorial.advance();
         }
         else {

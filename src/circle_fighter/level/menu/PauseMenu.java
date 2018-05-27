@@ -27,11 +27,14 @@ public class PauseMenu extends Menu {
         switch (selectedOption){
             case 0:
                 state.setState(LevelState.SubState.LEVEL);
+                break;
             case 1:
                 state.getCurrentLevel().reset();
                 state.setState(LevelState.SubState.LEVEL);
+                break;
             case 2:
                 state.setMenu(0);
+                break;
         }
     }
 

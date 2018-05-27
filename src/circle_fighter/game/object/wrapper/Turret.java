@@ -1,5 +1,6 @@
 package circle_fighter.game.object.wrapper;
 
+import circle_fighter.color.DynamicColor;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.GameObject;
@@ -14,12 +15,15 @@ public class Turret implements Updatable, Renderable {
     private double relativeAng;
     private long lastTime;
     private boolean firing;
-    public Turret(GameObject object, double maximumAng, double length, double girth, double shootRate){
+    private DynamicColor color;
+
+    public Turret(GameObject object, double maximumAng, double length, double girth, double shootRate, DynamicColor color){
         this.object = object;
         this.maximumAng = maximumAng;
         this.length = length;
         this.girth = girth;
         this.shootRate = shootRate;
+        this.color = color;
         relativeAng = 0;
     }
 
@@ -37,7 +41,7 @@ public class Turret implements Updatable, Renderable {
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.BLUE);
+        g.setColor(color.get());
         double angle = relativeAng + object.getPosition().getRotation();
         double x = object.getPosition().getScrX(), y = object.getPosition().getScrY();
         g.setStroke(new BasicStroke((float) girth));
@@ -46,6 +50,7 @@ public class Turret implements Updatable, Renderable {
 
     @Override
     public void tick() {
+        color.tick();
         long now = System.nanoTime();
         double angle = relativeAng+object.getPosition().getRotation();
         if((now-lastTime)/1.0e9>1/shootRate&&firing){
