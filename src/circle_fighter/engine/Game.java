@@ -24,6 +24,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public static final boolean DEBUG = true;
 
+    private Test test;
+
     private Game() {
         service = Executors.newCachedThreadPool();
         window = new Window(TITLE, 2, this);
@@ -45,12 +47,14 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     public void run() {
+        System.out.println(getGameWidth());
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
         int ticks = 60;
         double ns = 1000000000 / ticks;
         double delta = 0;
         int updates = 0, frames = 0;
+        test = new Test();
         //Allows for the logging of the ticks and frames each second
         //Game Loop\\
         while (running){
@@ -89,7 +93,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     public void tick() {
-        gsm.tick();
+        //gsm.tick();
+        test.tick();
         runningTime++;
     }
 
@@ -105,7 +110,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
-        gsm.render(g);
+        //gsm.render(g);
+        test.render(g);
 
         g.dispose();
         bs.show();
