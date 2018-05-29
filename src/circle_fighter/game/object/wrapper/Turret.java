@@ -55,7 +55,7 @@ public class Turret implements Updatable, Renderable {
         double angle = relativeAng+object.getPosition().getRotation();
         if((now-lastTime)/1.0e9>1/shootRate&&firing){
             lastTime = now;
-            new Bullet(object.getPosition().clone().apply(new Vector(Math.cos(angle)*length, Math.sin(angle)*length, 0)), object.getPlane(), 10, 5, object.getTeam());
+            new Bullet(object.getPosition().clone().apply(new Vector(Math.cos(angle)*length, Math.sin(angle)*length, 0)), object.getPlane(), 10, 2, object.getTeam());
         }
     }
 

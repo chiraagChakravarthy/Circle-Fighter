@@ -28,6 +28,12 @@ public class Position {
         this(point.x, point.y);
     }
 
+    public Position(Position position) {
+        this.x = position.x;
+        this.y = position.y;
+        this.rotation = position.rotation;
+    }
+
     public double distance(Position position){
         double a = position.x-x,
                 o=position.y-y;
@@ -109,5 +115,24 @@ public class Position {
     public static double distance(double x, double y, double x1, double y1) {
         double dx = x-x1, dy = y-y1;
         return Math.sqrt(dx*dx+dy*dy);
+    }
+
+    public Position move(Position position, boolean applyDirection){
+
+        if(applyDirection && rotation!=0){
+            double r = position.distance(this),
+                    t = angleTo(position)+rotation;
+            this.x += Math.cos(t)*r;
+            this.y += Math.sin(t)*r;
+            return this;
+        }
+        this.x += position.x;
+        this.y += position.y;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "X: " + x + ", Y: " + y;
     }
 }

@@ -15,12 +15,6 @@ public class PointBound extends Bound {
     }
 
     @Override
-    public boolean intersects(RectangularBound bound) {
-        return position.getX()>bound.getPosition().getX()&&position.getX()<bound.getPosition().getX()+bound.getWidth()
-                && position.getY()>bound.getPosition().getY()&&position.getY()<bound.getPosition().getY()+bound.getHeight();
-    }
-
-    @Override
     public boolean intersects(LineSegmentBound bound) {
         return false;
     }
@@ -31,7 +25,16 @@ public class PointBound extends Bound {
     }
 
     @Override
+    public boolean intersects(TriangularBound bound) {
+        return bound.intersects(this);
+    }
+
+    @Override
     public Rectangle outerBounds() {
         return new Rectangle((int)position.getX(), (int)position.getY(), 1, 1);
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

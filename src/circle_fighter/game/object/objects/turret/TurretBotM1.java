@@ -38,7 +38,7 @@ public class TurretBotM1 extends GameObject implements Damageable {
         movement = new VelAngAccMovement(position, vector, 0.05, 1, Math.toRadians(0.01), Math.toRadians(1));
         base = new CircularBase(RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 140, 0), position);
         bound = new CircularBound(position, RADIUS);
-        turret = new Turret(this, 0, 25, 4, 10, new SolidColor(0, 0, 0));
+        turret = new Turret(this, 0, 25, 4, 3, new SolidColor(0, 0, 0));
         health = new Health(4, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         turret.setFiring(true);
     }

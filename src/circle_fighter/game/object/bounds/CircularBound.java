@@ -18,17 +18,17 @@ public class CircularBound extends Bound {
     }
 
     @Override
-    public boolean intersects(RectangularBound bound) {
-        return bound.intersects(this);
-    }
-
-    @Override
     public boolean intersects(LineSegmentBound bound) {
         return bound.intersects(this);
     }
 
     @Override
     public boolean intersects(PointBound bound) {
+        return bound.intersects(this);
+    }
+
+    @Override
+    public boolean intersects(TriangularBound bound) {
         return bound.intersects(this);
     }
 

@@ -1,14 +1,14 @@
 package circle_fighter.level.level;
 
-import circle_fighter.engine.Game;
 import circle_fighter.game.object.implementations.CharacterObject;
+import circle_fighter.game.object.objects.bots.BotM3;
 import circle_fighter.game.object.objects.bots.BotM4;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.level.LevelPlane;
 
-public class L8 extends LevelPlane {
-    public L8(LevelState state) {
+public class L10 extends LevelPlane {
+    public L10(LevelState state) {
         super(1920, 1080, state);
     }
 
@@ -24,6 +24,5 @@ public class L8 extends LevelPlane {
     @Override
     public void reset() {
         super.reset();
-        new BotM4(new Position(-100, 300), this, 1);
     }
 }

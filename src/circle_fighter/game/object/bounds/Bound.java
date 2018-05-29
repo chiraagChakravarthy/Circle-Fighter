@@ -5,11 +5,11 @@ import java.awt.*;
 public abstract class Bound {
     public abstract boolean intersects(CircularBound bound);
 
-    public abstract boolean intersects(RectangularBound bound);
-
     public abstract boolean intersects(LineSegmentBound bound);
 
     public abstract boolean intersects(PointBound bound);
+
+    public abstract boolean intersects(TriangularBound bound);
 
     public abstract Rectangle outerBounds();
 

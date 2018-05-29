@@ -39,12 +39,6 @@ public class LineSegmentBound extends Bound {
 
     //Local
     @Override
-    public boolean intersects(RectangularBound bound) {
-        return false;
-    }
-
-    //Local
-    @Override
     public boolean intersects(LineSegmentBound bound) { if(h==0)
             return clp(bound.position.getX(), bound.position.getX()+bound.h, position.getX())&&clp(bound.position.getY(), bound.position.getY()+bound.v, position.getY());
         else if(bound.h==0){
@@ -59,6 +53,11 @@ public class LineSegmentBound extends Bound {
 
     @Override
     public boolean intersects(PointBound bound) {
+        return bound.intersects(this);
+    }
+
+    @Override
+    public boolean intersects(TriangularBound bound) {
         return bound.intersects(this);
     }
 
