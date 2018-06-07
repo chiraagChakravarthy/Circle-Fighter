@@ -120,7 +120,6 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     @Override
     public void mouseScrolled(MouseWheelEvent e) {
         if(progression.equals(MenuProgression.DEFAULT))scrollingOffset = -Math.max(Math.min(Math.abs(scrollingOffset)+SCROLLING_RATE*e.getUnitsToScroll(), getLowestY()+COMPONENT_SPACING-Game.getInstance().getGameHeight()), 0);
-        System.out.println(e.getUnitsToScroll());
     }
 
     protected void addComponent(MenuComponent menuComponent){
@@ -136,9 +135,9 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     }
 
     protected int getLowestY(){
-        double maxY = 0;
+        float maxY = 0;
         for(MenuComponent component : menuComponents){
-            maxY = Math.max(component.getArea(false).getMaxY(), maxY);
+            maxY = (float) Math.max(component.getArea(false).getMaxY(), maxY);
         }
         return (int)maxY;
     }

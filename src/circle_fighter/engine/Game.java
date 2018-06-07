@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private boolean running;
     private GameStateManager gsm;
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = true, TEST = false;
 
     private Test test;
 
@@ -37,7 +37,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     private void initialize(){
-        gsm = new GameStateManager();
+        if(!TEST)
+            gsm = new GameStateManager();
     }
 
     public static void main(String[] args) {
@@ -47,14 +48,14 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     public void run() {
-        System.out.println(getGameWidth());
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
         int ticks = 60;
         double ns = 1000000000 / ticks;
         double delta = 0;
         int updates = 0, frames = 0;
-        test = new Test();
+        if(TEST)
+            test = new Test();
         //Allows for the logging of the ticks and frames each second
         //Game Loop\\
         while (running){
@@ -93,8 +94,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     public void tick() {
-        //gsm.tick();
-        test.tick();
+        if(TEST)
+            test.tick();
+        else
+            gsm.tick();
         runningTime++;
     }
 
@@ -109,9 +112,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             return;
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-
-        //gsm.render(g);
-        test.render(g);
+        if(TEST)
+            test.render(g);
+        else
+            gsm.render(g);
 
         g.dispose();
         bs.show();
@@ -170,7 +174,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public Point mouseLocation(){
         Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
         SwingUtilities.convertPointFromScreen(mouseLocation, window.getFrame());
-        return mouseLocation;
+        return new Point(mouseLocation.x, mouseLocation.y);
     }
 
     public ExecutorService getThreadService() {

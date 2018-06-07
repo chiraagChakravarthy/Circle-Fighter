@@ -6,21 +6,21 @@ import java.awt.*;
 
 public class Position {
 
-    private static double xOffset, yOffset;
+    private static float xOffset, yOffset;
     static {
         xOffset = 0;
         yOffset = 0;
     }
 
-    private double x, y, rotation;
+    private float x, y, rotation;
 
-    public Position(double x, double y, double rotation){
+    public Position(float x, float y, float rotation){
         this.x = x;
         this.y = y;
         this.rotation = rotation;
     }
 
-    public Position(double x, double y){
+    public Position(float x, float y){
         this(x, y, 0);
     }
 
@@ -34,19 +34,19 @@ public class Position {
         this.rotation = position.rotation;
     }
 
-    public double distance(Position position){
-        double a = position.x-x,
+    public float distance(Position position){
+        float a = position.x-x,
                 o=position.y-y;
-        return Math.sqrt(a*a+o*o);
+        return (float) Math.sqrt(a*a+o*o);
     }
 
-    public double angleTo(Position position){
-        double a = position.x-x,
+    public float angleTo(Position position){
+        float a = position.x-x,
                 o = position.y-y,
-                h = Math.sqrt(a*a+o*o),
+                h = (float) Math.sqrt(a*a+o*o),
                 c = a/h,
-                t = Math.acos(c);
-        return o<0?(2*Math.PI-t):o>0?t:a>0?0:Math.PI;
+                t = (float) Math.acos(c);
+        return (float) (o<0?(2*Math.PI-t):o>0?t:a>0?0:Math.PI);
     }
 
     public Position apply(Vector vector){
@@ -56,38 +56,38 @@ public class Position {
         return this;
     }
 
-    public Position setX(double x) {
+    public Position setX(float x) {
         this.x = x;
         return this;
     }
 
-    public Position setY(double y) {
+    public Position setY(float y) {
         this.y = y;
         return this;
     }
 
-    public Position setRotation(double rotation) {
+    public Position setRotation(float rotation) {
         this.rotation = rotation;
         return this;
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getScrX(){
+    public float getScrX(){
         return x-xOffset+ Game.getInstance().getGameWidth()/2;
     }
 
-    public double getScrY(){
+    public float getScrY(){
         return y-yOffset + Game.getInstance().getGameHeight()/2;
     }
 
-    public double getRotation() {
+    public float getRotation() {
         return rotation;
     }
 
@@ -96,31 +96,30 @@ public class Position {
         return new Position(x, y, rotation);
     }
 
-    public static double getxOffset() {
+    public static float getxOffset() {
         return xOffset;
     }
 
-    public static double getyOffset() {
+    public static float getyOffset() {
         return yOffset;
     }
 
-    public static void setXOffset(double xOffset) {
+    public static void setXOffset(float xOffset) {
         Position.xOffset = xOffset;
     }
 
-    public static void setYOffset(double yOffset) {
+    public static void setYOffset(float yOffset) {
         Position.yOffset = yOffset;
     }
 
-    public static double distance(double x, double y, double x1, double y1) {
-        double dx = x-x1, dy = y-y1;
-        return Math.sqrt(dx*dx+dy*dy);
+    public static float distance(float x, float y, float x1, float y1) {
+        float dx = x-x1, dy = y-y1;
+        return (float) Math.sqrt(dx*dx+dy*dy);
     }
 
     public Position move(Position position, boolean applyDirection){
-
         if(applyDirection && rotation!=0){
-            double r = position.distance(this),
+            float r = position.distance(this),
                     t = angleTo(position)+rotation;
             this.x += Math.cos(t)*r;
             this.y += Math.sin(t)*r;

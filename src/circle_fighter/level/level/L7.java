@@ -27,7 +27,7 @@ public class L7 extends LevelPlane {
         super.reset();
         for (int i = 0; i < 3; i++) {
             double radians = i/3.0*Math.PI*2;
-            new BotM3(new Position(Math.cos(radians)*(i+1)*150, Math.sin(radians)*(i+1)*150), this, 1);
+            new BotM3(new Position((float)Math.cos(radians)*(i+1)*150, (float)Math.sin(radians)*(i+1)*150), this, 1);
         }
     }
 }

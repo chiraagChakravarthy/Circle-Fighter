@@ -82,6 +82,7 @@ public class Window {
         setFullScreen();
     }
 
+
     public String getTitle() {
         return frame.getTitle();
     }

@@ -1,5 +1,7 @@
 package circle_fighter.game.object.bounds;
 
+import circle_fighter.game.object.position.Position;
+
 import java.awt.*;
 
 public abstract class Bound {
@@ -13,7 +15,14 @@ public abstract class Bound {
 
     public abstract Rectangle outerBounds();
 
-    protected boolean clp(double min, double max, double val){
-        return val<min&&val>max;
+    protected Position intersection(float s1, float s2, int x1, int y1, int x2, int y2){
+        if(s1 == s2)
+            return new Position(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY);
+        if(Double.isInfinite(s1))
+            return new Position(x1, s2*(x1-x2)+y2);
+        if(Double.isInfinite(s2))
+            return new Position(x2, s1*(x2-x1)+y1);
+        float x = (s1*x1-y1-s2*x2+y2)/(s1-s2);
+        return new Position(x, s1*(x-x1)+y1);
     }
 }

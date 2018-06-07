@@ -5,22 +5,22 @@ import circle_fighter.game.object.position.Position;
 
 public class UnboundedBounds extends PlaneBounds {
     @Override
-    public double exceedsLeftBy(GameObject object) {
+    public float exceedsLeftBy(GameObject object) {
         return 0;
     }
 
     @Override
-    public double exceedsRightBy(GameObject object) {
+    public float exceedsRightBy(GameObject object) {
         return 0;
     }
 
     @Override
-    public double exceedsTopBy(GameObject object) {
+    public float exceedsTopBy(GameObject object) {
         return 0;
     }
 
     @Override
-    public double exceedsBottomBy(GameObject object) {
+    public float exceedsBottomBy(GameObject object) {
         return 0;
     }
 

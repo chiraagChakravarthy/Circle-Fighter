@@ -3,7 +3,6 @@ package circle_fighter.game.object.bounds;
 import circle_fighter.game.object.position.Position;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class TriangularBound extends Bound {
     private Position position;
@@ -34,18 +33,31 @@ public class TriangularBound extends Bound {
 
     @Override
     public boolean intersects(TriangularBound bound) {
-        Position[] vertices = bound.getVertices();
-        return inside(vertices[0])||inside(vertices[1])||inside(vertices[2]);
+        Position[] boundVertices = bound.getVertices();
+        if(inside(boundVertices[0])||inside(boundVertices[1])||inside(boundVertices[2]))
+            return true;
+        Position[] vertices = getVertices();
+        if(bound.inside(vertices[0])||bound.inside(vertices[1])||bound.inside(vertices[2]))
+            return true;
+
+        return false;
     }
 
+    /*
+    //TODO
+        Listnening Position
+            * Accepting listeners for changes in position or rotation
+            * Triangle bounds will only accept listener positions
+            * Only when called upon to do anything does it update its stuff
+     */
+
     private boolean inside(Position position){
-        Position point = position.clone().move(position, false);
+        Position point = position.clone();
         Position[] vertices = getVertices();
         double[] slopes = generateSlopes(vertices);
-        boolean s1 = onCorrectSide(onCorrectSide(true, slopes[0], vertices[0], vertices[2]), slopes[0], vertices[0], point),
-                s2 = onCorrectSide(onCorrectSide(true, slopes[1], vertices[1], vertices[0]), slopes[1], vertices[1], point),
-                s3 = onCorrectSide(onCorrectSide(true, slopes[2], vertices[2], vertices[1]), slopes[2], vertices[2], point);
-        return s1&&s2&&s3;
+        return onCorrectSide(onCorrectSide(true, slopes[0], vertices[0], vertices[2]), slopes[0], vertices[0], point)&&
+                onCorrectSide(onCorrectSide(true, slopes[1], vertices[1], vertices[0]), slopes[1], vertices[1], point)&&
+                onCorrectSide(onCorrectSide(true, slopes[2], vertices[2], vertices[1]), slopes[2], vertices[2], point);
     }
 
     @Override
@@ -70,20 +82,10 @@ public class TriangularBound extends Bound {
     }
 
     private boolean onCorrectSide(boolean positive, double slope, Position basePoint, Position point){
-        System.out.println("Base: " + basePoint.toString());
-        System.out.println("Comparison: " + point.toString());
-        System.out.println("Slope: " + slope);
-        System.out.println("Assess Positive: " + positive);
-        if(Double.isInfinite(slope)) {
+        if(Double.isInfinite(slope))
             return positive ? point.getX() < basePoint.getX() : point.getX() > basePoint.getX();
-        }
-        if(positive) {
-            boolean out = point.getY() > (point.getX() - basePoint.getX()) * slope + basePoint.getY();
-            System.out.println("Positive: " + out + "\n_______________________");
-            return out;
-        }
-        boolean out = point.getY()<(point.getX()-basePoint.getX())*slope+basePoint.getY();
-        System.out.println("Positive: " + !out + "\n_______________________");
-        return out;
+        if(positive)
+            return point.getY() > (point.getX() - basePoint.getX()) * slope + basePoint.getY();
+        return point.getY()<(point.getX()-basePoint.getX())*slope+basePoint.getY();
     }
 }

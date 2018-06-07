@@ -29,7 +29,7 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
 
     @Override
     public void tick() {
-        double top = plane.getBounds().exceedsTopBy(this),
+        float top = plane.getBounds().exceedsTopBy(this),
                 bottom = plane.getBounds().exceedsBottomBy(this),
                 left = plane.getBounds().exceedsLeftBy(this),
                 right = plane.getBounds().exceedsRightBy(this);

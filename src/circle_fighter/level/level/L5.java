@@ -1,6 +1,5 @@
 package circle_fighter.level.level;
 
-import circle_fighter.engine.Game;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.objects.bots.BotM2;
 import circle_fighter.game.object.position.Position;
@@ -25,8 +24,8 @@ public class L5 extends LevelPlane {
     public void reset() {
         super.reset();
         for (int i = 0; i < 5; i++) {
-            double radians = 2* Math.PI*i/5;
-            new BotM2(new Position(Math.cos(radians)*300, Math.sin(radians)*300), this, 1);
+            float radians = (float) (2* Math.PI*i/5);
+            new BotM2(new Position((float)Math.cos(radians)*300, (float) (Math.sin(radians)*300)), this, 1);
         }
     }
 }

@@ -5,34 +5,34 @@ import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.position.Position;
 
 public class BoundedBounds extends PlaneBounds {
-    private double x, y, width, height;
-    public BoundedBounds(double x, double y, double width, double height){
+    private float x, y, width, height;
+    public BoundedBounds(float x, float y, float width, float height){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
     @Override
-    public double exceedsLeftBy(GameObject object) {
-        double width = object.getBound().outerBounds().getWidth();
+    public float exceedsLeftBy(GameObject object) {
+        float width = (float) object.getBound().outerBounds().getWidth();
         return Math.min(object.getPosition().getX()-width/2-x, 0);
     }
 
     @Override
-    public double exceedsRightBy(GameObject object) {
-        double width = object.getBound().outerBounds().getWidth();
+    public float exceedsRightBy(GameObject object) {
+        float width = (float) object.getBound().outerBounds().getWidth();
         return Math.max(object.getPosition().getX()+width/2-(x+this.width), 0);
     }
 
     @Override
-    public double exceedsTopBy(GameObject object) {
-        double height = object.getBound().outerBounds().getHeight();
+    public float exceedsTopBy(GameObject object) {
+        float height = (float) object.getBound().outerBounds().getHeight();
         return Math.max(object.getPosition().getY()+height/2-(y+this.height), 0);
     }
 
     @Override
-    public double exceedsBottomBy(GameObject object) {
-        double height = object.getBound().outerBounds().getHeight();
+    public float exceedsBottomBy(GameObject object) {
+        float height = (float) object.getBound().outerBounds().getHeight();
         return Math.min(object.getPosition().getY()-height/2-y, 0);
     }
 

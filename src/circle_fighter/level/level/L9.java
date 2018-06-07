@@ -26,7 +26,7 @@ public class L9 extends LevelPlane {
         super.reset();
         for (int i = 0; i < 2; i++) {
             double radians = i/4.0*Math.PI/2;
-            new BotM4(new Position(Math.cos(radians)*400, Math.sin(radians)*400), this, 1);
+            new BotM4(new Position((float)(Math.cos(radians)*400), (float)(Math.sin(radians)*400)), this, 1);
         }
 
         new BotM3(new Position(-200, -200), this, 1);
