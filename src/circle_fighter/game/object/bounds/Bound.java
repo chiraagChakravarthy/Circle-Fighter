@@ -7,15 +7,14 @@ import java.awt.*;
 public abstract class Bound {
     public abstract boolean intersects(CircularBound bound);
 
-    public abstract boolean intersects(LineSegmentBound bound);
-
     public abstract boolean intersects(PointBound bound);
 
-    public abstract boolean intersects(TriangularBound bound);
+    public abstract boolean intersects(PolygonBound bound);
+
 
     public abstract Rectangle outerBounds();
 
-    protected Position intersection(float s1, float s2, int x1, int y1, int x2, int y2){
+    protected Position intersection(float s1, float s2, float x1, float y1, float x2, float y2){
         if(s1 == s2)
             return new Position(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY);
         if(Double.isInfinite(s1))

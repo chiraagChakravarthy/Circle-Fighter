@@ -15,17 +15,12 @@ public class PointBound extends Bound {
     }
 
     @Override
-    public boolean intersects(LineSegmentBound bound) {
-        return false;
-    }
-
-    @Override
     public boolean intersects(PointBound bound) {
         return false;
     }
 
     @Override
-    public boolean intersects(TriangularBound bound) {
+    public boolean intersects(PolygonBound bound) {
         return bound.intersects(this);
     }
 

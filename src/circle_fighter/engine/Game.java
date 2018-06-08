@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private boolean running;
     private GameStateManager gsm;
 
-    public static final boolean DEBUG = true, TEST = false;
+    public static final boolean DEBUG = true, TEST = true;
 
     private Test test;
 
@@ -127,13 +127,21 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
-        gsm.keyPressed(k);
+        if(TEST)
+            if(test != null)
+                test.keyPressed(k);
+        else if(gsm != null)
+                gsm.keyPressed(k);
     }
 
     public void keyReleased(KeyEvent e) {
         int k = e.getKeyCode();
         //k is an integer representing the key that was released
-        gsm.keyReleased(k);
+        if(TEST)
+            if(test != null)
+                test.keyReleased(k);
+        else if(gsm != null)
+            gsm.keyReleased(k);
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -142,12 +150,20 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void mousePressed(MouseEvent e) {
         //The mouse event itself is passed because it contains information of the mouse button pressed and the location of the mouse
-        gsm.mousePressed(e);
+        if(TEST)
+            if(test != null)
+                test.mousePressed(e);
+        else if(gsm != null)
+                gsm.mousePressed(e);
     }
 
     public void mouseReleased(MouseEvent e) {
         //The mouse event itself is passed because it contains information of the mouse button released and the location of the mouse
-        gsm.mouseReleased(e);
+        if(TEST)
+            if(test != null)
+                test.mouseReleased(e);
+        else if(gsm != null)
+            gsm.mouseReleased(e);
     }
 
     public void mouseEntered(MouseEvent e) {

@@ -12,7 +12,7 @@ import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.objects.Player;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.VelAngAccMovement;
-import circle_fighter.game.object.wrapper.CircularBase;
+import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.object.wrapper.Turret;
 import circle_fighter.game.plane.PlayerPlane;
@@ -27,7 +27,6 @@ public class TurretBotM1 extends GameObject implements Damageable {
 
     private Turret turret;
     private CircularBase base;
-    private CircularBound bound;
     private VelAngAccMovement movement;
     private Health health;
     private PlayerPlane plane;
@@ -36,10 +35,9 @@ public class TurretBotM1 extends GameObject implements Damageable {
         super(position, plane, BoundExitAction.BOUND, team);
         this.plane = plane;
         movement = new VelAngAccMovement(position, vector, 0.05, 1, Math.toRadians(0.01), Math.toRadians(1));
-        base = new CircularBase(RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 140, 0), position);
-        bound = new CircularBound(position, RADIUS);
         turret = new Turret(this, 0, 25, 4, 3, new SolidColor(0, 0, 0));
         health = new Health(4, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
+        base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 140, 0));
         turret.setFiring(true);
     }
 
@@ -84,12 +82,12 @@ public class TurretBotM1 extends GameObject implements Damageable {
 
     @Override
     public Bound getBound() {
-        return bound;
+        return base;
     }
 
     @Override
     public boolean damage(Damaging damagingObject) {
-        if(damagingObject.getBound().intersects(bound)&&damagingObject.getTeam()!=getTeam()){
+        if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.set(health.get()-damagingObject.damage());
             return true;
         }

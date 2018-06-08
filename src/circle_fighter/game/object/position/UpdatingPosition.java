@@ -62,6 +62,7 @@ public class UpdatingPosition extends Position {
 
     public void addListener(OnPositionChanged listener){
         listeners.add(listener);
+        listener.onPositionChanged();
     }
 
     public void removeListener(OnPositionChanged listener){

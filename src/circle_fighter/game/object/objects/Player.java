@@ -13,7 +13,7 @@ import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.position.VelAngAccMovement;
-import circle_fighter.game.object.wrapper.CircularBase;
+import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.object.wrapper.Turret;
 import circle_fighter.game.plane.Plane;
@@ -28,7 +28,6 @@ import java.awt.event.MouseWheelEvent;
 @RenderableObject
 public class Player extends GameObject implements UserInputListener, Damageable {
     private static final double RADIUS = 25;
-    private CircularBound bound;
     private Health health;
     private VelAngAccMovement movement;
     private Turret mainTurret;
@@ -38,15 +37,14 @@ public class Player extends GameObject implements UserInputListener, Damageable 
         super(position, plane, BoundExitAction.BOUND, 0);
         vector = new Vector(0, 0, 0);
         movement = new VelAngAccMovement(position, vector, 0.1, 3, Math.toRadians(0.05), Math.toRadians(3));
-        bound = new CircularBound(position, RADIUS);
         health = new Health(5, position, 50, 10, -50, 1000, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
         mainTurret = new Turret(this, Math.PI/9, 40, 5, 10, new SolidColor(0, 0, 255));
-        base = new CircularBase(RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0), position);
+        base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0));
     }
 
     @Override
     public Bound getBound() {
-        return bound;
+        return base;
     }
 
     @Override
@@ -125,7 +123,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
 
     @Override
     public boolean damage(Damaging damagingObject) {
-        if(damagingObject.getBound().intersects(bound)&&damagingObject.getTeam()!=getTeam()){
+        if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.damage(damagingObject.damage());
             return true;
         }

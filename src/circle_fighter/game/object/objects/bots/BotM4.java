@@ -13,7 +13,7 @@ import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.position.MultiDirectionalMovement;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.wrapper.CircularBase;
+import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
 
@@ -26,7 +26,6 @@ import java.awt.*;
 public class BotM4 extends GameObject implements Damaging, Damageable{
     private static final double RADIUS = 19;
 
-    private CircularBound bound;
     private MultiDirectionalMovement movement;
     private PlayerPlane plane;
     private Health health;
@@ -34,11 +33,10 @@ public class BotM4 extends GameObject implements Damaging, Damageable{
 
     public BotM4(Position position, PlayerPlane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
-        bound = new CircularBound(position, RADIUS);
         vector = new Vector(0, 0, 0);
         movement = new MultiDirectionalMovement(position, vector, 0.03, 0.1, 100, 4);
         health = new Health(10, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
-        base = new CircularBase(RADIUS, new SolidColor(0, 0, 255), new SolidColor(0, 0, 128), position);
+        base = new CircularBase(position, RADIUS, new SolidColor(0, 0, 255), new SolidColor(0, 0, 128));
         this.plane = plane;
     }
 
@@ -65,12 +63,12 @@ public class BotM4 extends GameObject implements Damaging, Damageable{
 
     @Override
     public Bound getBound() {
-        return bound;
+        return base;
     }
 
     @Override
     public boolean damage(Damaging damagingObject) {
-        if(damagingObject.getBound().intersects(bound)&&damagingObject.getTeam()!=getTeam()){
+        if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.set(health.get()-damagingObject.damage());
             return true;
         }

@@ -10,7 +10,7 @@ import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.position.Position;
-import circle_fighter.game.object.wrapper.CircularBase;
+import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.Plane;
 
@@ -19,15 +19,15 @@ import java.awt.*;
 @DamageableObject
 @CharacterObject
 public class TutorialBot extends GameObject implements Damageable {
-    private CircularBound bound;
+    private static final int RADIUS = 10;
+
     private Health health;
     private CircularBase base;
 
     public TutorialBot(Position position, Plane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
-        bound = new CircularBound(position, 10);
         health = new Health(1, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
-        base = new CircularBase(10, new SolidColor(0, 0, 0), new SolidColor(0, 0, 0), position);
+        base = new CircularBase(position, RADIUS, new SolidColor(0, 0, 0), new SolidColor(0, 0, 0));
     }
 
     @Override
@@ -47,12 +47,12 @@ public class TutorialBot extends GameObject implements Damageable {
 
     @Override
     public Bound getBound() {
-        return bound;
+        return base;
     }
 
     @Override
     public boolean damage(Damaging damagingObject) {
-        if(damagingObject.getBound().intersects(bound)){
+        if(damagingObject.getBound().intersects(base)){
             health.damage(damagingObject.damage());
             return true;
         }

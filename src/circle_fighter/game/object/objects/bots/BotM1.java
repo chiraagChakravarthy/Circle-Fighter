@@ -3,17 +3,16 @@ package circle_fighter.game.object.objects.bots;
 import circle_fighter.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
-import circle_fighter.game.object.bounds.CircularBound;
+import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
+import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.DamagingObject;
-import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.RenderableObject;
+import circle_fighter.game.object.position.OmniDirectionalMovement;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.position.OmniDirectionalMovement;
-import circle_fighter.game.object.wrapper.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
 
@@ -25,7 +24,6 @@ import java.awt.*;
 public class BotM1 extends GameObject implements Damaging, Damageable{
     private static final double RADIUS = 10;
 
-    private CircularBound bound;
     private OmniDirectionalMovement movement;
     private PlayerPlane plane;
     private Health health;
@@ -33,12 +31,11 @@ public class BotM1 extends GameObject implements Damaging, Damageable{
 
     public BotM1(Position position, PlayerPlane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
-        bound = new CircularBound(position, RADIUS);
         vector = new Vector(0, 0, 0);
         movement = new OmniDirectionalMovement(position, vector, 0.1, 1);
         movement.setFront(true);
         health = new Health(1, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
-        base = new CircularBase(RADIUS, new SolidColor(128, 0, 0), new SolidColor(0, 0, 0), position);
+        base = new CircularBase(position, RADIUS, new SolidColor(128, 0, 0), new SolidColor(0, 0, 0));
         this.plane = plane;
     }
 
@@ -61,12 +58,12 @@ public class BotM1 extends GameObject implements Damaging, Damageable{
 
     @Override
     public Bound getBound() {
-        return bound;
+        return base;
     }
 
     @Override
     public boolean damage(Damaging damagingObject) {
-        if(damagingObject.getBound().intersects(bound)&&damagingObject.getTeam()!=getTeam()){
+        if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.set(health.get()-damagingObject.damage());
             return true;
         }
