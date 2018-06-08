@@ -23,7 +23,7 @@ public class MenuState extends GameState {
         menus.add(new MainMenu(this));
         menus.add(new OptionsMenu(this));
         menus.add(new CreditsMenu(this));
-        background = new Background.PlainBackground(new Rainbow(0.5, 10));
+        background = new Background.PlainBackground(new Rainbow(0.5f, 10));
     }
 
     @Override

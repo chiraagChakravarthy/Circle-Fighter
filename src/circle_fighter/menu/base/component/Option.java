@@ -84,7 +84,7 @@ public class Option extends MenuComponent {
     }
 
     public void setEnabled(boolean enabled) {
-        color.setBrightness(enabled?1:0.2);
+        color.setBrightness(enabled?1:0.2f);
         this.enabled = enabled;
     }
 

@@ -11,8 +11,7 @@ public class UpdatingPosition extends Position {
     }
 
     public UpdatingPosition(float x, float y) {
-        super(x, y);
-        listeners = new ArrayList<>();
+        this(x, y, 0);
     }
 
     public UpdatingPosition(Point point) {

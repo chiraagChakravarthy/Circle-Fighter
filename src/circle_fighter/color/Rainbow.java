@@ -3,7 +3,7 @@ package circle_fighter.color;
 public class Rainbow extends DynamicColor {
     private int stage;
     private double rate;
-    public Rainbow(double brightness, double rate) {
+    public Rainbow(float brightness, float rate) {
         super(255, 0, 0, brightness);
         this.rate = rate;
     }

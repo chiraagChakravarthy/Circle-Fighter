@@ -1,7 +1,7 @@
 package circle_fighter.color;
 
 public class SolidColor extends DynamicColor {
-    public SolidColor(double r, double g, double b) {
+    public SolidColor(float r, float g, float b) {
         super(r, g, b, 1);
     }
 

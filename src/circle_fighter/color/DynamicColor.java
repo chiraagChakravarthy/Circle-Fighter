@@ -3,9 +3,9 @@ package circle_fighter.color;
 import java.awt.*;
 
 public abstract class DynamicColor {
-    protected double r, g, b;
-    private double brightness, o;
-    public DynamicColor(double r, double g, double b, double o, double brightness) {
+    protected float r, g, b;
+    private float brightness, o;
+    public DynamicColor(float r, float g, float b, float o, float brightness) {
         this.r=r;
         this.g=g;
         this.b=b;
@@ -13,17 +13,17 @@ public abstract class DynamicColor {
         this.brightness = brightness;
     }
 
-    public DynamicColor(double r, double g, double b, double brightness){
+    public DynamicColor(float r, float g, float b, float brightness){
         this(r, g, b, 1, brightness);
     }
 
     public abstract void tick();
 
-    public double getO() {
+    public float getO() {
         return o;
     }
 
-    public void setO(double o) {
+    public void setO(float o) {
         this.o = o;
     }
 
@@ -33,11 +33,11 @@ public abstract class DynamicColor {
         return new Color((int)(r*brightness), (int)(g*brightness), (int)((b*brightness)), (int)(o*255));
     }
 
-    public double getBrightness() {
+    public float getBrightness() {
         return brightness;
     }
 
-    public void setBrightness(double brightness) {
+    public void setBrightness(float brightness) {
         this.brightness = brightness;
     }
 }

@@ -5,11 +5,12 @@ import circle_fighter.engine.Game;
 import java.awt.*;
 
 public class Position {
-
+    private static final Position ZERO;
     private static float xOffset, yOffset;
     static {
         xOffset = 0;
         yOffset = 0;
+        ZERO = new Position(0, 0);
     }
 
     private float x, y, rotation;
@@ -119,10 +120,10 @@ public class Position {
 
     public Position move(Position position, boolean applyDirection){
         if(applyDirection && rotation!=0){
-            float r = position.distance(this),
-                    t = angleTo(position)+rotation;
-            this.x += Math.cos(t)*r;
-            this.y += Math.sin(t)*r;
+            float r = ZERO.angleTo(position) + rotation,
+                    d = ZERO.distance(position);
+            this.x += Math.cos(r)*d;
+            this.y += Math.sin(r)*d;
             return this;
         }
         this.x += position.x;

@@ -17,9 +17,9 @@ public abstract class Bound {
     protected Position intersection(float s1, float s2, float x1, float y1, float x2, float y2){
         if(s1 == s2)
             return new Position(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY);
-        if(Double.isInfinite(s1))
+        if(Float.isInfinite(s1))
             return new Position(x1, s2*(x1-x2)+y2);
-        if(Double.isInfinite(s2))
+        if(Float.isInfinite(s2))
             return new Position(x2, s1*(x2-x1)+y1);
         float x = (s1*x1-y1-s2*x2+y2)/(s1-s2);
         return new Position(x, s1*(x-x1)+y1);

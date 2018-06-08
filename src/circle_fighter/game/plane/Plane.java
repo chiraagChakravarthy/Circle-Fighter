@@ -19,7 +19,7 @@ public abstract class Plane implements Updatable, Renderable, UserInputListener 
     protected final PlaneBounds bounds;
 
     public Plane(PlaneBounds bounds){
-        background = new Background.CheckeredBackground(new Rainbow(0.5, 1), new SolidColor(128, 128, 128), 100, new Position(0, 0));
+        background = new Background.CheckeredBackground(new Rainbow(0.5f, 1), new SolidColor(128, 128, 128), 100, new Position(0, 0));
         objectManager = new ObjectManager();
         this.bounds = bounds;
     }

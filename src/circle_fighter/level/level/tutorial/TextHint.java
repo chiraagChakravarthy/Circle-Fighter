@@ -33,7 +33,7 @@ public class TextHint implements Updatable, Renderable {
         if(lastTime==0)
             lastTime = System.currentTimeMillis();
         else {
-            color.setO(1.0-(double)(System.currentTimeMillis()-lastTime)/duration);
+            color.setO((float) (1.0-(System.currentTimeMillis()-lastTime)/duration));
         }
     }
 
