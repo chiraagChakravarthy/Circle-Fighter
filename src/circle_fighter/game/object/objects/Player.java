@@ -1,6 +1,7 @@
 package circle_fighter.game.object.objects;
 
 import circle_fighter.color.SolidColor;
+import circle_fighter.engine.KeyBindManager;
 import circle_fighter.functionaliy.UserInputListener;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -17,6 +18,8 @@ import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.object.wrapper.Turret;
 import circle_fighter.game.plane.Plane;
+import circle_fighter.game.plane.PlayerPlane;
+import circle_fighter.user.User;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -32,9 +35,11 @@ public class Player extends GameObject implements UserInputListener, Damageable 
     private VelAngAccMovement movement;
     private Turret mainTurret;
     private CircularBase base;
+    private KeyBindManager keyBinds;
 
-    public Player(Position position, Plane plane) {
+    public Player(Position position, PlayerPlane plane, User user) {
         super(position, plane, BoundExitAction.BOUND, 0);
+        this.keyBinds = plane.getKeyBinds();
         vector = new Vector(0, 0, 0);
         movement = new VelAngAccMovement(position, vector, 0.1, 3, Math.toRadians(0.05), Math.toRadians(3));
         health = new Health(5, position, 50, 10, -50, 1000, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
@@ -67,22 +72,20 @@ public class Player extends GameObject implements UserInputListener, Damageable 
 
     @Override
     public void keyPressed(int k) {
-        switch (k){
-            case KeyEvent.VK_W:
-                movement.setFront(true);
-                break;
-            case KeyEvent.VK_S:
-                movement.setBack(true);
-                break;
-            case KeyEvent.VK_A:
-                movement.setLeft(true);
-                break;
-            case KeyEvent.VK_D:
-                movement.setRight(true);
-                break;
-            case KeyEvent.VK_SPACE:
-                mainTurret.setFiring(true);
-                break;
+        if(k==keyBinds.get(KeyBindManager.PLAYER_FORWARD)){
+            movement.setFront(true);
+        }
+        else if(k==keyBinds.get(KeyBindManager.PLAYER_BACKWARD)){
+            movement.setBack(true);
+        }
+        else if(k==keyBinds.get(KeyBindManager.ROTATE_CLOCKWISE)){
+            movement.setRight(true);
+        }
+        else if(k==keyBinds.get(KeyBindManager.ROTATE_COUNTER_CLOCKWISE)){
+            movement.setLeft(true);
+        }
+        else if(k==keyBinds.get(KeyBindManager.SHOOT)){
+            mainTurret.setFiring(true);
         }
     }
 

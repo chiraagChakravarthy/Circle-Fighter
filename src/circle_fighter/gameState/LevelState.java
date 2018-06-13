@@ -3,6 +3,7 @@ package circle_fighter.gameState;
 import circle_fighter.background.Background;
 import circle_fighter.color.Rainbow;
 import circle_fighter.engine.Game;
+import circle_fighter.engine.KeyBindManager;
 import circle_fighter.game.plane.Plane;
 import circle_fighter.level.level.*;
 import circle_fighter.level.level.tutorial.Tutorial;
@@ -24,8 +25,8 @@ public class LevelState extends GameState {
     private SubState state;
     private Background background;
 
-    public LevelState(GameStateManager gsm) {
-        super(gsm);
+    public LevelState(GameStateManager gsm, KeyBindManager keyBinds) {
+        super(gsm, keyBinds);
         level = 0;
         menu = 0;
         levels = new ArrayList();

@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 public abstract class LevelPlane extends PlayerPlane {
     protected LevelState state;
     public LevelPlane(int width, int height, LevelState state) {
-        super(new Position(0, 0), new BoundedBounds(-width/2, -height/2, width, height));
+        super(new Position(0, 0), new BoundedBounds(-width/2, -height/2, width, height), state.getKeyBinds());
         this.state = state;
     }
 

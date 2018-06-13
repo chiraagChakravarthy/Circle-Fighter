@@ -7,7 +7,7 @@ import circle_fighter.menu.base.component.Option;
 public class WinMenu extends Menu {
     private LevelState state;
     public WinMenu(LevelState state) {
-        super("You Win!");
+        super("You Win!", state.getKeyBinds());
         this.state = state;
         addComponent(new Option("Retry Level", getLowestY() + Menu.COMPONENT_SPACING, this));
         addComponent(new Option("Next Level", getLowestY() + Menu.COMPONENT_SPACING, this));

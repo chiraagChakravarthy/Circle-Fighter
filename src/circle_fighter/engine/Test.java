@@ -10,6 +10,10 @@ import java.awt.event.MouseWheelEvent;
 
 public class Test implements Updatable, Renderable, UserInputListener {
 
+    public Test(){
+
+    }
+
     @Override
     public void render(Graphics2D g) {
 

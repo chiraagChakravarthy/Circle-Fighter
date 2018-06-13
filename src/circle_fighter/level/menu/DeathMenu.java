@@ -7,7 +7,7 @@ import circle_fighter.menu.base.component.Option;
 public class DeathMenu extends Menu {
     private LevelState state;
     public DeathMenu(LevelState state) {
-        super("You Died!");
+        super("You Died!", state.getKeyBinds());
         addComponent(new Option("Retry Level", getLowestY()+Menu.COMPONENT_SPACING, this));
         addComponent(new Option("Exit to Level Select", getLowestY()+Menu.COMPONENT_SPACING, this));
         this.state = state;

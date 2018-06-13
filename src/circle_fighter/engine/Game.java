@@ -1,28 +1,29 @@
 package circle_fighter.engine;
 
+import circle_fighter.file.FileManager;
 import circle_fighter.gameState.GameStateManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseWheelListener {
     private static Game instance;
+    public static final boolean DEBUG = false, TEST = false;
+
     public final String TITLE = "Circle Fighter";
-    private Window window;
+    private final Window window;
     private int runningTime = 0;
     private final ExecutorService service;
-
     private boolean running;
     private GameStateManager gsm;
-
-    public static final boolean DEBUG = true, TEST = true;
+    private KeyBindManager keybinds;
 
     private Test test;
 
@@ -37,8 +38,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     private void initialize(){
-        if(!TEST)
-            gsm = new GameStateManager();
+        if(TEST)
+            test = new Test();
+        else {
+            keybinds = new KeyBindManager();
+            gsm = new GameStateManager(keybinds);
+        }
     }
 
     public static void main(String[] args) {
@@ -54,8 +59,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         double ns = 1000000000 / ticks;
         double delta = 0;
         int updates = 0, frames = 0;
-        if(TEST)
-            test = new Test();
         //Allows for the logging of the ticks and frames each second
         //Game Loop\\
         while (running){
@@ -79,9 +82,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
                 updates = 0;
                 frames = 0;
                 timer += 1000;
-                //Logs the Frames and the ticks that have passed since the last logging. The minimum time between each
-                //logging is a second. (The max being however long the tick and drawTo take to process), so the actual
-                //message being logged is a tad misleading
             }
         }
         //Game Loop\\
@@ -90,6 +90,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void stop() {
         running = false;
+        FileManager.writeToFile("files/keybinds.txt", new ArrayList<>(Collections.singletonList(keybinds.save())));
         service.shutdown();
     }
 
@@ -127,9 +128,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
-        if(TEST)
-            if(test != null)
+        if(TEST) {
+            if (test != null)
                 test.keyPressed(k);
+        }
         else if(gsm != null)
                 gsm.keyPressed(k);
     }
@@ -137,9 +139,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public void keyReleased(KeyEvent e) {
         int k = e.getKeyCode();
         //k is an integer representing the key that was released
-        if(TEST)
-            if(test != null)
+        if(TEST) {
+            if (test != null)
                 test.keyReleased(k);
+        }
         else if(gsm != null)
             gsm.keyReleased(k);
     }
@@ -150,18 +153,20 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void mousePressed(MouseEvent e) {
         //The mouse event itself is passed because it contains information of the mouse button pressed and the location of the mouse
-        if(TEST)
-            if(test != null)
+        if(TEST) {
+            if (test != null)
                 test.mousePressed(e);
+        }
         else if(gsm != null)
                 gsm.mousePressed(e);
     }
 
     public void mouseReleased(MouseEvent e) {
         //The mouse event itself is passed because it contains information of the mouse button released and the location of the mouse
-        if(TEST)
-            if(test != null)
+        if(TEST) {
+            if (test != null)
                 test.mouseReleased(e);
+        }
         else if(gsm != null)
             gsm.mouseReleased(e);
     }

@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 public class PauseMenu extends Menu {
     private LevelState state;
     public PauseMenu(LevelState state) {
-        super("Paused");
+        super("Paused", state.getKeyBinds());
         this.state = state;
         addComponent(new Option("Continue", getLowestY()+Menu.COMPONENT_SPACING, this));
         addComponent(new Option("Reset Level", getLowestY()+Menu.COMPONENT_SPACING, this));

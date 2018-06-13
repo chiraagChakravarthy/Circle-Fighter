@@ -1,5 +1,6 @@
 package circle_fighter.gameState;
 
+import circle_fighter.engine.KeyBindManager;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
@@ -13,10 +14,10 @@ public class GameStateManager implements Renderable, Updatable, UserInputListene
     public static final int MENU_STATE = 0, PLAY_STATE = 1;
     private ArrayList<GameState> states;
     private int gameState;
-    public GameStateManager() {
+    public GameStateManager(KeyBindManager keyBinds) {
         gameState = MENU_STATE;
         states = new ArrayList<>();
-        registerStates();
+        registerStates(keyBinds);
     }
 
     public void tick() {
@@ -55,8 +56,8 @@ public class GameStateManager implements Renderable, Updatable, UserInputListene
             System.out.println("GameState " + gameState + " does not exist.");
     }
 
-    private void registerStates() {
-        states.add(new MenuState(this));
-        states.add(new LevelState(this));
+    private void registerStates(KeyBindManager keyBinds) {
+        states.add(new MenuState(this, keyBinds));
+        states.add(new LevelState(this, keyBinds));
     }
 }

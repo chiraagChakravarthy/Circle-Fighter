@@ -1,11 +1,18 @@
 package circle_fighter.color;
 
+import circle_fighter.file.DataStorage;
+import circle_fighter.game.object.objects.Player;
+
 public class Rainbow extends DynamicColor {
     private int stage;
-    private double rate;
+    private float rate;
     public Rainbow(float brightness, float rate) {
         super(255, 0, 0, brightness);
         this.rate = rate;
+    }
+
+    public Rainbow(Player player){
+        super(player);
     }
 
     @Override
@@ -55,5 +62,11 @@ public class Rainbow extends DynamicColor {
 
     public int getStage() {
         return stage;
+    }
+
+    @Override
+    public void to(DataStorage storage) {
+        super.to(storage.getSubStorage(0));
+        storage.set(0, stage).set(1, Float.floatToIntBits(rate));
     }
 }

@@ -2,6 +2,7 @@ package circle_fighter.gameState;
 
 import circle_fighter.background.Background;
 import circle_fighter.color.Rainbow;
+import circle_fighter.engine.KeyBindManager;
 import circle_fighter.menu.CreditsMenu;
 import circle_fighter.menu.MainMenu;
 import circle_fighter.menu.OptionsMenu;
@@ -17,8 +18,9 @@ public class MenuState extends GameState {
     private int menu;
     private List<Menu> menus;
     private Background background;
-    public MenuState(GameStateManager gsm) {
-        super(gsm);
+
+    public MenuState(GameStateManager gsm, KeyBindManager keyBinds) {
+        super(gsm, keyBinds);
         menus = new ArrayList<>();
         menus.add(new MainMenu(this));
         menus.add(new OptionsMenu(this));

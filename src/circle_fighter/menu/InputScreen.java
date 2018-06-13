@@ -2,6 +2,7 @@ package circle_fighter.menu;
 
 import circle_fighter.color.SolidColor;
 import circle_fighter.engine.Game;
+import circle_fighter.engine.KeyBindManager;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.component.Option;
 import circle_fighter.menu.base.component.TextBox;
@@ -19,8 +20,8 @@ public abstract class InputScreen extends Menu {
     private boolean upperCase;
     private int blinkerTime, maximumCharacters;
 
-    public InputScreen(String title, int maximumCharacters){
-        super(title);
+    public InputScreen(String title, int maximumCharacters, KeyBindManager manager){
+        super(title, manager);
         this.maximumCharacters = maximumCharacters;
         input = "";
         inputBox = new TextBox(input, getLowestY() + COMPONENT_SPACING, Game.getInstance().getGameWidth()*2/3, new SolidColor(255, 255, 255));

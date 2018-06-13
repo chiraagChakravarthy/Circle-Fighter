@@ -2,6 +2,7 @@ package circle_fighter.menu.base;
 
 import circle_fighter.color.SolidColor;
 import circle_fighter.engine.Game;
+import circle_fighter.engine.KeyBindManager;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public abstract class Menu implements Updatable, Renderable, UserInputListener{
     private ArrayList<MenuComponent> menuComponents;
     private ArrayList<Option> options;
+    private KeyBindManager keyBinds;
 
     protected static final int COMPONENT_SPACING = 20;
     private static final float TRANSITION_RATE = 1f, SCROLLING_RATE = 20;
@@ -28,8 +30,9 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
 
     private TextBox title;
 
-    public Menu(String title){
+    public Menu(String title, KeyBindManager keyBinds){
         this.title = new TextBox(title, 50, (int) (Game.getInstance().getGameWidth()*2.0/3), new SolidColor(255, 255, 255));
+        this.keyBinds = keyBinds;
         menuComponents = new ArrayList<>();
         options = new ArrayList<>();
         addComponent(this.title);

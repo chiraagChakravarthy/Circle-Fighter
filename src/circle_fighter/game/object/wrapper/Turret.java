@@ -11,13 +11,13 @@ import java.awt.*;
 
 public class Turret implements Updatable, Renderable {
     private GameObject object;
-    private final double maximumAng, length, girth, shootRate;
-    private double relativeAng;
+    private final float maximumAng, length, girth, shootRate;
+    private float relativeAng;
     private long lastTime;
     private boolean firing;
     private DynamicColor color;
 
-    public Turret(GameObject object, double maximumAng, double length, double girth, double shootRate, DynamicColor color){
+    public Turret(GameObject object, float maximumAng, float length, float girth, float shootRate, DynamicColor color){
         this.object = object;
         this.maximumAng = maximumAng;
         this.length = length;
@@ -27,24 +27,24 @@ public class Turret implements Updatable, Renderable {
         relativeAng = 0;
     }
 
-    public double getRelativeAng() {
+    public float getRelativeAng() {
         return relativeAng;
     }
 
-    public void setRelativeAng(double relativeAng) {
+    public void setRelativeAng(float relativeAng) {
         this.relativeAng = Math.max(Math.min(relativeAng, maximumAng), -maximumAng);
     }
 
-    public double getMaximumAng() {
+    public float getMaximumAng() {
         return maximumAng;
     }
 
     @Override
     public void render(Graphics2D g) {
         g.setColor(color.get());
-        double angle = relativeAng + object.getPosition().getRotation();
-        double x = object.getPosition().getScrX(), y = object.getPosition().getScrY();
-        g.setStroke(new BasicStroke((float) girth));
+        float angle = relativeAng + object.getPosition().getRotation();
+        float x = object.getPosition().getScrX(), y = object.getPosition().getScrY();
+        g.setStroke(new BasicStroke(girth));
         g.drawLine((int)x, (int)y, (int)(x+Math.cos(angle)*length),(int)(y+Math.sin(angle)*length));
     }
 
@@ -52,7 +52,7 @@ public class Turret implements Updatable, Renderable {
     public void tick() {
         color.tick();
         long now = System.nanoTime();
-        double angle = relativeAng+object.getPosition().getRotation();
+        float angle = relativeAng+object.getPosition().getRotation();
         if((now-lastTime)/1.0e9>1/shootRate&&firing){
             lastTime = now;
             new Bullet(object.getPosition().clone().apply(new Vector(Math.cos(angle)*length, Math.sin(angle)*length, 0)), object.getPlane(), 10, 2, object.getTeam());

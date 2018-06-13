@@ -9,11 +9,12 @@ import java.util.Arrays;
 
 public class PolygonBound extends Bound implements OnPositionChanged {
     protected Position position;
-    protected Position[] relative, absolute;
-    protected float[] slopes;
-    protected boolean changed;
-    protected float[] lineRanges;
-    protected Rectangle outerBound;
+    protected Position[] absolute;
+    protected Position[] relative;
+    private float[] slopes;
+    private boolean changed;
+    private float[] lineRanges;
+    private Rectangle outerBound;
 
     public PolygonBound(UpdatingPosition position, Position[] relative){
         this.position = position;

@@ -11,7 +11,7 @@ public class LevelMenu extends Menu {
     private LevelState state;
     private int levels;
     public LevelMenu(LevelState state, int levels) {
-        super("Level Select");
+        super("Level Select", state.getKeyBinds());
         this.state = state;
         this.levels = levels;
         addComponent(new Option("Tutorial", getLowestY()+Menu.COMPONENT_SPACING, this));
