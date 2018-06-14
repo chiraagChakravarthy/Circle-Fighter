@@ -1,14 +1,15 @@
 package circle_fighter.game.object.bounds;
 
+import circle_fighter.file.DataStorage;
+import circle_fighter.game.object.bounds.renderBase.PolygonBase;
 import circle_fighter.game.object.position.OnPositionChanged;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
+import javafx.geometry.Pos;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class PolygonBound extends Bound implements OnPositionChanged {
-    protected Position position;
     protected Position[] absolute;
     protected Position[] relative;
     private float[] slopes;
@@ -17,7 +18,7 @@ public class PolygonBound extends Bound implements OnPositionChanged {
     private Rectangle outerBound;
 
     public PolygonBound(UpdatingPosition position, Position[] relative){
-        this.position = position;
+        super(position);
         position.addListener(this);
         this.relative = relative;
         absolute = new Position[relative.length];
@@ -25,6 +26,12 @@ public class PolygonBound extends Bound implements OnPositionChanged {
         slopes = new float[absolute.length];
     }
 
+    public PolygonBound(Position position){
+        super(position);
+        ((UpdatingPosition)position).addListener(this);
+    }
+
+    //TODO finish this method
     @Override
     public boolean intersects(CircularBound bound) {
         if(changed)
@@ -150,5 +157,21 @@ public class PolygonBound extends Bound implements OnPositionChanged {
         if(changed)
             update();
         return lineRanges;
+    }
+
+    @Override
+    public void from(DataStorage storage) {
+        int size = storage.subStorageAmount();
+        for (int i = 0; i < size; i++) {
+            Position position = new Position();
+            position.from(storage.getSubStorage(i));
+        }
+    }
+
+    @Override
+    public void to(DataStorage storage) {
+        for (int i = 0; i < relative.length; i++) {
+            relative[i].to(storage.getSubStorage(i));
+        }
     }
 }

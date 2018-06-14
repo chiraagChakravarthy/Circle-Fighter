@@ -1,43 +1,43 @@
 package circle_fighter.game.object.position;
 
 public class Vector {
-    private double velX, velY, velAng, velCap;
+    private float velX, velY, velAng, velCap;
 
-    public Vector(double velX, double velY, double velAng){
+    public Vector(float velX, float velY, float velAng){
         this.velX = velX;
         this.velY = velY;
         this.velAng = velAng;
     }
 
 
-    public double getVelX() {
+    public float getVelX() {
         return velX;
     }
 
-    public double getVelY() {
+    public float getVelY() {
         return velY;
     }
 
-    public double getVelAng() {
+    public float getVelAng() {
         return velAng;
     }
 
-    public Vector setVelX(double velX) {
+    public Vector setVelX(float velX) {
         this.velX = velX;
         return this;
     }
 
-    public Vector setVelY(double velY) {
+    public Vector setVelY(float velY) {
         this.velY = velY;
         return this;
     }
 
-    public Vector setVelAng(double velAng) {
+    public Vector setVelAng(float velAng) {
         this.velAng = velAng;
         return this;
     }
 
-    public double velocity(){
-        return Math.sqrt(velX*velX+velY*velY);
+    public float velocity(){
+        return (float) Math.sqrt(velX*velX+velY*velY);
     }
 }

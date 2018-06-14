@@ -1,14 +1,16 @@
 package circle_fighter.game.object.bounds;
 
+import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.position.Position;
 
 import java.awt.*;
 
 public class PointBound extends Bound {
-    private Position position;
+
     public PointBound(Position position){
-        this.position = position;
+        super(position);
     }
+
     @Override
     public boolean intersects(CircularBound bound) {
         return position.distance(bound.getCenterPoint()) <= bound.getRadius();
@@ -31,5 +33,15 @@ public class PointBound extends Bound {
 
     public Position getPosition() {
         return position;
+    }
+
+    @Override
+    public void from(DataStorage storage) {
+
+    }
+
+    @Override
+    public void to(DataStorage storage) {
+
     }
 }

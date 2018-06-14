@@ -136,7 +136,7 @@ public class DataStorage {
         return subStorages.get(storage);
     }
 
-    public int subStorageSize(){
+    public int subStorageAmount(){
         return subStorages.size();
     }
 }

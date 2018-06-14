@@ -3,7 +3,6 @@ package circle_fighter.game.object.objects.bots;
 import circle_fighter.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
-import circle_fighter.game.object.bounds.CircularBound;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.CharacterObject;
@@ -53,7 +52,7 @@ public class TutorialBot extends GameObject implements Damageable {
     @Override
     public boolean damage(Damaging damagingObject) {
         if(damagingObject.getBound().intersects(base)){
-            health.damage(damagingObject.damage());
+            health.set(health.get()-damagingObject.damage());
             return true;
         }
         return false;

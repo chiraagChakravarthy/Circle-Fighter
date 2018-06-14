@@ -1,20 +1,25 @@
 package circle_fighter.game.object.bounds;
 
+import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.position.Position;
 
 import java.awt.*;
 
 public class CircularBound extends Bound {
-    protected final Position centerPoint;
-    protected final double radius;
-    public CircularBound(Position centerPoint, double radius){
-        this.centerPoint = centerPoint;
+    protected float radius;
+    public CircularBound(Position centerPoint, float radius){
+        super(centerPoint);
         this.radius = radius;
     }
+
+    public CircularBound(Position position){
+        super(position);
+    }
+
     //Local
     @Override
     public boolean intersects(CircularBound bound) {
-        return bound.centerPoint.distance(centerPoint)<=bound.radius+radius;
+        return bound.position.distance(position)<=bound.radius+radius;
     }
 
     @Override
@@ -29,14 +34,24 @@ public class CircularBound extends Bound {
 
     @Override
     public Rectangle outerBounds() {
-        return new Rectangle((int)(centerPoint.getX()-radius), (int)(centerPoint.getY()-radius), (int)(radius*2), (int)(radius*2));
+        return new Rectangle((int)(position.getX()-radius), (int)(position.getY()-radius), (int)(radius*2), (int)(radius*2));
     }
 
     public Position getCenterPoint() {
-        return centerPoint;
+        return position;
     }
 
-    public double getRadius() {
+    public float getRadius() {
         return radius;
+    }
+
+    @Override
+    public void from(DataStorage storage) {
+        radius = Float.intBitsToFloat(storage.get(0));
+    }
+
+    @Override
+    public void to(DataStorage storage) {
+        storage.set(0, Float.floatToIntBits(radius));
     }
 }

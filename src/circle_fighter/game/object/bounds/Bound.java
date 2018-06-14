@@ -1,10 +1,19 @@
 package circle_fighter.game.object.bounds;
 
+import circle_fighter.functionaliy.Savable;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
+import javafx.geometry.Pos;
 
 import java.awt.*;
 
-public abstract class Bound {
+public abstract class Bound implements Savable {
+    protected Position position;
+
+    public Bound(Position position){
+        this.position = position;
+    }
+
     public abstract boolean intersects(CircularBound bound);
 
     public abstract boolean intersects(PointBound bound);

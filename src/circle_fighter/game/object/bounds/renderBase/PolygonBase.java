@@ -9,13 +9,17 @@ import circle_fighter.game.object.position.UpdatingPosition;
 
 import java.awt.*;
 
-public class PolygonBase extends PolygonBound implements Updatable, Renderable {
+public class PolygonBase extends PolygonBound implements RenderBase {
     private Polygon polygon;
     private DynamicColor color;
 
     public PolygonBase(DynamicColor color, UpdatingPosition position, Position[] relative) {
         super(position, relative);
         this.color = color;
+    }
+
+    public PolygonBase(Position position){
+        super(position);
     }
 
 
@@ -46,5 +50,11 @@ public class PolygonBase extends PolygonBound implements Updatable, Renderable {
 
     public void setColor(DynamicColor color) {
         this.color = color;
+    }
+
+    //TODO refer to same TODO in Circular Base
+    @Override
+    public void setColor(DynamicColor... color) {
+        this.color = color[0];
     }
 }

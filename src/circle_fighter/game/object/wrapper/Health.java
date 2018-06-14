@@ -1,34 +1,40 @@
 package circle_fighter.game.object.wrapper;
 
 import circle_fighter.color.DynamicColor;
+import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Renderable;
+import circle_fighter.functionaliy.Savable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.ui.ProgressBar;
 
 import java.awt.*;
 
-public class Health implements Renderable, Updatable{
-    private final double initialHealth;
-    private final int verticalOffset;
-    private final long invulnerabilityTime;
+public class Health implements Renderable, Updatable, Savable {
+    private float initialHealth, invulnerabilityMultiplier;
+    private int verticalOffset;
 
     private Position position;
     private ProgressBar healthBar;
 
-    private long damagedTime;
-    private double health;
+    private long damagedTime, invulnerabilityTime;
+    private float health;
     private boolean visible;
 
-    public Health(double initialHealth, Position position, int width, int height, int verticalOffset, long invulnerabilityTime, DynamicColor borderColor, DynamicColor barColor){
+    public Health(float initialHealth, Position position, int width, int height, int verticalOffset, float invulnerabilityMultiplier, DynamicColor borderColor, DynamicColor barColor){
         this.initialHealth = initialHealth;
         health = initialHealth;
         this.position = position;
         healthBar = new ProgressBar(0, 0, width, height, 1, borderColor, barColor);
         this.verticalOffset = verticalOffset;
-        this.invulnerabilityTime = invulnerabilityTime;
+        this.invulnerabilityMultiplier = invulnerabilityMultiplier;
         damagedTime = 0;
         visible = true;
+    }
+
+    public Health(Position position){
+        this.position = position;
+
     }
 
     public void tick(){
@@ -44,19 +50,30 @@ public class Health implements Renderable, Updatable{
             healthBar.render(g);
     }
 
-    public void damage(double amount){
+    public void damage(float amount, long time){
         long now = System.currentTimeMillis();
         if(now - damagedTime > invulnerabilityTime) {
             health -= amount;
             damagedTime = now;
+            invulnerabilityTime  = (long)(time*invulnerabilityMultiplier);
         }
     }
 
-    public double get() {
+    public float get() {
         return health;
     }
 
-    public void set(double health) {
+    public void set(float health) {
         this.health = health;
+    }
+
+    @Override
+    public void from(DataStorage storage) {
+
+    }
+
+    @Override
+    public void to(DataStorage storage) {
+
     }
 }

@@ -1,7 +1,9 @@
-package circle_fighter.game.object.wrapper;
+package circle_fighter.game.object.turret;
 
 import circle_fighter.color.DynamicColor;
+import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Renderable;
+import circle_fighter.functionaliy.Savable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.objects.Bullet;
@@ -9,7 +11,7 @@ import circle_fighter.game.object.position.Vector;
 
 import java.awt.*;
 
-public class Turret implements Updatable, Renderable {
+public class Turret implements Updatable, Renderable, Savable {
     private GameObject object;
     private final float maximumAng, length, girth, shootRate;
     private float relativeAng;
@@ -65,5 +67,15 @@ public class Turret implements Updatable, Renderable {
 
     public boolean isFiring() {
         return firing;
+    }
+
+    @Override
+    public void from(DataStorage storage) {
+
+    }
+
+    @Override
+    public void to(DataStorage storage) {
+
     }
 }

@@ -3,7 +3,6 @@ package circle_fighter.game.object.objects.turret;
 import circle_fighter.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
-import circle_fighter.game.object.bounds.CircularBound;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.CharacterObject;
@@ -14,7 +13,7 @@ import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.VelAngAccMovement;
 import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
-import circle_fighter.game.object.wrapper.Turret;
+import circle_fighter.game.object.turret.Turret;
 import circle_fighter.game.plane.PlayerPlane;
 
 import java.awt.*;
@@ -23,7 +22,7 @@ import java.awt.*;
 @DamageableObject
 @CharacterObject
 public class TurretBotM1 extends GameObject implements Damageable {
-    private static final double RADIUS = 15;
+    private static final float RADIUS = 15;
 
     private Turret turret;
     private CircularBase base;
@@ -34,7 +33,7 @@ public class TurretBotM1 extends GameObject implements Damageable {
     public TurretBotM1(Position position, PlayerPlane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
         this.plane = plane;
-        movement = new VelAngAccMovement(position, vector, 0.05, 1, Math.toRadians(0.01), Math.toRadians(1));
+        movement = new VelAngAccMovement(position, vector, 0.05f, 1, (float)Math.toRadians(0.01), (float)Math.toRadians(1));
         turret = new Turret(this, 0, 25, 4, 3, new SolidColor(0, 0, 0));
         health = new Health(4, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 140, 0));
@@ -69,6 +68,7 @@ public class TurretBotM1 extends GameObject implements Damageable {
         }
 
         turret.tick();
+        health.tick();
         if(health.get()<=0)
             despawn();
     }

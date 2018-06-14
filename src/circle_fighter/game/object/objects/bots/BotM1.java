@@ -22,7 +22,7 @@ import java.awt.*;
 @RenderableObject
 @CharacterObject
 public class BotM1 extends GameObject implements Damaging, Damageable{
-    private static final double RADIUS = 10;
+    private static final float RADIUS = 10;
 
     private OmniDirectionalMovement movement;
     private PlayerPlane plane;
@@ -71,7 +71,12 @@ public class BotM1 extends GameObject implements Damaging, Damageable{
     }
 
     @Override
-    public double damage() {
+    public float damage() {
         return 1;
+    }
+
+    @Override
+    public long invulnerabilityTime() {
+        return 1000;
     }
 }

@@ -3,7 +3,6 @@ package circle_fighter.game.object.objects.bots;
 import circle_fighter.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
-import circle_fighter.game.object.bounds.CircularBound;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.CharacterObject;
@@ -24,7 +23,7 @@ import java.awt.*;
 @RenderableObject
 @CharacterObject
 public class BotM4 extends GameObject implements Damaging, Damageable{
-    private static final double RADIUS = 19;
+    private static final float RADIUS = 19;
 
     private MultiDirectionalMovement movement;
     private PlayerPlane plane;
@@ -76,7 +75,12 @@ public class BotM4 extends GameObject implements Damaging, Damageable{
     }
 
     @Override
-    public double damage() {
+    public float damage() {
         return 2;
+    }
+
+    @Override
+    public long invulnerabilityTime() {
+        return 1000;
     }
 }

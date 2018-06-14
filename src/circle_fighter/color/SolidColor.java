@@ -7,6 +7,10 @@ public class SolidColor extends DynamicColor {
         super(r, g, b, 1);
     }
 
+    public SolidColor(){
+        super();
+    }
+
     @Override
     public void tick() {
         //ignored

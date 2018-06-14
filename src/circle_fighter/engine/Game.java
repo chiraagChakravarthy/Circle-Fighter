@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseWheelListener {
     private static Game instance;
-    public static final boolean DEBUG = false, TEST = false;
+    public static final boolean DEBUG = true, TEST = false;
 
     public final String TITLE = "Circle Fighter";
     private final Window window;
@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     private Game() {
         service = Executors.newCachedThreadPool();
-        window = new Window(TITLE, 2, this);
+        window = new Window(TITLE, 3, this);
         addKeyListener(this);
         addMouseListener(this);
         addMouseWheelListener(this);

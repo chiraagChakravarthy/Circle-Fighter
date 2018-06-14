@@ -40,6 +40,7 @@ public class LevelState extends GameState {
         levels.add(new L7(this));
         levels.add(new L8(this));
         levels.add(new L9(this));
+        levels.add(new L10(this));
         menus = new ArrayList<>();
         menus.add(new LevelMenu(this, levels.size()-1));
         menus.add(new DeathMenu(this));

@@ -1,15 +1,23 @@
 package circle_fighter.game.object.position;
 
-public class VelAngAccMovement extends VelAccMovement {
-    private final double accAng, maxVelAng;
+import circle_fighter.file.DataStorage;
+
+public class VelAngAccMovement extends VelAccMovement{
+    private float accAng, maxVelAng;
     private boolean left, right;
 
-    public VelAngAccMovement(Position position, Vector vector, double acc, double maxVel, double accAng, double maxVelAng) {
+    public VelAngAccMovement(Position position, Vector vector, float acc, float maxVel, float accAng, float maxVelAng) {
         super(position, vector, acc, maxVel);
         this.accAng = accAng;
         this.maxVelAng = maxVelAng;
         left = false;
         right = false;
+    }
+
+    public VelAngAccMovement(Position position, Vector vector){
+        super(position, vector);
+        accAng = 0;
+        maxVelAng = 0;
     }
 
     @Override
@@ -45,5 +53,18 @@ public class VelAngAccMovement extends VelAccMovement {
 
     public boolean isRight() {
         return right;
+    }
+
+    @Override
+    public void from(DataStorage storage) {
+        super.from(storage.getSubStorage(0));
+        accAng = Float.intBitsToFloat(storage.get(0));
+        maxVelAng = Float.intBitsToFloat(storage.get(1));
+    }
+
+    @Override
+    public void to(DataStorage storage) {
+        super.to(storage.getSubStorage(0));
+        storage.set(0, Float.floatToIntBits(accAng)).set(1, Float.floatToIntBits(maxVelAng));
     }
 }

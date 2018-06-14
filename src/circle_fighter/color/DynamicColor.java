@@ -1,12 +1,12 @@
 package circle_fighter.color;
 
 import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.Saveable;
+import circle_fighter.functionaliy.Savable;
 import circle_fighter.game.object.objects.Player;
 
 import java.awt.*;
 
-public abstract class DynamicColor implements Saveable{
+public abstract class DynamicColor implements Savable {
     protected float r, g, b;
     private float brightness, o;
     public DynamicColor(float r, float g, float b, float o, float brightness) {
@@ -23,10 +23,6 @@ public abstract class DynamicColor implements Saveable{
 
     public DynamicColor(float r, float g, float b, float brightness){
         this(r, g, b, 1, brightness);
-    }
-
-    public DynamicColor(Player player){
-        //ignored constructor. Necessary for user element registry
     }
 
     public abstract void tick();

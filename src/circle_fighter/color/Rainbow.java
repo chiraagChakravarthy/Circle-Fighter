@@ -11,8 +11,8 @@ public class Rainbow extends DynamicColor {
         this.rate = rate;
     }
 
-    public Rainbow(Player player){
-        super(player);
+    public Rainbow(){
+        super();
     }
 
     @Override

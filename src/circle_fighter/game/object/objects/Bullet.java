@@ -45,7 +45,7 @@ public class Bullet extends GameObject implements Damaging{
     }
 
     @Override
-    public double damage() {
+    public float damage() {
         if(damage>0) {
             damage--;
             if(damage<=0)
@@ -53,5 +53,10 @@ public class Bullet extends GameObject implements Damaging{
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public long invulnerabilityTime() {
+        return 100;
     }
 }

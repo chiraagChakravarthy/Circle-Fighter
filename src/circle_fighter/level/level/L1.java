@@ -1,6 +1,5 @@
 package circle_fighter.level.level;
 
-import circle_fighter.engine.Game;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.objects.bots.BotM1;
 import circle_fighter.game.object.position.Position;
