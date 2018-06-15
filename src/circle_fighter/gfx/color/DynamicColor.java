@@ -1,12 +1,12 @@
-package circle_fighter.color;
+package circle_fighter.gfx.color;
 
 import circle_fighter.file.DataStorage;
+import circle_fighter.functionaliy.HardSavable;
 import circle_fighter.functionaliy.Savable;
-import circle_fighter.game.object.objects.Player;
 
 import java.awt.*;
 
-public abstract class DynamicColor implements Savable {
+public abstract class DynamicColor implements Savable, HardSavable {
     protected float r, g, b;
     private float brightness, o;
     public DynamicColor(float r, float g, float b, float o, float brightness) {
@@ -49,15 +49,17 @@ public abstract class DynamicColor implements Savable {
         this.brightness = brightness;
     }
 
-    public void from(DataStorage storage){
-        storage.set(0, Float.floatToIntBits(r)).set(1, Float.floatToIntBits(g)).set(2, Float.floatToIntBits(b)).set(3, Float.floatToIntBits(o)).set(4, Float.floatToIntBits(brightness));
+    @Override
+    public void hardSave(DataStorage storage) {
+        storage.setFloat(0, r).setFloat(1, g).setFloat(2, b).setFloat(3, o).setFloat(4, brightness);
     }
-
-    public void to(DataStorage storage){
-        r = Float.intBitsToFloat(storage.get(0));
-        g = Float.intBitsToFloat(storage.get(1));
-        b = Float.intBitsToFloat(storage.get(2));
-        o = Float.intBitsToFloat(storage.get(3));
-        brightness = Float.intBitsToFloat(storage.get(4));
+    //TODO finish implimenting hard/soft saving and loading for all in game classes
+    @Override
+    public void hardLoad(DataStorage storage) {
+        r = storage.getFloat(0);
+        g = storage.getFloat(1);
+        b = storage.getFloat(2);
+        o = storage.getFloat(3);
+        brightness = storage.getFloat(4);
     }
 }

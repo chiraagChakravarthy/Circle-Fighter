@@ -1,7 +1,9 @@
 package circle_fighter.game.object.objects;
 
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.engine.KeyBindManager;
+import circle_fighter.functionaliy.Renderable;
+import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -10,9 +12,7 @@ import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.RenderableObject;
-import circle_fighter.game.object.position.Position;
-import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.position.VelAngAccMovement;
+import circle_fighter.game.object.position.*;
 import circle_fighter.game.object.bounds.renderBase.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.object.turret.Turret;
@@ -23,7 +23,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-
+//TODO make movement vector an inherant part of the game object, and for all nonmoving objects, make a nonmoving movement vector
 @CharacterObject
 @DamageableObject
 @RenderableObject
@@ -32,7 +32,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
     private Health health;
     private VelAngAccMovement movement;
     private Turret mainTurret;
-    private CircularBase base;
+    private Bound base;
     private KeyBindManager keyBinds;
 
     public Player(Position position, PlayerPlane plane) {
@@ -45,6 +45,16 @@ public class Player extends GameObject implements UserInputListener, Damageable 
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0));
     }
 
+    public Player(Position position, PlayerPlane plane, User user){
+        super(position, plane, BoundExitAction.BOUND, 0);
+        keyBinds = plane.getKeyBinds();
+        vector = new Vector(0, 0, 0);
+        movement = (VelAngAccMovement) user.getMovement(this);
+        health = user.getHealth(this);
+        base = user.getBase(this);
+
+    }
+
     @Override
     public Bound getBound() {
         return base;
@@ -52,7 +62,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
 
     @Override
     public void render(Graphics2D g) {
-        base.render(g);
+        ((Renderable)base).render(g);
         mainTurret.render(g);
         health.render(g);
     }
@@ -62,7 +72,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
         health.tick();
         mainTurret.tick();
         movement.tick();
-        base.tick();
+        ((Updatable)base).tick();
         if(health.get()<=0)
             despawn();
         super.tick();

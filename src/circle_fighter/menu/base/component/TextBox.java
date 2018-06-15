@@ -1,9 +1,9 @@
 package circle_fighter.menu.base.component;
 
-import circle_fighter.color.DynamicColor;
+import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.engine.Game;
-import circle_fighter.text.Text;
-import circle_fighter.text.TextBuilder;
+import circle_fighter.gfx.text.Text;
+import circle_fighter.gfx.text.TextBuilder;
 
 import java.awt.*;
 

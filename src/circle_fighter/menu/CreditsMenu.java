@@ -1,6 +1,6 @@
 package circle_fighter.menu;
 
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.engine.Game;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;

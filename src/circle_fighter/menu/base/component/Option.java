@@ -1,7 +1,7 @@
 package circle_fighter.menu.base.component;
 
-import circle_fighter.color.DynamicColor;
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.color.DynamicColor;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.engine.Game;
 import circle_fighter.menu.base.Menu;
 

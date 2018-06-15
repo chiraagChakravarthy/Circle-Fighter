@@ -1,11 +1,9 @@
 package circle_fighter.game.object.bounds;
 
 import circle_fighter.file.DataStorage;
-import circle_fighter.game.object.bounds.renderBase.PolygonBase;
 import circle_fighter.game.object.position.OnPositionChanged;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
-import javafx.geometry.Pos;
 
 import java.awt.*;
 
@@ -26,9 +24,15 @@ public class PolygonBound extends Bound implements OnPositionChanged {
         slopes = new float[absolute.length];
     }
 
-    public PolygonBound(Position position){
+    public PolygonBound(UpdatingPosition position, DataStorage storage){
         super(position);
-        ((UpdatingPosition)position).addListener(this);
+        position.addListener(this);
+        int vertices = storage.get(0);
+        relative = new Position[vertices];
+        for (int i = 0; i < vertices; i++) {
+            relative[i] = new Position();
+            relative[i].hardLoad(storage.getSubStorage(i));
+        }
     }
 
     //TODO finish this method
@@ -134,8 +138,6 @@ public class PolygonBound extends Bound implements OnPositionChanged {
 
     private boolean intersects(float x, float y, int i){
         int m = i*4;
-        /*if(x<lineRanges[m])
-            return y>=lineRanges[m+2]&&y<=lineRanges[m+3];*/
         Position intersection = intersection(0, slopes[i], x, y, absolute[i].getX(), absolute[i].getY());
         return (Float.isInfinite(slopes[i])?intersection.getY()>=lineRanges[m+2]&&intersection.getY()<=lineRanges[m+3]:
                 intersection.getX()>=lineRanges[m]&&intersection.getX()<=lineRanges[m+1])&&intersection.getX()>=x;
@@ -160,18 +162,10 @@ public class PolygonBound extends Bound implements OnPositionChanged {
     }
 
     @Override
-    public void from(DataStorage storage) {
-        int size = storage.subStorageAmount();
-        for (int i = 0; i < size; i++) {
-            Position position = new Position();
-            position.from(storage.getSubStorage(i));
-        }
-    }
-
-    @Override
-    public void to(DataStorage storage) {
+    public void save(DataStorage storage) {
+        storage.set(0, relative.length);
         for (int i = 0; i < relative.length; i++) {
-            relative[i].to(storage.getSubStorage(i));
+            relative[i].hardLoad(storage.getSubStorage(i));
         }
     }
 }

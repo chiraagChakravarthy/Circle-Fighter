@@ -1,8 +1,7 @@
 package circle_fighter.functionaliy;
 
 import circle_fighter.file.DataStorage;
-
+//TODO for all class implimenting this, include a constructor which contains a data storage and all shared parameters
 public interface Savable {
-    void from(DataStorage storage);
-    void to(DataStorage storage);
+    void save(DataStorage storage);
 }

@@ -1,8 +1,8 @@
 package circle_fighter.game.plane;
 
-import circle_fighter.background.Background;
-import circle_fighter.color.Rainbow;
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.background.Background;
+import circle_fighter.gfx.color.Rainbow;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.ObjectManager;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.plane.bounds.PlaneBounds;
@@ -11,7 +11,6 @@ import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public abstract class Plane implements Updatable, Renderable, UserInputListener {
     protected final Background.CheckeredBackground background;

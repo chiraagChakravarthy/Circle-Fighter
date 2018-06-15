@@ -1,7 +1,6 @@
-package circle_fighter.color;
+package circle_fighter.gfx.color;
 
 import circle_fighter.file.DataStorage;
-import circle_fighter.game.object.objects.Player;
 
 public class Rainbow extends DynamicColor {
     private int stage;
@@ -9,6 +8,10 @@ public class Rainbow extends DynamicColor {
     public Rainbow(float brightness, float rate) {
         super(255, 0, 0, brightness);
         this.rate = rate;
+    }
+
+    public Rainbow(DataStorage storage){
+        rate = storage.getFloat(0);
     }
 
     public Rainbow(){
@@ -65,8 +68,19 @@ public class Rainbow extends DynamicColor {
     }
 
     @Override
-    public void to(DataStorage storage) {
-        super.to(storage.getSubStorage(0));
-        storage.set(0, stage).set(1, Float.floatToIntBits(rate));
+    public void hardSave(DataStorage storage) {
+        super.hardSave(storage.getSubStorage(0));
+        storage.set(0, stage);
+    }
+
+    @Override
+    public void hardLoad(DataStorage storage) {
+        super.hardLoad(storage.getSubStorage(0));
+        stage = storage.get(0);
+    }
+
+    @Override
+    public void save(DataStorage storage) {
+        storage.setFloat(0, rate);
     }
 }

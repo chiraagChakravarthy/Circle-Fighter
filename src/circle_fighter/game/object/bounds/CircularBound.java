@@ -1,19 +1,23 @@
 package circle_fighter.game.object.bounds;
 
 import circle_fighter.file.DataStorage;
+import circle_fighter.functionaliy.HardSavable;
+import circle_fighter.functionaliy.Savable;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
 
 import java.awt.*;
 
 public class CircularBound extends Bound {
     protected float radius;
-    public CircularBound(Position centerPoint, float radius){
+    public CircularBound(UpdatingPosition centerPoint, float radius){
         super(centerPoint);
         this.radius = radius;
     }
 
-    public CircularBound(Position position){
+    public CircularBound(UpdatingPosition position, DataStorage storage){
         super(position);
+        radius = storage.getFloat(0);
     }
 
     //Local
@@ -46,12 +50,7 @@ public class CircularBound extends Bound {
     }
 
     @Override
-    public void from(DataStorage storage) {
-        radius = Float.intBitsToFloat(storage.get(0));
-    }
-
-    @Override
-    public void to(DataStorage storage) {
-        storage.set(0, Float.floatToIntBits(radius));
+    public void save(DataStorage storage) {
+        storage.setFloat(0, radius);
     }
 }

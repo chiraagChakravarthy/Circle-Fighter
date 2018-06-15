@@ -17,11 +17,11 @@ public class Bullet extends GameObject implements Damaging{
     private static final double LENGTH = 10;
     private PointBound bound;
     private double damage;
-    public Bullet(Position position, Plane plane, double velocity, double error, int team) {
+    public Bullet(Position position, Plane plane, float velocity, float error, int team) {
         super(position, plane, BoundExitAction.DESPAWN, team);
         position.setRotation((float) (position.getRotation()+Math.toRadians((Math.random()-0.5)*2*error)));
-        vector.setVelX(Math.cos(position.getRotation())*velocity);
-        vector.setVelY(Math.sin(position.getRotation())*velocity);
+        vector.setVelX((float) (Math.cos(position.getRotation())*velocity));
+        vector.setVelY((float) (Math.sin(position.getRotation())*velocity));
         bound = new PointBound(position);
         damage = 1;
     }

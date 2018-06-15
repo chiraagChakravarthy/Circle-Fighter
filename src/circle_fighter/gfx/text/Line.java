@@ -1,4 +1,4 @@
-package circle_fighter.text;
+package circle_fighter.gfx.text;
 
 public class Line {
     private String text;

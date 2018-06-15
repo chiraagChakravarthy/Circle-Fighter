@@ -1,11 +1,11 @@
 package circle_fighter.level.level.tutorial;
 
-import circle_fighter.color.DynamicColor;
+import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.engine.Game;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
-import circle_fighter.text.Text;
-import circle_fighter.text.TextBuilder;
+import circle_fighter.gfx.text.Text;
+import circle_fighter.gfx.text.TextBuilder;
 
 import java.awt.*;
 

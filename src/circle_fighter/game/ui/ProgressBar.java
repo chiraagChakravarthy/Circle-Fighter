@@ -1,9 +1,8 @@
 package circle_fighter.game.ui;
 
-import circle_fighter.color.DynamicColor;
+import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
-import javafx.beans.binding.SetBinding;
 
 import java.awt.*;
 

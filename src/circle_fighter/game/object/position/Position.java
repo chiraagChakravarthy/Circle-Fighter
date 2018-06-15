@@ -2,13 +2,14 @@ package circle_fighter.game.object.position;
 
 import circle_fighter.engine.Game;
 import circle_fighter.file.DataStorage;
+import circle_fighter.functionaliy.HardSavable;
 import circle_fighter.functionaliy.Savable;
 import javafx.geometry.Pos;
 
 import java.awt.*;
 import java.nio.FloatBuffer;
 
-public class Position implements Savable{
+public class Position implements HardSavable {
     private static final Position ZERO;
     private static float xOffset, yOffset;
     static {
@@ -149,16 +150,14 @@ public class Position implements Savable{
     }
 
     @Override
-    public void from(DataStorage storage) {
-        x = Float.intBitsToFloat(storage.get(0));
-        y = Float.intBitsToFloat(storage.get(1));
-        rotation = Float.intBitsToFloat(storage.get(2));
+    public void hardLoad(DataStorage storage) {
+        x = storage.getFloat(0);
+        y = storage.getFloat(1);
+        rotation = storage.getFloat(2);
     }
 
     @Override
-    public void to(DataStorage storage) {
-        storage.set(0, Float.floatToIntBits(x)).
-                set(1, Float.floatToIntBits(y)).
-                set(2, Float.floatToIntBits(rotation));
+    public void hardSave(DataStorage storage) {
+        storage.setFloat(0, x).setFloat(1, y).setFloat(2, rotation);
     }
 }

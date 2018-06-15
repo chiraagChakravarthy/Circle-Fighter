@@ -1,6 +1,6 @@
 package circle_fighter.level.level.tutorial.stages;
 
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.level.level.tutorial.TextHint;
 import circle_fighter.level.level.tutorial.Tutorial;
 

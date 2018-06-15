@@ -8,9 +8,9 @@ import javafx.geometry.Pos;
 import java.awt.*;
 
 public abstract class Bound implements Savable {
-    protected Position position;
+    protected UpdatingPosition position;
 
-    public Bound(Position position){
+    public Bound(UpdatingPosition position){
         this.position = position;
     }
 

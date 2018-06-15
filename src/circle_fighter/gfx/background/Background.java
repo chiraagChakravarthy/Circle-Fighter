@@ -1,18 +1,15 @@
-package circle_fighter.background;
+package circle_fighter.gfx.background;
 
 import circle_fighter.engine.Game;
-import circle_fighter.color.DynamicColor;
-import circle_fighter.color.Rainbow;
+import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
 import circle_fighter.game.object.position.Position;
-import javafx.geometry.Pos;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.awt.image.BufferedImage;
 
 public abstract class Background implements Renderable, Updatable, UserInputListener {
     public static class PlainBackground extends Background {

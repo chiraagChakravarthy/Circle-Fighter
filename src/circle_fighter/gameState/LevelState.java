@@ -1,7 +1,7 @@
 package circle_fighter.gameState;
 
-import circle_fighter.background.Background;
-import circle_fighter.color.Rainbow;
+import circle_fighter.gfx.background.Background;
+import circle_fighter.gfx.color.Rainbow;
 import circle_fighter.engine.Game;
 import circle_fighter.engine.KeyBindManager;
 import circle_fighter.game.plane.Plane;

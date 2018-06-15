@@ -1,6 +1,6 @@
 package circle_fighter.game.object.objects.turret;
 
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.functionality.Damageable;

@@ -1,6 +1,6 @@
 package circle_fighter.level.level.tutorial.stages;
 
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.engine.Game;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.objects.bots.TutorialBot;

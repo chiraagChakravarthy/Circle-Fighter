@@ -10,7 +10,11 @@ public class UserHealth {
         this.storage = storage;
     }
 
+    //TODO instead of manually supplying values, create method in health class of manually setting relative parameters based off of the base.
+    //TODO make a bound of some sort a requirement of game objects
     public Health getHealth(Player player){
-
+        Health health = new Health(player.getPosition(), 50, 10, -50);
+        health.from(storage);
+        return health;
     }
 }

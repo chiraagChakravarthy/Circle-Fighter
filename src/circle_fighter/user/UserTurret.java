@@ -1,6 +1,6 @@
 package circle_fighter.user;
 
-import circle_fighter.color.DynamicColor;
+import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.objects.Player;
 import circle_fighter.game.object.turret.Turret;

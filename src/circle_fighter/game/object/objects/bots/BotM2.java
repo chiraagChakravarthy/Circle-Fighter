@@ -1,6 +1,6 @@
 package circle_fighter.game.object.objects.bots;
 
-import circle_fighter.color.SolidColor;
+import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.functionality.Damageable;
@@ -33,7 +33,7 @@ public class BotM2 extends GameObject implements Damaging, Damageable{
     public BotM2(Position position, PlayerPlane plane, int team) {
         super(position, plane, BoundExitAction.BOUND, team);
         vector = new Vector(0, 0, 0);
-        movement = new OmniDirectionalMovement(position, vector, 0.1, 1.5);
+        movement = new OmniDirectionalMovement(position, vector, 0.1f, 1.5f);
         movement.setFront(true);
         health = new Health(2, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(128, 0, 0));

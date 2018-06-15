@@ -89,12 +89,15 @@ public class DataStorage {
         return (chars[0] << 24) + (chars[1] << 16) + (chars[2] << 8) + chars[3];
     }
 
-    public int size(){
-        return data.size();
+    public int get(int i){
+        for (int j = data.size(); j <= i; j++) {
+            data.add(0);
+        }
+        return data.get(i);
     }
 
-    public int get(int i){
-        return data.get(i);
+    public float getFloat(int i){
+        return Float.intBitsToFloat(get(i));
     }
 
     public DataStorage add(int data){
@@ -102,13 +105,27 @@ public class DataStorage {
         return this;
     }
 
+    public DataStorage addFloat(float data){
+        return add(Float.floatToIntBits(data));
+    }
+
     public DataStorage set(int index, int data){
-        if(this.data.size()>=index){
-            for (int i = 0; i < this.data.size() - index; i++) {
-                this.data.add(0);
-            }
+        for (int i = this.data.size(); i <= index; i++) {
+            this.data.add(0);
         }
         this.data.set(index, data);
+        return this;
+    }
+
+    public DataStorage setFloat(int index, float data){
+        return set(index, Float.floatToIntBits(data));
+    }
+
+    public DataStorage remove(int index){
+        for (int i = data.size(); i <= index; i++) {
+            data.add(0);
+        }
+        data.remove(index);
         return this;
     }
 
@@ -117,8 +134,27 @@ public class DataStorage {
         return this;
     }
 
+    public int size(){
+        return data.size();
+    }
+
+    public DataStorage getSubStorage(int storage){
+        for (int i = subStorages.size(); i <= storage; i++) {
+            subStorages.add(new DataStorage());
+        }
+        return subStorages.get(storage);
+    }
+
     public DataStorage addSubStorage(DataStorage storage){
         subStorages.add(storage);
+        return this;
+    }
+
+    public DataStorage setSubStorage(int index, DataStorage storage){
+        for (int i = subStorages.size(); i <= index; i++) {
+            subStorages.add(new DataStorage());
+        }
+        subStorages.set(index, storage);
         return this;
     }
 
@@ -132,11 +168,7 @@ public class DataStorage {
         return this;
     }
 
-    public DataStorage getSubStorage(int storage){
-        return subStorages.get(storage);
-    }
-
-    public int subStorageAmount(){
+    public int subStorageSize(){
         return subStorages.size();
     }
 }

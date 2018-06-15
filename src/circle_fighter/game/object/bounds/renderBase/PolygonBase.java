@@ -1,11 +1,11 @@
 package circle_fighter.game.object.bounds.renderBase;
 
-import circle_fighter.color.DynamicColor;
-import circle_fighter.functionaliy.Renderable;
-import circle_fighter.functionaliy.Updatable;
+import circle_fighter.file.DataStorage;
+import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.game.object.bounds.PolygonBound;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
+import circle_fighter.user.UserColorRegistry;
 
 import java.awt.*;
 
@@ -18,8 +18,9 @@ public class PolygonBase extends PolygonBound implements RenderBase {
         this.color = color;
     }
 
-    public PolygonBase(Position position){
-        super(position);
+    public PolygonBase(UpdatingPosition position, DataStorage storage){
+        super(position, storage.getSubStorage(0));
+        color = UserColorRegistry.fromID(storage.get(0), storage.getSubStorage(1));
     }
 
 
@@ -56,5 +57,10 @@ public class PolygonBase extends PolygonBound implements RenderBase {
     @Override
     public void setColor(DynamicColor... color) {
         this.color = color[0];
+    }
+
+    @Override
+    public void save(DataStorage storage) {
+        super.save(storage.getSubStorage(0));
     }
 }
