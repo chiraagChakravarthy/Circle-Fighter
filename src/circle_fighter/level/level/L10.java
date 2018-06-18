@@ -5,6 +5,7 @@ import circle_fighter.game.object.objects.bots.BotM3;
 import circle_fighter.game.object.objects.bots.BotM4;
 import circle_fighter.game.object.objects.turret.TurretBotM1;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.level.LevelPlane;
 
@@ -25,6 +26,6 @@ public class L10 extends LevelPlane {
     @Override
     public void reset() {
         super.reset();
-        new TurretBotM1(new Position(300, 300), this, 1);
+        new TurretBotM1(new UpdatingPosition(300, 300), this, 1);
     }
 }

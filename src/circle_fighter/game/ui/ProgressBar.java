@@ -1,19 +1,22 @@
 package circle_fighter.game.ui;
 
+import circle_fighter.file.DataStorage;
+import circle_fighter.functionaliy.Savable;
 import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
+import circle_fighter.gfx.color.ColorRegistry;
 
 import java.awt.*;
 
-public class ProgressBar implements Renderable, Updatable {
-    private static final double BORDER_PROPORTION = 0.1;
-    private double progress, x, y, width, height, barX, barWidth, barY, barHeight;
+public class ProgressBar implements Renderable, Updatable, Savable {
+    private static final float BORDER_PROPORTION = 0.1f;
+    private float progress, x, y, width, height, barX, barWidth, barY, barHeight;
     private DynamicColor borderColor, barColor;
-    public ProgressBar(double x, double y, double width, double height, double progress, DynamicColor borderColor, DynamicColor barColor){
+    public ProgressBar(float x, float y, float width, float height, DynamicColor borderColor, DynamicColor barColor){
         this.width = width;
         this.height = height;
-        this.progress = progress;
+        this.progress = 1;
         this.borderColor = borderColor;
         this.barColor = barColor;
         barWidth = width*(1- BORDER_PROPORTION);
@@ -22,7 +25,17 @@ public class ProgressBar implements Renderable, Updatable {
         setY(y);
     }
 
-
+    public ProgressBar(DataStorage storage){
+        this.width = storage.get(0);
+        this.height = storage.get(1);
+        progress = 1;
+        borderColor = ColorRegistry.fromID(storage.get(2), storage.getSubStorage(0));
+        barColor = ColorRegistry.fromID(storage.get(3), storage.getSubStorage(1));
+        barWidth = width*(1- BORDER_PROPORTION);
+        barHeight = height-width*BORDER_PROPORTION;
+        setX(storage.getFloat(4));
+        setY(storage.getFloat(5));
+    }
 
     @Override
     public void tick() {
@@ -38,11 +51,11 @@ public class ProgressBar implements Renderable, Updatable {
         g.fillRect((int)barX, (int)barY, (int)(barWidth*progress), (int)barHeight);
     }
 
-    public double getProgress() {
+    public float getProgress() {
         return progress;
     }
 
-    public void setProgress(double progress) {
+    public void setProgress(float progress) {
         this.progress = progress;
     }
 
@@ -54,29 +67,34 @@ public class ProgressBar implements Renderable, Updatable {
         this.borderColor = borderColor;
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public void setX(double x) {
+    public void setX(float x) {
         this.x = x;
         barX = (width-barWidth)/2+x;
     }
 
-    public void setY(double y) {
+    public void setY(float y) {
         this.y = y;
         barY = (height-barHeight)/2+y;
     }
 
-    public double getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public double getHeight() {
+    public float getHeight() {
         return height;
+    }
+
+    @Override
+    public void save(DataStorage storage) {
+
     }
 }

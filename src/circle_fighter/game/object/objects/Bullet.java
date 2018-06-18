@@ -7,6 +7,9 @@ import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.implementations.DamagingObject;
 import circle_fighter.game.object.implementations.RenderableObject;
+import circle_fighter.game.object.position.UpdatingPosition;
+import circle_fighter.game.object.position.Vector;
+import circle_fighter.game.object.position.movement.VelMovement;
 import circle_fighter.game.plane.Plane;
 
 import java.awt.*;
@@ -17,8 +20,8 @@ public class Bullet extends GameObject implements Damaging{
     private static final double LENGTH = 10;
     private PointBound bound;
     private double damage;
-    public Bullet(Position position, Plane plane, float velocity, float error, int team) {
-        super(position, plane, BoundExitAction.DESPAWN, team);
+    public Bullet(UpdatingPosition position, Plane plane, float velocity, float error, int team) {
+        super(plane, BoundExitAction.DESPAWN, new VelMovement(position, new Vector(0, 0, 0), velocity), team);
         position.setRotation((float) (position.getRotation()+Math.toRadians((Math.random()-0.5)*2*error)));
         vector.setVelX((float) (Math.cos(position.getRotation())*velocity));
         vector.setVelY((float) (Math.sin(position.getRotation())*velocity));
@@ -29,7 +32,6 @@ public class Bullet extends GameObject implements Damaging{
     @Override
     public void tick() {
         super.tick();
-        position.apply(vector);
     }
 
     @Override

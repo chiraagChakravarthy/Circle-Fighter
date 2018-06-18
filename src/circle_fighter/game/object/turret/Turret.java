@@ -9,7 +9,7 @@ import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.objects.Bullet;
 import circle_fighter.game.object.position.Vector;
-import circle_fighter.user.UserColorRegistry;
+import circle_fighter.gfx.color.ColorRegistry;
 
 import java.awt.*;
 
@@ -33,7 +33,7 @@ public class Turret implements Updatable, Renderable, Savable, HardSavable {
 
     public Turret(DataStorage storage, GameObject object){
         this.object = object;
-        color = UserColorRegistry.fromID(storage.get(0), storage.getSubStorage(0));
+        color = ColorRegistry.fromID(storage.get(0), storage.getSubStorage(0));
         maximumAng = storage.getFloat(1);
         length = storage.getFloat(2);
         girth = storage.get(3);
@@ -98,7 +98,7 @@ public class Turret implements Updatable, Renderable, Savable, HardSavable {
 
     @Override
     public void save(DataStorage storage) {
-        storage.set(0, UserColorRegistry.toID(color.getClass()));
+        storage.set(0, ColorRegistry.toID(color.getClass()));
         color.save(storage.getSubStorage(0));
         storage.setFloat(1, maximumAng).setFloat(2, length).setFloat(3, girth).setFloat(4, shootRate);
     }

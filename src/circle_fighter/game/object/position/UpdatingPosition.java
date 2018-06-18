@@ -1,5 +1,7 @@
 package circle_fighter.game.object.position;
 
+import circle_fighter.file.DataStorage;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -32,28 +34,28 @@ public class UpdatingPosition extends Position {
     }
 
     @Override
-    public Position setY(float y) {
+    public UpdatingPosition setY(float y) {
         super.setY(y);
         update();
         return this;
     }
 
     @Override
-    public Position setRotation(float rotation) {
+    public UpdatingPosition setRotation(float rotation) {
         super.setRotation(rotation);
         update();
         return this;
     }
 
     @Override
-    public Position move(Position position, boolean applyDirection) {
+    public UpdatingPosition move(Position position, boolean applyDirection) {
         super.move(position, applyDirection);
         update();
         return this;
     }
 
     @Override
-    public Position apply(Vector vector) {
+    public UpdatingPosition apply(Vector vector) {
         super.apply(vector);
         update();
         return this;
@@ -76,5 +78,16 @@ public class UpdatingPosition extends Position {
         for(OnPositionChanged listener : listeners){
             listener.onPositionChanged();
         }
+    }
+
+    @Override
+    public void hardLoad(DataStorage storage) {
+        super.hardLoad(storage);
+        update();
+    }
+
+    @Override
+    public UpdatingPosition clone() {
+        return new UpdatingPosition(this);
     }
 }

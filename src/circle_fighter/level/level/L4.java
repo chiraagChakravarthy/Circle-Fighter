@@ -5,6 +5,7 @@ import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.objects.bots.BotM1;
 import circle_fighter.game.object.objects.bots.BotM2;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.level.LevelPlane;
 
@@ -26,9 +27,9 @@ public class L4 extends LevelPlane {
     @Override
     public void reset() {
         super.reset();
-        new BotM2(new Position(300, 300), this, 1);
-        new BotM2(new Position(-300, -300), this, 1);
-        new BotM1(new Position(300, -300), this, 1);
-        new BotM1(new Position(-300, 300), this, 1);
+        new BotM2(new UpdatingPosition(300, 300), this, 1);
+        new BotM2(new UpdatingPosition(-300, -300), this, 1);
+        new BotM1(new UpdatingPosition(300, -300), this, 1);
+        new BotM1(new UpdatingPosition(-300, 300), this, 1);
     }
 }

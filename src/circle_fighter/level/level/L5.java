@@ -3,6 +3,7 @@ package circle_fighter.level.level;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.objects.bots.BotM2;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.level.LevelPlane;
 
@@ -25,7 +26,7 @@ public class L5 extends LevelPlane {
         super.reset();
         for (int i = 0; i < 5; i++) {
             float radians = (float) (2* Math.PI*i/5);
-            new BotM2(new Position((float)Math.cos(radians)*300, (float) (Math.sin(radians)*300)), this, 1);
+            new BotM2(new UpdatingPosition((float)Math.cos(radians)*300, (float) (Math.sin(radians)*300)), this, 1);
         }
     }
 }

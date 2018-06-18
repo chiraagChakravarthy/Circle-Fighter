@@ -1,5 +1,6 @@
 package circle_fighter.engine;
 
+import circle_fighter.engine.test.Test;
 import circle_fighter.file.FileManager;
 import circle_fighter.gameState.GameStateManager;
 
@@ -8,14 +9,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseWheelListener {
     private static Game instance;
-    public static final boolean DEBUG = false, TEST = false;
+    public static final boolean DEBUG = true, TEST = false;
 
     public final String TITLE = "Circle Fighter";
     private final Window window;

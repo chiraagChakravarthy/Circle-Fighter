@@ -20,7 +20,8 @@ public class Text implements Updatable, Renderable {
     private RoundRectangle2D border;
     private int width, height;
     private Alignment alignment;
-
+    private String text;
+    //TODO fix glitch where height becomes 0 when text contains only spaces
     public Text(String text, int x, int y, int width, Font font, DynamicColor color, Alignment alignment, boolean showBorder, boolean minimizeWidth, boolean center){
         this.font = font;
         this.color = color;
@@ -112,12 +113,18 @@ public class Text implements Updatable, Renderable {
         height = lines.size() * (font.getSize() + 2 * padding);
         if(lines.size()==1&& minimizeWidth) {
             width = lineWidth + padding * 2;
-            if(center){
-                x = (Game.getInstance().getGameWidth()-width)/2;
+        }
+        if(center){
+            x = (Game.getInstance().getGameWidth()-width)/2;
+            if(minimizeWidth)
                 lines.get(0).setX(padding);
-            }
         }
         border = new RoundRectangle2D.Double(x, y, width, height, font.getSize(), font.getSize());
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public enum Alignment {

@@ -18,9 +18,9 @@ public class TextBox extends MenuComponent {
                 .setWidth(width)
                 .setY(y)
                 .setColor(color)
-                .setX((Game.getInstance().getGameWidth()-width)/2)
                 .setShowBorder(showBorder)
-                .setCenter(true).get();
+                .setCenter(true)
+                .get();
         this.x  = text.getX();
         text.setX(x+transitionOffset);
     }

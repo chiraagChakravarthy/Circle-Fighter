@@ -1,5 +1,6 @@
 package circle_fighter.level.level.tutorial.stages;
 
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.engine.Game;
 import circle_fighter.game.object.implementations.CharacterObject;
@@ -27,7 +28,7 @@ public class Stage3 extends TutorialStage {
 
     @Override
     public void reset() {
-        new TutorialBot(new Position(0, 0), tutorial, 1);
+        new TutorialBot(new UpdatingPosition(0, 0), tutorial, 1);
         playerPosition = new Position(Game.getInstance().getGameWidth()/4, -Game.getInstance().getGameHeight()/4);
         for(TextHint hint : hints){
             hint.reset();

@@ -46,7 +46,6 @@ public class LevelState extends GameState {
         menus.add(new DeathMenu(this));
         menus.add(new WinMenu(this));
         menus.add(new PauseMenu(this));
-
         state = SubState.MENU;
         background = new Background.PlainBackground(new Rainbow(0.5f, 10));
         highestLevel = Game.DEBUG?levels.size():0;

@@ -26,16 +26,20 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
         this.initialHealth = initialHealth;
         health = initialHealth;
         this.position = position;
-        healthBar = new ProgressBar(0, 0, width, height, 1, borderColor, barColor);
+        healthBar = new ProgressBar(0, 0, width, height, borderColor, barColor);
         this.verticalOffset = verticalOffset;
         this.invulnerabilityMultiplier = invulnerabilityMultiplier;
         damagedTime = 0;
         visible = true;
     }
 
-    public Health(Position position, int width, int height, int verticalOffset, DataStorage storage){
+    public Health(Position position, DataStorage storage){
+        this.position = position;
         initialHealth = storage.getFloat(0);
         invulnerabilityMultiplier = storage.getFloat(1);
+        verticalOffset = storage.get(2);
+        health = initialHealth;
+        healthBar = new ProgressBar(storage.getSubStorage(0));
 
     }
 

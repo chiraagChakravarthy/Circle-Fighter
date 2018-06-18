@@ -5,8 +5,10 @@ import circle_fighter.gfx.color.Rainbow;
 import circle_fighter.engine.KeyBindManager;
 import circle_fighter.menu.CreditsMenu;
 import circle_fighter.menu.MainMenu;
-import circle_fighter.menu.OptionsMenu;
+import circle_fighter.menu.options.OptionsMenu;
 import circle_fighter.menu.base.Menu;
+import circle_fighter.menu.user.UserMenu;
+import circle_fighter.menu.user.UserNameMenu;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,9 +24,11 @@ public class MenuState extends GameState {
     public MenuState(GameStateManager gsm, KeyBindManager keyBinds) {
         super(gsm, keyBinds);
         menus = new ArrayList<>();
-        menus.add(new MainMenu(this));
-        menus.add(new OptionsMenu(this));
-        menus.add(new CreditsMenu(this));
+        menus.add(new MainMenu(this));//0
+        menus.add(new OptionsMenu(this));//1
+        menus.add(new CreditsMenu(this));//2
+        menus.add(new UserMenu(this));//3
+        menus.add(new UserNameMenu(this));//4
         background = new Background.PlainBackground(new Rainbow(0.5f, 10));
     }
 

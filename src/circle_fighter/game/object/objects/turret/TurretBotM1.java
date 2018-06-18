@@ -1,5 +1,7 @@
 package circle_fighter.game.object.objects.turret;
 
+import circle_fighter.game.object.position.UpdatingPosition;
+import circle_fighter.game.object.position.Vector;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -9,9 +11,8 @@ import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.RenderableObject;
 import circle_fighter.game.object.objects.Player;
-import circle_fighter.game.object.position.Position;
-import circle_fighter.game.object.position.VelAngAccMovement;
-import circle_fighter.game.object.bounds.renderBase.CircularBase;
+import circle_fighter.game.object.position.movement.VelAngAccMovement;
+import circle_fighter.game.object.bounds.render_base.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.object.turret.Turret;
 import circle_fighter.game.plane.PlayerPlane;
@@ -26,14 +27,12 @@ public class TurretBotM1 extends GameObject implements Damageable {
 
     private Turret turret;
     private CircularBase base;
-    private VelAngAccMovement movement;
     private Health health;
     private PlayerPlane plane;
 
-    public TurretBotM1(Position position, PlayerPlane plane, int team) {
-        super(position, plane, BoundExitAction.BOUND, team);
+    public TurretBotM1(UpdatingPosition position, PlayerPlane plane, int team) {
+        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), .05f, 1, (float)Math.toRadians(.01), (float)Math.toRadians(1)), team);
         this.plane = plane;
-        movement = new VelAngAccMovement(position, vector, 0.05f, 1, (float)Math.toRadians(0.01), (float)Math.toRadians(1));
         turret = new Turret(this, 0, 25, 4, 3, new SolidColor(0, 0, 0));
         health = new Health(4, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 140, 0));
@@ -43,11 +42,11 @@ public class TurretBotM1 extends GameObject implements Damageable {
     @Override
     public void tick() {
         super.tick();
-        movement.tick();
 
         Player player = plane.getPlayer();
         double distance = player.getPosition().distance(position),
                 relAngle = (position.angleTo(player.getPosition())-position.getRotation())%(2*Math.PI);
+        VelAngAccMovement movement = (VelAngAccMovement)this.movement;
         if(distance<=300){
             if(relAngle<Math.PI/2|relAngle>3*Math.PI/2){
                 movement.setFront(false).setBack(true);

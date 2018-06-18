@@ -1,16 +1,16 @@
-package circle_fighter.user;
+package circle_fighter.game.object.bounds;
 
 import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.bounds.Bound;
-import circle_fighter.game.object.bounds.renderBase.CircularBase;
-import circle_fighter.game.object.bounds.renderBase.PolygonBase;
+import circle_fighter.game.object.bounds.render_base.CircularBase;
+import circle_fighter.game.object.bounds.render_base.PolygonBase;
 import circle_fighter.game.object.position.Position;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class UserBaseRegistry {
+public class BaseRegistry {
     private static ArrayList<Class<? extends Bound>> bounds;
     static {
         bounds = new ArrayList(Arrays.asList(CircularBase.class, PolygonBase.class));
@@ -22,9 +22,7 @@ public class UserBaseRegistry {
 
     public static Bound fromID(int id, DataStorage storage, Position position){
         try {
-            Bound bound = bounds.get(id).getConstructor(Position.class).newInstance(position);
-            bound.from(storage);
-            return bound;
+            return bounds.get(id).getConstructor(Position.class, DataStorage.class).newInstance(position, storage);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }

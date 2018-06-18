@@ -1,6 +1,7 @@
 package circle_fighter.level;
 
-import circle_fighter.game.object.position.Position;
+import circle_fighter.engine.KeyBindManager;
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.plane.PlayerPlane;
 import circle_fighter.game.plane.bounds.BoundedBounds;
 import circle_fighter.gameState.LevelState;
@@ -11,8 +12,10 @@ import java.awt.event.MouseEvent;
 
 public abstract class LevelPlane extends PlayerPlane {
     protected LevelState state;
+    protected KeyBindManager keyBinds;
     public LevelPlane(int width, int height, LevelState state) {
-        super(new Position(0, 0), new BoundedBounds(-width/2, -height/2, width, height), state.getKeyBinds());
+        super(new UpdatingPosition(0, 0), new BoundedBounds(-width/2, -height/2, width, height), state.getKeyBinds());
+        keyBinds = state.getKeyBinds();
         this.state = state;
     }
 
@@ -29,11 +32,9 @@ public abstract class LevelPlane extends PlayerPlane {
     @Override
     public void keyPressed(int k) {
         super.keyPressed(k);
-        switch (k){
-            case KeyEvent.VK_ESCAPE:
-                state.setState(LevelState.SubState.MENU);
-                state.setMenu(3);
-                break;
+        if(k==keyBinds.get(KeyBindManager.PAUSE)){
+            state.setState(LevelState.SubState.MENU);
+            state.setMenu(3);
         }
     }
 

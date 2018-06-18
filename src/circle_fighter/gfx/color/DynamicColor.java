@@ -53,7 +53,6 @@ public abstract class DynamicColor implements Savable, HardSavable {
     public void hardSave(DataStorage storage) {
         storage.setFloat(0, r).setFloat(1, g).setFloat(2, b).setFloat(3, o).setFloat(4, brightness);
     }
-    //TODO finish implimenting hard/soft saving and loading for all in game classes
     @Override
     public void hardLoad(DataStorage storage) {
         r = storage.getFloat(0);

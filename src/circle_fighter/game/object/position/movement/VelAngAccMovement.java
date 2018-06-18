@@ -1,12 +1,15 @@
-package circle_fighter.game.object.position;
+package circle_fighter.game.object.position.movement;
 
 import circle_fighter.file.DataStorage;
+import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
+import circle_fighter.game.object.position.Vector;
 
 public class VelAngAccMovement extends VelAccMovement{
     private float accAng, maxVelAng;
     private boolean left, right;
 
-    public VelAngAccMovement(Position position, Vector vector, float acc, float maxVel, float accAng, float maxVelAng) {
+    public VelAngAccMovement(UpdatingPosition position, Vector vector, float acc, float maxVel, float accAng, float maxVelAng) {
         super(position, vector, acc, maxVel);
         this.accAng = accAng;
         this.maxVelAng = maxVelAng;
@@ -14,10 +17,10 @@ public class VelAngAccMovement extends VelAccMovement{
         right = false;
     }
 
-    public VelAngAccMovement(Position position, Vector vector){
-        super(position, vector);
-        accAng = 0;
-        maxVelAng = 0;
+    public VelAngAccMovement(UpdatingPosition position, Vector vector, DataStorage storage){
+        super(position, vector, storage.getSubStorage(0));
+        accAng = storage.getFloat(0);
+        maxVelAng = storage.getFloat(1);
     }
 
     @Override
@@ -56,15 +59,21 @@ public class VelAngAccMovement extends VelAccMovement{
     }
 
     @Override
-    public void from(DataStorage storage) {
-        super.from(storage.getSubStorage(0));
-        accAng = Float.intBitsToFloat(storage.get(0));
-        maxVelAng = Float.intBitsToFloat(storage.get(1));
+    public void save(DataStorage storage) {
+        super.save(storage.getSubStorage(0));
+        storage.setFloat(0, accAng).setFloat(1, maxVelAng);
     }
 
     @Override
-    public void to(DataStorage storage) {
-        super.to(storage.getSubStorage(0));
-        storage.set(0, Float.floatToIntBits(accAng)).set(1, Float.floatToIntBits(maxVelAng));
+    public void hardLoad(DataStorage storage) {
+        super.hardLoad(storage.getSubStorage(0));
+        left = storage.get(0)==1;
+        right = storage.get(1)==1;
+    }
+
+    @Override
+    public void hardSave(DataStorage storage) {
+        super.hardSave(storage.getSubStorage(0));
+        storage.set(0, left?1:0).set(1, right?1:0);
     }
 }

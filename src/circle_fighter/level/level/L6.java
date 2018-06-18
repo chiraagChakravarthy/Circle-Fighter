@@ -3,6 +3,7 @@ package circle_fighter.level.level;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.objects.bots.BotM3;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.level.LevelPlane;
 
@@ -23,6 +24,6 @@ public class L6 extends LevelPlane {
     @Override
     public void reset() {
         super.reset();
-        new BotM3(new Position(-250, -300), this, 1);
+        new BotM3(new UpdatingPosition(-250, -300), this, 1);
     }
 }

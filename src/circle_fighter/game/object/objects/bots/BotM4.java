@@ -1,5 +1,6 @@
 package circle_fighter.game.object.objects.bots;
 
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -9,10 +10,10 @@ import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.DamagingObject;
 import circle_fighter.game.object.implementations.RenderableObject;
-import circle_fighter.game.object.position.MultiDirectionalMovement;
+import circle_fighter.game.object.position.movement.MultiDirectionalMovement;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.bounds.renderBase.CircularBase;
+import circle_fighter.game.object.bounds.render_base.CircularBase;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
 
@@ -25,15 +26,14 @@ import java.awt.*;
 public class BotM4 extends GameObject implements Damaging, Damageable{
     private static final float RADIUS = 19;
 
-    private MultiDirectionalMovement movement;
     private PlayerPlane plane;
     private Health health;
     private CircularBase base;
+    private MultiDirectionalMovement movement;
 
-    public BotM4(Position position, PlayerPlane plane, int team) {
-        super(position, plane, BoundExitAction.BOUND, team);
-        vector = new Vector(0, 0, 0);
-        movement = new MultiDirectionalMovement(position, vector, 0.03f, 0.1f, 100, 4);
+    public BotM4(UpdatingPosition position, PlayerPlane plane, int team) {
+        super(plane, BoundExitAction.BOUND, new MultiDirectionalMovement(position, new Vector(0, 0, 0), .03f, .01f, 100, 4), team);
+        movement = (MultiDirectionalMovement)super.movement;
         health = new Health(10, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(0, 0, 255), new SolidColor(0, 0, 128));
         this.plane = plane;
@@ -51,7 +51,6 @@ public class BotM4 extends GameObject implements Damaging, Damageable{
         base.tick();
         if(health.get()<=0)
             despawn();
-        movement.tick();
     }
 
     @Override

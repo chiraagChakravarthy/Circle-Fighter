@@ -1,4 +1,4 @@
-package circle_fighter.menu;
+package circle_fighter.menu.options;
 
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;

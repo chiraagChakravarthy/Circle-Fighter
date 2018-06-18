@@ -2,12 +2,13 @@ package circle_fighter.game.object.bounds;
 
 import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.position.Position;
+import circle_fighter.game.object.position.UpdatingPosition;
 
 import java.awt.*;
 
 public class PointBound extends Bound {
 
-    public PointBound(Position position){
+    public PointBound(UpdatingPosition position){
         super(position);
     }
 
@@ -36,12 +37,7 @@ public class PointBound extends Bound {
     }
 
     @Override
-    public void from(DataStorage storage) {
-
-    }
-
-    @Override
-    public void to(DataStorage storage) {
+    public void save(DataStorage storage) {
 
     }
 }
