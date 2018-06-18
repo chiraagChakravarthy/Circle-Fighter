@@ -1,6 +1,8 @@
 package circle_fighter.game.plane;
 
 import circle_fighter.engine.KeyBindManager;
+import circle_fighter.file.DataStorage;
+import circle_fighter.file.FileManager;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.objects.Player;
 import circle_fighter.game.object.position.UpdatingPosition;
@@ -9,6 +11,9 @@ import circle_fighter.game.plane.bounds.PlaneBounds;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public abstract class PlayerPlane extends Plane {
     private Player player;

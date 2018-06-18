@@ -43,7 +43,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
     }
 
     public Player(UpdatingPosition position, PlayerPlane plane, DataStorage storage){
-        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), storage.getSubStorage(0)), 0);
+        super(plane, BoundExitAction.BOUND, storage.getSubStorage(0));
         keyBinds = plane.getKeyBinds();
         health = new Health(position, storage.getSubStorage(1));
         mainTurret = new Turret(storage.getSubStorage(2), this);
@@ -139,16 +139,23 @@ public class Player extends GameObject implements UserInputListener, Damageable,
 
     @Override
     public void hardLoad(DataStorage storage) {
-
+        super.hardLoad(storage.getSubStorage(0));
+        health.hardLoad(storage.getSubStorage(1));
+        mainTurret.hardLoad(storage.getSubStorage(2));
     }
 
     @Override
     public void hardSave(DataStorage storage) {
-
+        super.hardSave(storage.getSubStorage(0));
+        health.hardSave(storage.getSubStorage(1));
+        mainTurret.hardSave(storage.getSubStorage(2));
     }
 
     @Override
     public void save(DataStorage storage) {
-
+        super.save(storage.getSubStorage(0));
+        health.save(storage.getSubStorage(1));
+        mainTurret.save(storage.getSubStorage(2));
+        base.save(storage.getSubStorage(3));
     }
 }

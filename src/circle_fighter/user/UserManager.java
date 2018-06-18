@@ -5,6 +5,12 @@ import circle_fighter.file.FileManager;
 import java.util.ArrayList;
 
 public class UserManager {
+    private static String USER_DEFAULT;
+
+    public static void init(){
+        //USER_DEFAULT = FileManager.readFromFile("res/user_default.txt").get(0);
+    }
+
     private ArrayList<User> users;
     public UserManager(){
         users = new ArrayList<>();
@@ -20,5 +26,13 @@ public class UserManager {
             lines.addAll(users.get(i).save());
         }
         FileManager.writeToFile("files/users.txt", lines);
+    }
+
+    public User getUser(int user){
+        return users.get(user);
+    }
+
+    public void addUser(String name){
+        users.add(new User(name, USER_DEFAULT));
     }
 }

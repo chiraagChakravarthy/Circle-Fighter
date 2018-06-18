@@ -9,21 +9,16 @@ import circle_fighter.game.plane.PlayerPlane;
 import java.util.ArrayList;
 import java.util.Arrays;
 //TODO make all saved numerical parameters level based, and have a key (level - actual parameter) saved to the resources folder
-//TODO meke player constructor with user, and have player directly access parameters from user
+//TODO make player constructor with user, and have player directly access parameters from user
 
 public class User {
-    private static String USER_DEFAULT;
-
-    public static void init(){
-        USER_DEFAULT = FileManager.readFromFile("res/user_default.txt").get(0);
-    }
 
     private DataStorage storage;
     private String name;
     
     public User(String name, String user){
         this.name = name;
-        this.storage = new DataStorage().fromString(user==null?USER_DEFAULT:user);
+        this.storage = new DataStorage().fromString(user);
 
     }
 

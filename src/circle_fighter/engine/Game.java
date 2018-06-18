@@ -3,6 +3,7 @@ package circle_fighter.engine;
 import circle_fighter.engine.test.Test;
 import circle_fighter.file.FileManager;
 import circle_fighter.gameState.GameStateManager;
+import circle_fighter.user.UserManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +42,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         if(TEST)
             test = new Test();
         else {
+            UserManager.init();
             keybinds = new KeyBindManager();
             gsm = new GameStateManager(keybinds);
         }
