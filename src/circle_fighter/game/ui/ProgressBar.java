@@ -26,8 +26,8 @@ public class ProgressBar implements Renderable, Updatable, Savable {
     }
 
     public ProgressBar(DataStorage storage){
-        this.width = storage.get(0);
-        this.height = storage.get(1);
+        this.width = storage.getFloat(0);
+        this.height = storage.getFloat(1);
         progress = 1;
         borderColor = ColorRegistry.fromID(storage.get(2), storage.getSubStorage(0));
         barColor = ColorRegistry.fromID(storage.get(3), storage.getSubStorage(1));
@@ -95,6 +95,8 @@ public class ProgressBar implements Renderable, Updatable, Savable {
 
     @Override
     public void save(DataStorage storage) {
-
+        storage.setFloat(0, width).setFloat(1, height).set(2, ColorRegistry.toID(borderColor.getClass())).set(3, ColorRegistry.toID(barColor.getClass())).setFloat(4, x).setFloat(5, y);
+        borderColor.save(storage.getSubStorage(0));
+        barColor.save(storage.getSubStorage(1));
     }
 }

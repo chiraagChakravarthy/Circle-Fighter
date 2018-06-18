@@ -7,6 +7,8 @@ import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.objects.Player;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.plane.bounds.PlaneBounds;
+import circle_fighter.user.User;
+import circle_fighter.user.UserManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -70,7 +72,11 @@ public abstract class PlayerPlane extends Plane {
     @Override
     public void reset() {
         super.reset();
-        player = new Player(initialPlayerPosition.clone(), this);
+        /*player = new Player(new UpdatingPosition(0, 0), this);
+        DataStorage storage = new DataStorage();
+        player.save(storage);
+        FileManager.writeToFile("res/user/user_default.txt", new ArrayList<>(Arrays.asList(storage.toString())));*/
+        player = new User("Test", UserManager.USER_DEFAULT).getPlayer(this);
     }
 
     public KeyBindManager getKeyBinds() {

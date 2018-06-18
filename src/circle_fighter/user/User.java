@@ -19,13 +19,10 @@ public class User {
     public User(String name, String user){
         this.name = name;
         this.storage = new DataStorage().fromString(user);
-
     }
 
     public Player getPlayer(PlayerPlane plane){
-        Player player =  new Player(new UpdatingPosition(0, 0), plane);
-        player.save(storage);
-        return player;
+        return new Player(new UpdatingPosition(0, 0), plane, storage);
     }
 
     public ArrayList<String > save(){

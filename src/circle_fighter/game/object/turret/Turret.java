@@ -36,8 +36,8 @@ public class Turret implements Updatable, Renderable, Savable, HardSavable {
         color = ColorRegistry.fromID(storage.get(0), storage.getSubStorage(0));
         maximumAng = storage.getFloat(1);
         length = storage.getFloat(2);
-        girth = storage.get(3);
-        shootRate = storage.get(4);
+        girth = storage.getFloat(3);
+        shootRate = storage.getFloat(4);
     }
 
     public float getRelativeAng() {

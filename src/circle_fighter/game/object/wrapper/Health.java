@@ -40,7 +40,6 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
         verticalOffset = storage.get(2);
         health = initialHealth;
         healthBar = new ProgressBar(storage.getSubStorage(0));
-
     }
 
     public void tick(){
@@ -58,6 +57,7 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
 
     public void damage(float amount, long time){
         long now = System.currentTimeMillis();
+        System.out.println(now-damagedTime);
         if(now - damagedTime > invulnerabilityTime) {
             health -= amount;
             damagedTime = now;
@@ -75,7 +75,8 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
 
     @Override
     public void save(DataStorage storage) {
-
+        storage.setFloat(0, initialHealth).setFloat(1, invulnerabilityMultiplier).set(2, verticalOffset);
+        healthBar.save(storage.getSubStorage(0));
     }
 
     @Override

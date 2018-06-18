@@ -5,10 +5,10 @@ import circle_fighter.file.FileManager;
 import java.util.ArrayList;
 
 public class UserManager {
-    private static String USER_DEFAULT;
+    public static String USER_DEFAULT;
 
     public static void init(){
-        //USER_DEFAULT = FileManager.readFromFile("res/user_default.txt").get(0);
+        USER_DEFAULT = FileManager.readFromFile("res/user/user_default.txt").get(0);
     }
 
     private ArrayList<User> users;

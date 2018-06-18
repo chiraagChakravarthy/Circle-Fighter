@@ -37,17 +37,17 @@ public class Player extends GameObject implements UserInputListener, Damageable,
     public Player(UpdatingPosition position, PlayerPlane plane) {
         super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), 0.1f, 3, (float)Math.toRadians(.05), (float)Math.toRadians(3)), 0);
         this.keyBinds = plane.getKeyBinds();
-        health = new Health(5, position, 50, 10, -50, 1000, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
+        health = new Health(5, position, 50, 10, -50, 1, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
         mainTurret = new Turret(this, (float)Math.PI/9, 40, 5, 10, new SolidColor(0, 0, 255));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0));
     }
 
     public Player(UpdatingPosition position, PlayerPlane plane, DataStorage storage){
-        super(plane, BoundExitAction.BOUND, storage.getSubStorage(0));
+        super(plane, BoundExitAction.BOUND, position, storage.getSubStorage(0));
         keyBinds = plane.getKeyBinds();
-        health = new Health(position, storage.getSubStorage(1));
+        health = new Health(this.position, storage.getSubStorage(1));
         mainTurret = new Turret(storage.getSubStorage(2), this);
-        base = new CircularBase(position, storage.getSubStorage(3));
+        base = new CircularBase(this.position, storage.getSubStorage(3));
     }
 
     @Override

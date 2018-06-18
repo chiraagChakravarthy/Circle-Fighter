@@ -16,6 +16,7 @@ public class DataStorage {
         clear();
         clearSubStorage();
         int[] values = new int[string.length()/4];
+
         for (int i = 0; i < values.length; i++) {
             int m = i*4;
             values[i] = fromChars(string.substring(m, m+4).toCharArray());
@@ -76,12 +77,12 @@ public class DataStorage {
 
     private char[] toChars(int value) {
         int n = value >> 24;
-        value -= n;
+        value -= n<<24;
         int n1 = value >> 16;
-        value -= n1;
+        value -= n1<<16;
         int n2 = value >> 8;
         return new char[]{
-                (char) n, (char) n1, (char) n2, (char) (value - n2)
+                (char) n, (char) n1, (char) n2, (char) (value - (n2<<8))
         };
     }
 

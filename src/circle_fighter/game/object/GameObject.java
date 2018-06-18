@@ -32,12 +32,12 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
         plane.getObjectManager().add(this);
     }
 
-    public GameObject(Plane plane, BoundExitAction action, DataStorage storage){
+    public GameObject(Plane plane, BoundExitAction action, UpdatingPosition position, DataStorage storage){
         this.team = 0;
         this.plane = plane;
         this.action = action;
-        movement = MovementRegistry.fromID(storage.get(0), storage.getSubStorage(0), new UpdatingPosition(0, 0), new Vector(0, 0, 0));
-        position = movement.getPosition();
+        movement = MovementRegistry.fromID(storage.get(0), storage.getSubStorage(0), position, new Vector(0, 0, 0));
+        this.position = position;
         vector = movement.getVector();
         plane.getObjectManager().add(this);
     }

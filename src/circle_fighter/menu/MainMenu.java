@@ -27,7 +27,8 @@ public class MainMenu extends StateMenu {
     protected void onExit(int selectedOption) {
         switch (selectedOption){
             case 0:
-                state.setMenu(3);
+                //state.setMenu(3);
+                state.getGsm().setGameState(GameStateManager.PLAY_STATE);
                 break;
             case 1:
                 state.setMenu(1);
