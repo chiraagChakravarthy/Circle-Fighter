@@ -35,7 +35,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
     private KeyBindManager keyBinds;
 
     public Player(UpdatingPosition position, PlayerPlane plane) {
-        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), 0.1f, 3, (float)Math.toRadians(.05), (float)Math.toRadians(3)), 0);
+        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), 0.5f, 15, (float)Math.toRadians(.25), (float)Math.toRadians(10)), 0);
         this.keyBinds = plane.getKeyBinds();
         health = new Health(5, position, 50, 10, -50, 1, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
         mainTurret = new Turret(this, (float)Math.PI/9, 40, 5, 10, new SolidColor(0, 0, 255));

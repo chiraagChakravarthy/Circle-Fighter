@@ -57,7 +57,6 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
 
     public void damage(float amount, long time){
         long now = System.currentTimeMillis();
-        System.out.println(now-damagedTime);
         if(now - damagedTime > invulnerabilityTime) {
             health -= amount;
             damagedTime = now;

@@ -122,7 +122,8 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     //TODO fix osx glitch where this rapidly switches between 1 and -1
     @Override
     public void mouseScrolled(MouseWheelEvent e) {
-        if(progression.equals(MenuProgression.DEFAULT))scrollingOffset = -Math.max(Math.min(Math.abs(scrollingOffset)+SCROLLING_RATE*e.getUnitsToScroll(), getLowestY()+COMPONENT_SPACING-Game.getInstance().getGameHeight()), 0);
+        if(progression.equals(MenuProgression.DEFAULT))
+            scrollingOffset = -Math.max(Math.min(Math.abs(scrollingOffset)+SCROLLING_RATE*e.getUnitsToScroll(), getLowestY()+COMPONENT_SPACING-Game.getInstance().getGameHeight()), 0);
     }
 
     protected void addComponent(MenuComponent menuComponent){

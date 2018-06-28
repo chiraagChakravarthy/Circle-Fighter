@@ -40,13 +40,7 @@ public class PolygonBase extends PolygonBound implements RenderBase {
     @Override
     protected void update() {
         super.update();
-        int[] x = new int[absolute.length],
-                y = new int[absolute.length];
-        for (int i = 0; i < absolute.length; i++) {
-            x[i] = (int) absolute[i].getX();
-            y[i] = (int) absolute[i].getY();
-        }
-        polygon = new Polygon(x, y, absolute.length);
+        reconfigurePolygon();
     }
 
     public void setColor(DynamicColor color) {
@@ -62,5 +56,23 @@ public class PolygonBase extends PolygonBound implements RenderBase {
     @Override
     public void save(DataStorage storage) {
         super.save(storage.getSubStorage(0));
+    }
+
+    @Override
+    public void onOffsetsChanged() {
+        super.onOffsetsChanged();
+        reconfigurePolygon();
+    }
+
+    private void reconfigurePolygon(){
+        if(absolute[0] != null) {
+            int[] x = new int[absolute.length],
+                    y = new int[absolute.length];
+            for (int i = 0; i < absolute.length; i++) {
+                x[i] = (int) absolute[i].getScrX();
+                y[i] = (int) absolute[i].getScrY();
+            }
+            polygon = new Polygon(x, y, absolute.length);
+        }
     }
 }

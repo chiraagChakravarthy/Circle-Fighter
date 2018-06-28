@@ -33,4 +33,8 @@ public abstract class Bound implements Savable {
         float x = (s1*x1-y1-s2*x2+y2)/(s1-s2);
         return new Position(x, s1*(x-x1)+y1);
     }
+
+    public UpdatingPosition getPosition() {
+        return position;
+    }
 }

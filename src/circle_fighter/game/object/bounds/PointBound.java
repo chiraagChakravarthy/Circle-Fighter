@@ -32,10 +32,6 @@ public class PointBound extends Bound {
         return new Rectangle((int)position.getX(), (int)position.getY(), 1, 1);
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
     @Override
     public void save(DataStorage storage) {
 

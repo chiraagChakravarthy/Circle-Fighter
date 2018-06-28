@@ -22,7 +22,7 @@ public class User {
     }
 
     public Player getPlayer(PlayerPlane plane){
-        return new Player(new UpdatingPosition(0, 0), plane, storage);
+        return new Player(new UpdatingPosition(0, 0), plane);
     }
 
     public ArrayList<String > save(){

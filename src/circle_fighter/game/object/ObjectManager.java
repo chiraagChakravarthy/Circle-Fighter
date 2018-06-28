@@ -14,7 +14,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+//TODO create collision functionality which will set an entities velocity in the direction of intersection to 0 and allign it as close as possible to the shape without touching. Also handle inside collision box cases (attempt to shove out otherwise free roaming)
 public class ObjectManager implements Updatable, Renderable{
     private final Map<Class<? extends Annotation>, AtomicList> objects;
     private final Map<Class<?>, AtomicList> objectTypes;

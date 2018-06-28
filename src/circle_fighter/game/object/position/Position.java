@@ -11,11 +11,40 @@ import java.nio.FloatBuffer;
 
 public class Position implements HardSavable {
     private static final Position ZERO;
-    private static float xOffset, yOffset;
+    protected static float xOffset, yOffset;
     static {
         xOffset = 0;
         yOffset = 0;
         ZERO = new Position(0, 0);
+    }
+
+    public static float getxOffset() {
+        return xOffset;
+    }
+
+    public static float getyOffset() {
+        return yOffset;
+    }
+
+    public static void setXOffset(float xOffset) {
+        Position.xOffset = xOffset;
+    }
+
+    public static void setYOffset(float yOffset) {
+        Position.yOffset = yOffset;
+    }
+
+    public static float distance(float x, float y, float x1, float y1) {
+        float dx = x-x1, dy = y-y1;
+        return (float) Math.sqrt(dx*dx+dy*dy);
+    }
+
+    public static Position fromPolar(float radians, float r){
+        radians = (float) (radians%(Math.PI*2));
+        float pi = (float) Math.PI;
+        float parentSine = radians>pi/2&&radians<3*pi/2?pi-radians:radians,
+                parentCos = radians>pi?pi*2-radians:radians;
+        return new Position((float)Math.cos(parentCos)*r, (float)Math.sin(parentSine)*r);
     }
 
     private float x, y, rotation;
@@ -104,27 +133,6 @@ public class Position implements HardSavable {
     @Override
     public Position clone(){
         return new Position(x, y, rotation);
-    }
-
-    public static float getxOffset() {
-        return xOffset;
-    }
-
-    public static float getyOffset() {
-        return yOffset;
-    }
-
-    public static void setXOffset(float xOffset) {
-        Position.xOffset = xOffset;
-    }
-
-    public static void setYOffset(float yOffset) {
-        Position.yOffset = yOffset;
-    }
-
-    public static float distance(float x, float y, float x1, float y1) {
-        float dx = x-x1, dy = y-y1;
-        return (float) Math.sqrt(dx*dx+dy*dy);
     }
 
     public Position move(Position position, boolean applyDirection){

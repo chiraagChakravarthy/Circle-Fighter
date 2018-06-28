@@ -40,6 +40,29 @@ public class PolygonBound extends Bound implements OnPositionChanged {
     public boolean intersects(CircularBound bound) {
         if(changed)
             update();
+        if(inside(bound.getCenterPoint())) {
+            return true;
+        }
+        for (int i = 0; i < absolute.length; i++) {
+            if(absolute[i].distance(bound.getCenterPoint())<bound.getRadius()) {
+                return true;
+            }
+            float slope = Float.isFinite(slopes[i])?-1.0f/slopes[i]:0;
+            Position closest = intersection(slopes[i], slope, absolute[i].getX(), absolute[i].getY(), bound.getCenterPoint().getX(), bound.getCenterPoint().getY());
+            if(closest.distance(bound.getCenterPoint())<bound.getRadius()){
+                int m = i*4;
+                if(lineRanges[m]==lineRanges[m+1]){
+                    float halfChord = (float)Math.sqrt(bound.getRadius()*bound.getRadius()-Math.pow(bound.getCenterPoint().getX()-lineRanges[m], 2));
+                    if(bound.getCenterPoint().getY()+halfChord>lineRanges[m+2]&&bound.getCenterPoint().getY()-halfChord<lineRanges[m+3]) {
+                        return true;
+                    }
+
+                }
+                else if(closest.getX()>lineRanges[m]&&closest.getX()<lineRanges[m+1]){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -63,12 +86,11 @@ public class PolygonBound extends Bound implements OnPositionChanged {
                 int n = j*4;
                 Position intersection = intersection(slopes[i], boundSlopes[j], absolute[i].getX(), absolute[i].getY(), boundAbsolute[j].getX(), boundAbsolute[j].getY());
                 if(Float.isInfinite(boundSlopes[j])) {
-                    if(intersection.getY() >= lineRanges[m+2]&&intersection.getY()>=boundRanges[n+2]&&intersection.getY()<=lineRanges[m+3]&&intersection.getY()<=boundRanges[n+3]) {
+                    if(intersection.getY() > lineRanges[m+2]&&intersection.getY()>boundRanges[n+2]&&intersection.getY()<lineRanges[m+3]&&intersection.getY()<boundRanges[n+3]) {
                         return true;
                     }
                 }
-                else if(intersection.getX() >= lineRanges[m]&&intersection.getX()>=boundRanges[n]&&intersection.getX()<=lineRanges[m+1]&&intersection.getX()<=boundRanges[n+1]) {
-
+                else if(intersection.getX() > lineRanges[m]&&intersection.getX()>boundRanges[n]&&intersection.getX()<lineRanges[m+1]&&intersection.getX()<boundRanges[n+1]) {
                     return true;
                 }
             }
@@ -125,9 +147,11 @@ public class PolygonBound extends Bound implements OnPositionChanged {
             update();
         int amount = 0;
         for (int i = 0; i < absolute.length; i++) {
-            if(intersects(position.getX(), position.getY(), i))
+            if(intersects(position.getX(), position.getY(), i)) {
                 amount++;
+            }
         }
+        System.out.println("Amount: " + amount);
         return amount%2==1;
     }
 
@@ -136,11 +160,16 @@ public class PolygonBound extends Bound implements OnPositionChanged {
         changed = true;
     }
 
+    @Override
+    public void onOffsetsChanged() {
+        //ignored
+    }
+
     private boolean intersects(float x, float y, int i){
         int m = i*4;
         Position intersection = intersection(0, slopes[i], x, y, absolute[i].getX(), absolute[i].getY());
-        return (Float.isInfinite(slopes[i])?intersection.getY()>=lineRanges[m+2]&&intersection.getY()<=lineRanges[m+3]:
-                intersection.getX()>=lineRanges[m]&&intersection.getX()<=lineRanges[m+1])&&intersection.getX()>=x;
+        return (Float.isInfinite(slopes[i])?intersection.getY()>lineRanges[m+2]&&intersection.getY()<lineRanges[m+3]:
+                intersection.getX()>lineRanges[m]&&intersection.getX()<=lineRanges[m+1])&&intersection.getX()>x;
     }
 
     public Position[] getAbsolute() {
