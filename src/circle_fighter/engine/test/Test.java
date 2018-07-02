@@ -21,10 +21,11 @@ public class Test implements Updatable, Renderable, UserInputListener {
     private PolygonBase base;
     private CircularBase mouse;
     public Test(){
-        Position[] relative = new Position[5];
-        for (int i = 0; i < 5; i++) {
-            float radians = (float) (i/5.0*Math.PI*2);
-            relative[i] = Position.fromPolar(radians, 50);
+        Position[] relative = new Position[3];
+        float pi = (float)Math.PI;
+        for (int i = 0; i < 3; i++) {
+            float radians = i/3.0f*pi*2;
+            relative[i] = Position.fromPolar(radians, 200);
         }
         base = new PolygonBase(new Rainbow(0.5f, 10), new UpdatingPosition(0, 0), relative);
         mouse = new CircularBase(new UpdatingPosition(0, 0), 50, new SolidColor(0, 0, 0), new SolidColor(0, 0, 0));

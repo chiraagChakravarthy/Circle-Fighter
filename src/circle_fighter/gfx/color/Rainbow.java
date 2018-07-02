@@ -68,18 +68,6 @@ public class Rainbow extends DynamicColor {
     }
 
     @Override
-    public void hardSave(DataStorage storage) {
-        super.hardSave(storage.getSubStorage(0));
-        storage.set(0, stage);
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-        super.hardLoad(storage.getSubStorage(0));
-        stage = storage.get(0);
-    }
-
-    @Override
     public void save(DataStorage storage) {
         storage.setFloat(0, rate);
     }

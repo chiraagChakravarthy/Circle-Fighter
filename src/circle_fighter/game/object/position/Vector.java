@@ -1,9 +1,6 @@
 package circle_fighter.game.object.position;
 
-import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.HardSavable;
-
-public class Vector implements HardSavable{
+public class Vector{
     private float velX, velY, velAng;
 
     public Vector(float velX, float velY, float velAng){
@@ -42,17 +39,5 @@ public class Vector implements HardSavable{
 
     public float velocity(){
         return (float) Math.sqrt(velX*velX+velY*velY);
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-        velX = storage.getFloat(0);
-        velY = storage.getFloat(1);
-        velAng = storage.getFloat(2);
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        storage.setFloat(0, velX).setFloat(1, velY).setFloat(2, velAng);
     }
 }

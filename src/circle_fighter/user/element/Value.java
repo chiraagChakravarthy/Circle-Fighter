@@ -1,4 +1,4 @@
-package circle_fighter.user;
+package circle_fighter.user.element;
 
 public class Value {
     private final float min, max;

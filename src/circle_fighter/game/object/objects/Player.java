@@ -2,7 +2,8 @@ package circle_fighter.game.object.objects;
 
 import circle_fighter.engine.KeyBindManager;
 import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.*;
+import circle_fighter.functionaliy.Savable;
+import circle_fighter.functionaliy.UserInputListener;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.bounds.render_base.CircularBase;
@@ -11,13 +12,16 @@ import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.RenderableObject;
+import circle_fighter.game.object.position.OnPositionChanged;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.position.movement.VelAngAccMovement;
-import circle_fighter.game.object.turret.Turret;
+import circle_fighter.game.object.turret.BasicTurret;
+import circle_fighter.game.object.turret.TurretManager;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
 import circle_fighter.gfx.color.SolidColor;
+import circle_fighter.user.User;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,27 +31,28 @@ import java.awt.event.MouseWheelEvent;
 @CharacterObject
 @DamageableObject
 @RenderableObject
-public class Player extends GameObject implements UserInputListener, Damageable, Savable, HardSavable {
+public class Player extends GameObject implements UserInputListener, Damageable, Savable {
     private static final float RADIUS = 25;
     private Health health;
-    private Turret mainTurret;
+    private TurretManager turrets;
     private CircularBase base;
     private KeyBindManager keyBinds;
 
+
     public Player(UpdatingPosition position, PlayerPlane plane) {
-        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), 0.5f, 15, (float)Math.toRadians(.25), (float)Math.toRadians(10)), 0);
+        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), 0.1f, 3, (float)Math.toRadians(.05), (float)Math.toRadians(3)), 0);
         this.keyBinds = plane.getKeyBinds();
         health = new Health(5, position, 50, 10, -50, 1, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
-        mainTurret = new Turret(this, (float)Math.PI/9, 40, 5, 10, new SolidColor(0, 0, 255));
+        turrets = new TurretManager(new BasicTurret(this));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0));
     }
 
-    public Player(UpdatingPosition position, PlayerPlane plane, DataStorage storage){
-        super(plane, BoundExitAction.BOUND, position, storage.getSubStorage(0));
+    public Player(UpdatingPosition position, PlayerPlane plane, User user){
+        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), user.getMovement()), 0);
         keyBinds = plane.getKeyBinds();
-        health = new Health(this.position, storage.getSubStorage(1));
-        mainTurret = new Turret(storage.getSubStorage(2), this);
-        base = new CircularBase(this.position, storage.getSubStorage(3));
+        health = new Health(this.position, user.getHealth());
+        turrets = new TurretManager(user.getTurrets(), this);
+        base = new CircularBase(this.position, user.getBase());
     }
 
     @Override
@@ -58,14 +63,14 @@ public class Player extends GameObject implements UserInputListener, Damageable,
     @Override
     public void render(Graphics2D g) {
         base.render(g);
-        mainTurret.render(g);
+        turrets.render(g);
         health.render(g);
     }
 
     @Override
     public void tick() {
         health.tick();
-        mainTurret.tick();
+        turrets.tick();
         base.tick();
         if(health.get()<=0)
             despawn();
@@ -88,7 +93,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
             movement.setLeft(true);
         }
         else if(k==keyBinds.get(KeyBindManager.SHOOT)){
-            mainTurret.setFiring(true);
+
         }
     }
 
@@ -109,7 +114,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
                 movement.setRight(false);
                 break;
             case KeyEvent.VK_SPACE:
-                mainTurret.setFiring(false);
+
         }
     }
 
@@ -138,24 +143,8 @@ public class Player extends GameObject implements UserInputListener, Damageable,
     }
 
     @Override
-    public void hardLoad(DataStorage storage) {
-        super.hardLoad(storage.getSubStorage(0));
-        health.hardLoad(storage.getSubStorage(1));
-        mainTurret.hardLoad(storage.getSubStorage(2));
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        super.hardSave(storage.getSubStorage(0));
-        health.hardSave(storage.getSubStorage(1));
-        mainTurret.hardSave(storage.getSubStorage(2));
-    }
-
-    @Override
     public void save(DataStorage storage) {
         super.save(storage.getSubStorage(0));
         health.save(storage.getSubStorage(1));
-        mainTurret.save(storage.getSubStorage(2));
-        base.save(storage.getSubStorage(3));
     }
 }

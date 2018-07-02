@@ -2,14 +2,13 @@ package circle_fighter.game.object.position;
 
 import circle_fighter.engine.Game;
 import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.HardSavable;
 import circle_fighter.functionaliy.Savable;
 import javafx.geometry.Pos;
 
 import java.awt.*;
 import java.nio.FloatBuffer;
 
-public class Position implements HardSavable {
+public class Position {
     private static final Position ZERO;
     protected static float xOffset, yOffset;
     static {
@@ -41,8 +40,8 @@ public class Position implements HardSavable {
 
     public static Position fromPolar(float radians, float r){
         radians = (float) (radians%(Math.PI*2));
-        float pi = (float) Math.PI;
-        float parentSine = radians>pi/2&&radians<3*pi/2?pi-radians:radians,
+        float pi = (float) Math.PI,
+                parentSine = radians<pi/2?radians:radians<3*pi/2?pi-radians:radians-2*pi,
                 parentCos = radians>pi?pi*2-radians:radians;
         return new Position((float)Math.cos(parentCos)*r, (float)Math.sin(parentSine)*r);
     }
@@ -110,6 +109,10 @@ public class Position implements HardSavable {
         return this;
     }
 
+    public Position scrPosition(){
+        return new Position(getScrX(), getScrY());
+    }
+
     public float getX() {
         return x;
     }
@@ -155,17 +158,5 @@ public class Position implements HardSavable {
     @Override
     public String toString() {
         return "X: " + x + ", Y: " + y;
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-        x = storage.getFloat(0);
-        y = storage.getFloat(1);
-        rotation = storage.getFloat(2);
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        storage.setFloat(0, x).setFloat(1, y).setFloat(2, rotation);
     }
 }

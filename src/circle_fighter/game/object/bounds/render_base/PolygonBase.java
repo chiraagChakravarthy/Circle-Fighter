@@ -1,11 +1,9 @@
 package circle_fighter.game.object.bounds.render_base;
 
-import circle_fighter.file.DataStorage;
-import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.game.object.bounds.PolygonBound;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
-import circle_fighter.gfx.color.ColorRegistry;
+import circle_fighter.gfx.color.DynamicColor;
 
 import java.awt.*;
 
@@ -16,11 +14,6 @@ public class PolygonBase extends PolygonBound implements RenderBase {
     public PolygonBase(DynamicColor color, UpdatingPosition position, Position[] relative) {
         super(position, relative);
         this.color = color;
-    }
-
-    public PolygonBase(UpdatingPosition position, DataStorage storage){
-        super(position, storage.getSubStorage(0));
-        color = ColorRegistry.fromID(storage.get(0), storage.getSubStorage(1));
     }
 
 
@@ -38,8 +31,8 @@ public class PolygonBase extends PolygonBound implements RenderBase {
     }
 
     @Override
-    protected void update() {
-        super.update();
+    public void onPositionChanged() {
+        super.onPositionChanged();
         reconfigurePolygon();
     }
 
@@ -54,18 +47,14 @@ public class PolygonBase extends PolygonBound implements RenderBase {
     }
 
     @Override
-    public void save(DataStorage storage) {
-        super.save(storage.getSubStorage(0));
-    }
-
-    @Override
     public void onOffsetsChanged() {
         super.onOffsetsChanged();
         reconfigurePolygon();
     }
 
     private void reconfigurePolygon(){
-        if(absolute[0] != null) {
+        Position[] absolute = getAbsolute();
+        if(absolute != null && absolute[0] != null) {
             int[] x = new int[absolute.length],
                     y = new int[absolute.length];
             for (int i = 0; i < absolute.length; i++) {

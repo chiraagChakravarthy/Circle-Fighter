@@ -2,6 +2,8 @@ package circle_fighter.game.object.objects.turret;
 
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
+import circle_fighter.game.object.turret.BasicTurret;
+import circle_fighter.game.object.turret.TurretManager;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -25,7 +27,7 @@ import java.awt.*;
 public class TurretBotM1 extends GameObject implements Damageable {
     private static final float RADIUS = 15;
 
-    private Turret turret;
+    private TurretManager turrets;
     private CircularBase base;
     private Health health;
     private PlayerPlane plane;
@@ -33,10 +35,9 @@ public class TurretBotM1 extends GameObject implements Damageable {
     public TurretBotM1(UpdatingPosition position, PlayerPlane plane, int team) {
         super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), .05f, 1, (float)Math.toRadians(.01), (float)Math.toRadians(1)), team);
         this.plane = plane;
-        turret = new Turret(this, 0, 25, 4, 3, new SolidColor(0, 0, 0));
+        turrets = new TurretManager(new BasicTurret(this));
         health = new Health(4, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 140, 0));
-        turret.setFiring(true);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class TurretBotM1 extends GameObject implements Damageable {
             movement.setRight(true).setLeft(false);
         }
 
-        turret.tick();
+        turrets.tick();
         health.tick();
         if(health.get()<=0)
             despawn();
@@ -75,7 +76,7 @@ public class TurretBotM1 extends GameObject implements Damageable {
     @Override
     public void render(Graphics2D g) {
         base.render(g);
-        turret.render(g);
+        turrets.render(g);
         health.render(g);
     }
 

@@ -1,43 +1,29 @@
 package circle_fighter.game.object.turret;
 
-import circle_fighter.functionaliy.HardSavable;
-import circle_fighter.gfx.color.DynamicColor;
-import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Renderable;
-import circle_fighter.functionaliy.Savable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.GameObject;
-import circle_fighter.game.object.objects.Bullet;
-import circle_fighter.game.object.position.Vector;
-import circle_fighter.gfx.color.ColorRegistry;
+import circle_fighter.user.element.turret.UserTurret;
 
-import java.awt.*;
-
-public class Turret implements Updatable, Renderable, Savable, HardSavable {
-    private GameObject object;
-    private float maximumAng, length, girth, shootRate;
-    private float relativeAng;
+public abstract class Turret implements Updatable, Renderable {
+    //TODO refactor all instances of shoot rate to reload rate
+    protected GameObject object;
+    private final float maximumAng, reloadRate;
+    protected float relativeAng;
     private long lastTime;
-    private boolean firing;
-    private DynamicColor color;
+    protected float delta;
+    private boolean reloading;
 
-    public Turret(GameObject object, float maximumAng, float length, float girth, float shootRate, DynamicColor color){
+    public Turret(UserTurret turret, GameObject object){
         this.object = object;
-        this.maximumAng = maximumAng;
-        this.length = length;
-        this.girth = girth;
-        this.shootRate = shootRate;
-        this.color = color;
-        relativeAng = 0;
+        maximumAng = turret.functions[UserTurret.MAX_ANG].perform(turret.get(UserTurret.MAX_ANG));
+        reloadRate = turret.functions[UserTurret.RELOAD_RATE].perform(turret.get(UserTurret.RELOAD_RATE));
     }
 
-    public Turret(DataStorage storage, GameObject object){
+    public Turret(GameObject object, float maximumAng, float reloadRate){
         this.object = object;
-        color = ColorRegistry.fromID(storage.get(0), storage.getSubStorage(0));
-        maximumAng = storage.getFloat(1);
-        length = storage.getFloat(2);
-        girth = storage.getFloat(3);
-        shootRate = storage.getFloat(4);
+        this.maximumAng = maximumAng;
+        this.reloadRate = reloadRate;
     }
 
     public float getRelativeAng() {
@@ -53,53 +39,33 @@ public class Turret implements Updatable, Renderable, Savable, HardSavable {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.setColor(color.get());
-        float angle = relativeAng + object.getPosition().getRotation();
-        float x = object.getPosition().getScrX(), y = object.getPosition().getScrY();
-        g.setStroke(new BasicStroke(girth));
-        g.drawLine((int)x, (int)y, (int)(x+Math.cos(angle)*length),(int)(y+Math.sin(angle)*length));
-    }
-
-    @Override
     public void tick() {
-        color.tick();
-        long now = System.nanoTime();
-        float angle = relativeAng+object.getPosition().getRotation();
-        if((now-lastTime)/1.0e9>1/shootRate&&firing){
+        if(reloading) {
+            long now = System.currentTimeMillis();
+            delta += (now-lastTime)*reloadRate;
             lastTime = now;
-            new Bullet(object.getPosition().clone().apply(new Vector((float)Math.cos(angle)*length, (float)Math.sin(angle)*length, 0)), object.getPlane(), 10, 2, object.getTeam());
+            if(delta>1){
+                onReload();
+                delta--;
+            }
         }
     }
 
-    public void setFiring(boolean firing) {
-        this.firing = firing;
+    protected abstract void onReload();
+
+    public boolean reload(){
+        if(isReloading()){
+            return false;
+        }
+        reloading = true;
+        return true;
     }
 
-    public boolean isFiring() {
-        return firing;
+    public boolean isReloading() {
+        return reloading;
     }
 
-    @Override
-    public void hardLoad(DataStorage storage) {
-        color.hardLoad(storage.getSubStorage(0));
-        firing = storage.get(0)==1;
-        relativeAng = storage.getFloat(1);
-        lastTime = (long) (System.nanoTime()-(System.nanoTime()%(1e9f/shootRate))+storage.get(2));
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        color.hardSave(storage.getSubStorage(0));
-        storage.set(0, firing?1:0);
-        storage.setFloat(1, relativeAng);
-        storage.set(2, (int) (System.nanoTime()-lastTime));
-    }
-
-    @Override
-    public void save(DataStorage storage) {
-        storage.set(0, ColorRegistry.toID(color.getClass()));
-        color.save(storage.getSubStorage(0));
-        storage.setFloat(1, maximumAng).setFloat(2, length).setFloat(3, girth).setFloat(4, shootRate);
+    protected float angle(){
+        return relativeAng + object.getPosition().getRotation();
     }
 }

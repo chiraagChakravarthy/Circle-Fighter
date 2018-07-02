@@ -1,7 +1,6 @@
 package circle_fighter.game.object;
 
 import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.HardSavable;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Savable;
 import circle_fighter.functionaliy.Updatable;
@@ -12,9 +11,11 @@ import circle_fighter.game.object.position.movement.MovementRegistry;
 import circle_fighter.game.object.position.movement.MovementVector;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
+import circle_fighter.game.object.position.movement.VelAngAccMovement;
 import circle_fighter.game.plane.Plane;
+import circle_fighter.user.element.UserMovement;
 
-public abstract class GameObject implements Renderable, Updatable, Bounded, Polarized, Savable, HardSavable {
+public abstract class GameObject implements Renderable, Updatable, Bounded, Polarized, Savable {
     protected UpdatingPosition position;
     protected Vector vector;
     protected MovementVector movement;
@@ -29,16 +30,6 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
         this.action = action;
         this.team = team;
         this.movement = movement;
-        plane.getObjectManager().add(this);
-    }
-
-    public GameObject(Plane plane, BoundExitAction action, UpdatingPosition position, DataStorage storage){
-        this.team = 0;
-        this.plane = plane;
-        this.action = action;
-        movement = MovementRegistry.fromID(storage.get(0), storage.getSubStorage(0), position, new Vector(0, 0, 0));
-        this.position = position;
-        vector = movement.getVector();
         plane.getObjectManager().add(this);
     }
 
@@ -91,21 +82,5 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
     public void save(DataStorage storage) {
         storage.set(0, MovementRegistry.toID(movement.getClass()));
         movement.save(storage.getSubStorage(0));
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        position.hardSave(storage.getSubStorage(0));
-        vector.hardSave(storage.getSubStorage(1));
-        movement.hardSave(storage.getSubStorage(2));
-        storage.set(0, team);
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-        team = storage.get(0);
-        position.hardLoad(storage.getSubStorage(0));
-        vector.hardLoad(storage.getSubStorage(1));
-        movement.hardLoad(storage.getSubStorage(2));
     }
 }

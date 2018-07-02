@@ -46,17 +46,6 @@ public class VelMovement extends MovementVector {
     }
 
     @Override
-    public void hardLoad(DataStorage storage) {
-        back = storage.get(0)==1;
-        front = storage.get(1)==1;
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        storage.set(0, back?1:0).set(1, front?1:0);
-    }
-
-    @Override
     public void save(DataStorage storage) {
         storage.setFloat(0, velocity);
     }

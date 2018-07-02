@@ -25,16 +25,4 @@ public class SolidColor extends DynamicColor {
     public void save(DataStorage storage) {
         storage.setFloat(0, r).setFloat(1, g).setFloat(2, b);
     }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        setBrightness(storage.getFloat(0));
-        setO(storage.get(1));
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-        storage.setFloat(0, getBrightness());
-        storage.setFloat(1, getO());
-    }
 }

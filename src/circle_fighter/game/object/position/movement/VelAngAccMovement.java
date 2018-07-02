@@ -4,6 +4,8 @@ import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
+import circle_fighter.user.User;
+import circle_fighter.user.element.UserMovement;
 
 public class VelAngAccMovement extends VelAccMovement{
     private float accAng, maxVelAng;
@@ -17,10 +19,10 @@ public class VelAngAccMovement extends VelAccMovement{
         right = false;
     }
 
-    public VelAngAccMovement(UpdatingPosition position, Vector vector, DataStorage storage){
-        super(position, vector, storage.getSubStorage(0));
-        accAng = storage.getFloat(0);
-        maxVelAng = storage.getFloat(1);
+    public VelAngAccMovement(UpdatingPosition position, Vector vector, UserMovement movement){
+        super(position, vector, movement);
+        accAng = movement.getFunctions()[UserMovement.ACC_ANG].perform(movement.get(UserMovement.ACC_ANG));
+        maxVelAng =  movement.getFunctions()[UserMovement.VEL_ANG].perform(movement.get(UserMovement.VEL_ANG));
     }
 
     @Override
@@ -62,18 +64,5 @@ public class VelAngAccMovement extends VelAccMovement{
     public void save(DataStorage storage) {
         super.save(storage.getSubStorage(0));
         storage.setFloat(0, accAng).setFloat(1, maxVelAng);
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-        super.hardLoad(storage.getSubStorage(0));
-        left = storage.get(0)==1;
-        right = storage.get(1)==1;
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        super.hardSave(storage.getSubStorage(0));
-        storage.set(0, left?1:0).set(1, right?1:0);
     }
 }

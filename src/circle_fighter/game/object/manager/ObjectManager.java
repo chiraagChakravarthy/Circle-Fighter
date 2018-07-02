@@ -1,7 +1,9 @@
-package circle_fighter.game.object;
+package circle_fighter.game.object.manager;
 
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
+import circle_fighter.game.object.AtomicList;
+import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.DamageableObject;
@@ -48,7 +50,6 @@ public class ObjectManager implements Updatable, Renderable{
         for(Updatable object : (List<Updatable>) objectTypes.get(Updatable.class).get()){
             object.tick();
         }
-
         for(Damageable damageable : (List<Damageable>)objectTypes.get(Damageable.class).get()){
             for(Damaging damaging : (List<Damaging>)objectTypes.get(Damaging.class).get()){
                 damageable.damage(damaging);

@@ -72,11 +72,7 @@ public abstract class PlayerPlane extends Plane {
     @Override
     public void reset() {
         super.reset();
-        /*player = new Player(new UpdatingPosition(0, 0), this);
-        DataStorage storage = new DataStorage();
-        player.save(storage);
-        FileManager.writeToFile("res/user/user_default.txt", new ArrayList<>(Arrays.asList(storage.toString())));*/
-        player = new User("Test", UserManager.USER_DEFAULT).getPlayer(this);
+        player = new Player(new UpdatingPosition(0, 0), this);
     }
 
     public KeyBindManager getKeyBinds() {

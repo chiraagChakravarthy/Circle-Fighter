@@ -48,27 +48,6 @@ public class MultiDirectionalMovement extends MovementVector {
     }
 
     @Override
-    public void hardLoad(DataStorage storage) {
-        DataStorage directionStorage = storage.getSubStorage(0),
-                velocityStorage = storage.getSubStorage(1);
-        //TODO for this and all other boolean storage, create method which allows for an array of 32 booleans to be collected from a single integer index
-        for (int i = 0; i < direction.length; i++) {
-            direction[i] = directionStorage.get(i)==1;
-            velocities[i] = velocityStorage.getFloat(i);
-        }
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        DataStorage directionStorage = storage.getSubStorage(0),
-                velocityStorage = storage.getSubStorage(1);
-        for (int i = 0; i < direction.length; i++) {
-            directionStorage.set(i, direction[i]?1:0);
-            velocityStorage.setFloat(i, velocities[i]);
-        }
-    }
-
-    @Override
     public void save(DataStorage storage) {
         storage.set(0, direction.length).setFloat(1, acc).setFloat(2, dcc).setFloat(3, maxVel);
     }

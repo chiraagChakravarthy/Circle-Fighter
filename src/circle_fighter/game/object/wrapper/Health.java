@@ -1,6 +1,5 @@
 package circle_fighter.game.object.wrapper;
 
-import circle_fighter.functionaliy.HardSavable;
 import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Renderable;
@@ -8,11 +7,13 @@ import circle_fighter.functionaliy.Savable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.ui.ProgressBar;
+import circle_fighter.gfx.color.SolidColor;
+import circle_fighter.user.element.UserHealth;
 
 import java.awt.*;
 
-public class Health implements Renderable, Updatable, Savable, HardSavable {
-    private float initialHealth, invulnerabilityMultiplier;
+public class Health implements Renderable, Updatable, Savable {
+    private float maxHealth, invulnerabilityMultiplier;
     private int verticalOffset;
 
     private Position position;
@@ -22,9 +23,9 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
     private float health;
     private boolean visible;
 
-    public Health(float initialHealth, Position position, int width, int height, int verticalOffset, float invulnerabilityMultiplier, DynamicColor borderColor, DynamicColor barColor){
-        this.initialHealth = initialHealth;
-        health = initialHealth;
+    public Health(float maxHealth, Position position, int width, int height, int verticalOffset, float invulnerabilityMultiplier, DynamicColor borderColor, DynamicColor barColor){
+        this.maxHealth = maxHealth;
+        health = maxHealth;
         this.position = position;
         healthBar = new ProgressBar(0, 0, width, height, borderColor, barColor);
         this.verticalOffset = verticalOffset;
@@ -33,17 +34,17 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
         visible = true;
     }
 
-    public Health(Position position, DataStorage storage){
+    public Health(Position position, UserHealth health){
         this.position = position;
-        initialHealth = storage.getFloat(0);
-        invulnerabilityMultiplier = storage.getFloat(1);
-        verticalOffset = storage.get(2);
-        health = initialHealth;
-        healthBar = new ProgressBar(storage.getSubStorage(0));
+        maxHealth = health.getFunctions()[UserHealth.MAX_HEALTH].perform(health.get(UserHealth.MAX_HEALTH));
+        invulnerabilityMultiplier = health.getFunctions()[UserHealth.INVULNERABILITY_MULTIPLIER].perform(health.get(UserHealth.INVULNERABILITY_MULTIPLIER));
+        verticalOffset = -50;
+        this.health = maxHealth;
+        healthBar = new ProgressBar(0, 0, 50, 10, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
     }
 
     public void tick(){
-        healthBar.setProgress(health/initialHealth);
+        healthBar.setProgress(health/ maxHealth);
         healthBar.tick();
         healthBar.setX(position.getScrX()-healthBar.getWidth()/2);
         healthBar.setY(position.getScrY()+verticalOffset);
@@ -74,17 +75,7 @@ public class Health implements Renderable, Updatable, Savable, HardSavable {
 
     @Override
     public void save(DataStorage storage) {
-        storage.setFloat(0, initialHealth).setFloat(1, invulnerabilityMultiplier).set(2, verticalOffset);
+        storage.setFloat(0, maxHealth).setFloat(1, invulnerabilityMultiplier).set(2, verticalOffset);
         healthBar.save(storage.getSubStorage(0));
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-
     }
 }

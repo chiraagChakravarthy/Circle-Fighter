@@ -29,7 +29,7 @@ public class FileManager {
                 data.add(input.nextLine());
             }
         } catch (FileNotFoundException e) {
-            //not ignored. Will result in an empty arraylist
+            //not swallowed. Will result in an empty arraylist. This would never happen otherwise.
         }
         return data;
     }

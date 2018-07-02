@@ -31,9 +31,4 @@ public class PointBound extends Bound {
     public Rectangle outerBounds() {
         return new Rectangle((int)position.getX(), (int)position.getY(), 1, 1);
     }
-
-    @Override
-    public void save(DataStorage storage) {
-
-    }
 }

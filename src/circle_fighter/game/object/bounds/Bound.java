@@ -1,14 +1,13 @@
 package circle_fighter.game.object.bounds;
 
-import circle_fighter.functionaliy.Savable;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
-import javafx.geometry.Pos;
 
 import java.awt.*;
 
-public abstract class Bound implements Savable {
+public abstract class Bound {
     protected UpdatingPosition position;
+    private float rotation;
 
     public Bound(UpdatingPosition position){
         this.position = position;

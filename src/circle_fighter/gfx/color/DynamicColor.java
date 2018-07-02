@@ -1,12 +1,10 @@
 package circle_fighter.gfx.color;
 
-import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.HardSavable;
 import circle_fighter.functionaliy.Savable;
 
 import java.awt.*;
 
-public abstract class DynamicColor implements Savable, HardSavable {
+public abstract class DynamicColor implements Savable {
     protected float r, g, b;
     private float brightness, o;
     public DynamicColor(float r, float g, float b, float o, float brightness) {
@@ -50,15 +48,12 @@ public abstract class DynamicColor implements Savable, HardSavable {
     }
 
     @Override
-    public void hardSave(DataStorage storage) {
-        storage.setFloat(0, r).setFloat(1, g).setFloat(2, b).setFloat(3, o).setFloat(4, brightness);
-    }
-    @Override
-    public void hardLoad(DataStorage storage) {
-        r = storage.getFloat(0);
-        g = storage.getFloat(1);
-        b = storage.getFloat(2);
-        o = storage.getFloat(3);
-        brightness = storage.getFloat(4);
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

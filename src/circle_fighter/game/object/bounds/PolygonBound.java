@@ -1,15 +1,15 @@
 package circle_fighter.game.object.bounds;
 
-import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.position.OnPositionChanged;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 
+import javax.xml.crypto.Data;
 import java.awt.*;
 
 public class PolygonBound extends Bound implements OnPositionChanged {
-    protected Position[] absolute;
-    protected Position[] relative;
+    private Position[] absolute;
+    private Position[] relative;
     private float[] slopes;
     private boolean changed;
     private float[] lineRanges;
@@ -17,22 +17,11 @@ public class PolygonBound extends Bound implements OnPositionChanged {
 
     public PolygonBound(UpdatingPosition position, Position[] relative){
         super(position);
-        position.addListener(this);
         this.relative = relative;
         absolute = new Position[relative.length];
         lineRanges = new float[absolute.length*4];
         slopes = new float[absolute.length];
-    }
-
-    public PolygonBound(UpdatingPosition position, DataStorage storage){
-        super(position);
         position.addListener(this);
-        int vertices = storage.get(0);
-        relative = new Position[vertices];
-        for (int i = 0; i < vertices; i++) {
-            relative[i] = new Position();
-            relative[i].hardLoad(storage.getSubStorage(i));
-        }
     }
 
     //TODO finish this method
@@ -51,15 +40,16 @@ public class PolygonBound extends Bound implements OnPositionChanged {
             Position closest = intersection(slopes[i], slope, absolute[i].getX(), absolute[i].getY(), bound.getCenterPoint().getX(), bound.getCenterPoint().getY());
             if(closest.distance(bound.getCenterPoint())<bound.getRadius()){
                 int m = i*4;
-                if(lineRanges[m]==lineRanges[m+1]){
+                if(Float.isFinite(slopes[i])){
+                    if(closest.getX()>lineRanges[m]&&closest.getX()<lineRanges[m+1]){
+                        return true;
+                    }
+                }
+                else {
                     float halfChord = (float)Math.sqrt(bound.getRadius()*bound.getRadius()-Math.pow(bound.getCenterPoint().getX()-lineRanges[m], 2));
                     if(bound.getCenterPoint().getY()+halfChord>lineRanges[m+2]&&bound.getCenterPoint().getY()-halfChord<lineRanges[m+3]) {
                         return true;
                     }
-
-                }
-                else if(closest.getX()>lineRanges[m]&&closest.getX()<lineRanges[m+1]){
-                    return true;
                 }
             }
         }
@@ -107,7 +97,6 @@ public class PolygonBound extends Bound implements OnPositionChanged {
         }
         return false;
     }
-
     @Override
     public Rectangle outerBounds() {
         return outerBound;
@@ -116,15 +105,20 @@ public class PolygonBound extends Bound implements OnPositionChanged {
     //TODO optimize finding odd/even intersects between horizontal line from point and edge of polygon
     protected void update(){
         float maxX=0, maxY=0, minX=0, minY=0;
+        System.out.println(relative);
         for (int i = 0; i < relative.length; i++) {
+            System.out.println(0);
             Position absolute = new Position(position).move(relative[i], true);
+            System.out.println(1);
             this.absolute[i] = absolute;
+            System.out.println(2);
             if(i==0){
                 maxX = absolute.getX();
                 minX = absolute.getX();
                 maxY = absolute.getY();
                 minY = absolute.getY();
             }
+            System.out.println(3);
             maxX = Math.max(maxX, absolute.getX());
             maxY = Math.max(maxY, absolute.getY());
             minX = Math.min(minX, absolute.getX());
@@ -151,7 +145,6 @@ public class PolygonBound extends Bound implements OnPositionChanged {
                 amount++;
             }
         }
-        System.out.println("Amount: " + amount);
         return amount%2==1;
     }
 
@@ -188,13 +181,5 @@ public class PolygonBound extends Bound implements OnPositionChanged {
         if(changed)
             update();
         return lineRanges;
-    }
-
-    @Override
-    public void save(DataStorage storage) {
-        storage.set(0, relative.length);
-        for (int i = 0; i < relative.length; i++) {
-            relative[i].hardLoad(storage.getSubStorage(i));
-        }
     }
 }

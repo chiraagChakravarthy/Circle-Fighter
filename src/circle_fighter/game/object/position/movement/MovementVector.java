@@ -1,12 +1,11 @@
 package circle_fighter.game.object.position.movement;
 
-import circle_fighter.functionaliy.HardSavable;
 import circle_fighter.functionaliy.Savable;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
 
-public abstract class MovementVector implements Savable, HardSavable {
+public abstract class MovementVector implements Savable {
     protected UpdatingPosition position;
     protected Vector vector;
     public MovementVector(UpdatingPosition position, Vector vector){

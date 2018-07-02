@@ -69,17 +69,6 @@ public class OmniDirectionalMovement extends MovementVector {
     }
 
     @Override
-    public void hardLoad(DataStorage storage) {
-        front = storage.get(0)==1;
-        back = storage.get(1)==1;
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-        storage.set(0, front?1:0).set(1, back?1:0);
-    }
-
-    @Override
     public void save(DataStorage storage) {
         storage.setFloat(0, acc).setFloat(1, maxVel);
     }

@@ -17,16 +17,6 @@ public class MotionlessMovement extends MovementVector {
     }
 
     @Override
-    public void hardLoad(DataStorage storage) {
-
-    }
-
-    @Override
-    public void hardSave(DataStorage storage) {
-
-    }
-
-    @Override
     public void save(DataStorage storage) {
 
     }

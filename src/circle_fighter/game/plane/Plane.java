@@ -1,9 +1,10 @@
 package circle_fighter.game.plane;
 
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gfx.background.Background;
 import circle_fighter.gfx.color.Rainbow;
 import circle_fighter.gfx.color.SolidColor;
-import circle_fighter.game.object.ObjectManager;
+import circle_fighter.game.object.manager.ObjectManager;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.plane.bounds.PlaneBounds;
 import circle_fighter.functionaliy.Renderable;
@@ -25,6 +26,7 @@ public abstract class Plane implements Updatable, Renderable, UserInputListener 
 
     @Override
     public void tick() {
+        UpdatingPosition.tick();
         background.tick();
         objectManager.tick();
         background.getPosition().setX(Position.getxOffset());

@@ -1,14 +1,12 @@
 package circle_fighter.game.object.position;
 
-import circle_fighter.file.DataStorage;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class UpdatingPosition extends Position {
     private static ArrayList<UpdatingPosition> updatingPositions;
     private static float lastXOffset, lastYOffset;
-
+    //TODO make position return booleans to detect if anything has actually changed in order to know if to update anything
     static {
         updatingPositions = new ArrayList<>();
         lastXOffset = xOffset + 1;
@@ -48,6 +46,7 @@ public class UpdatingPosition extends Position {
 
     public UpdatingPosition(Position position) {
         super(position);
+        listeners = new ArrayList<>();
         listeners = new ArrayList<>();
     }
 
@@ -109,12 +108,6 @@ public class UpdatingPosition extends Position {
         for(OnPositionChanged listener : listeners){
             listener.onOffsetsChanged();
         }
-    }
-
-    @Override
-    public void hardLoad(DataStorage storage) {
-        super.hardLoad(storage);
-        update();
     }
 
     @Override
