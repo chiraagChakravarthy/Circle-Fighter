@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 public class User {
 
-    private DataStorage storage;
     private String name;
     private UserTurretManager turrets;
     private UserHealth health;
@@ -26,18 +25,27 @@ public class User {
 
     public User(String name, String user){
         this.name = name;
-        this.storage = new DataStorage().fromString(user);
+        DataStorage storage = new DataStorage().fromString(user);
         turrets = new UserTurretManager(storage.getSubStorage(0));
         health = new UserHealth(storage.getSubStorage(1));
         movement = new UserMovement(storage.getSubStorage(2));
         base = new UserBase(storage.getSubStorage(3));
     }
 
-    public Player getPlayer(PlayerPlane plane){
-        return new Player(new UpdatingPosition(0, 0), plane);
+    public User(String name){
+        this.name = name;
+        turrets = new UserTurretManager();
+        health = new UserHealth();
+        movement = new UserMovement();
+        base = new UserBase();
     }
 
     public ArrayList<String > save() {
+        DataStorage storage = new DataStorage();
+        turrets.save(storage.getSubStorage(0));
+        health.save(storage.getSubStorage(1));
+        movement.save(storage.getSubStorage(2));
+        base.save(storage.getSubStorage(3));
         return new ArrayList<>(Arrays.asList(name, storage.toString()));
     }
 

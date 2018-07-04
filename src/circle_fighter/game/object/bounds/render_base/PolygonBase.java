@@ -10,7 +10,6 @@ import java.awt.*;
 public class PolygonBase extends PolygonBound implements RenderBase {
     private Polygon polygon;
     private DynamicColor color;
-
     public PolygonBase(DynamicColor color, UpdatingPosition position, Position[] relative) {
         super(position, relative);
         this.color = color;

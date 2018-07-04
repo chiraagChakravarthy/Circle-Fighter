@@ -16,15 +16,12 @@ public class UserHealth extends UserElement {
         UserHealth.inverses = inverses.toArray(new TransformFunction[functions.size()]);
     }
     public UserHealth(){
-        super(functions, inverses, new Value(0, 30, 0),
-                new Value(0, 30, 0),
-                new Value(0, 30, 0));
+        this(null);
     }
 
     public UserHealth(DataStorage storage){
-        this();
-        for (int i = 0; i < 3; i++) {
-            values[i].set(storage.getFloat(i));
-        }
+        super(storage, functions, inverses, new Value(0, 30, 1),
+                new Value(0, 30, 0),
+                new Value(0, 30, 0));
     }
 }

@@ -7,7 +7,6 @@ import java.awt.*;
 
 public abstract class Bound {
     protected UpdatingPosition position;
-    private float rotation;
 
     public Bound(UpdatingPosition position){
         this.position = position;

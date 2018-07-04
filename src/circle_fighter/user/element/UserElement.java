@@ -3,8 +3,9 @@ package circle_fighter.user.element;
 import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Savable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.Type;
+import java.util.*;
 
 public class UserElement implements Savable{
     protected static TransformFunction[] addFunctions(float coefficient, float min, ArrayList<TransformFunction> functions, ArrayList<TransformFunction> inverse){
@@ -13,26 +14,37 @@ public class UserElement implements Savable{
         return new TransformFunction[]{functions.get(functions.size()-1), inverse.get(inverse.size()-1)};
     }
 
-    protected static <T> T[] merge(T[]... values){
-        ArrayList<T> valueList = new ArrayList<>();
-        for(T[] valueArray : values){
+    protected static TransformFunction[] merge(TransformFunction[]... values){
+        ArrayList<TransformFunction> valueList = new ArrayList<>();
+        for(TransformFunction[] valueArray : values){
             valueList.addAll(Arrays.asList(valueArray));
         }
-        return (T[])valueList.toArray();
+        return valueList.toArray(new TransformFunction[valueList.size()]);
     }
 
     protected Value[] values;
+
     public final TransformFunction[] functions, inverses;
-    public UserElement(TransformFunction[] functions, TransformFunction[] inverses, Value[] values, Value... valuesList){
+
+    public UserElement(DataStorage storage, TransformFunction[] functions, TransformFunction[] inverses, Value[] values, Value... valuesList){
         this.functions = functions;
         this.inverses = inverses;
         this.values = new Value[values.length + valuesList.length];
-        System.arraycopy(values, 0, this.values, 0, values.length);
-        System.arraycopy(valuesList, 0, this.values, values.length, valuesList.length);
+        System.arraycopy(valuesList, 0, this.values, 0, valuesList.length);
+        System.arraycopy(values, 0, this.values, valuesList.length, values.length);
+        if(storage != null){
+            for (int i = 0; i < values.length; i++) {
+                values[i].set(storage.getFloat(i));
+            }
+        }
     }
 
-    public UserElement(TransformFunction[] functions, TransformFunction[] inverses, Value... valuesList){
-        this(functions, inverses, new Value[0], valuesList);
+    public UserElement(DataStorage storage, TransformFunction[] functions, TransformFunction[] inverses, Value... valuesList){
+        this(storage, functions, inverses, new Value[0], valuesList);
+    }
+
+    public UserElement(){
+        this(null, new TransformFunction[0], new TransformFunction[0]);
     }
 
     public float get(int index){

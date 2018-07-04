@@ -1,7 +1,5 @@
 package circle_fighter.game.object.bounds;
 
-import circle_fighter.file.DataStorage;
-import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 
 import java.awt.*;

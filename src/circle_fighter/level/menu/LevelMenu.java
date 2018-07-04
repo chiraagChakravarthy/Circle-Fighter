@@ -22,6 +22,11 @@ public class LevelMenu extends Menu {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+    }
+
+    @Override
     protected void onSelect(int selectedOption) {
         exit();
     }

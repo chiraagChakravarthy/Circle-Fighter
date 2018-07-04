@@ -1,9 +1,7 @@
 package circle_fighter.user.element;
 
 import circle_fighter.file.DataStorage;
-import circle_fighter.gfx.color.ColorRegistry;
-import circle_fighter.gfx.color.DynamicColor;
-import circle_fighter.gfx.color.SolidColor;
+import circle_fighter.gfx.color.*;
 
 import java.util.ArrayList;
 
@@ -16,25 +14,31 @@ public class UserBase extends UserElement {
         inverseRadius = functions[1];
     }
 
-    private DynamicColor inner, outer;
+    private int inner, outer;
 
     public UserBase() {
-        super(new TransformFunction[]{radius}, new TransformFunction[]{inverseRadius}, new Value(0, 0, 0));
-        inner = new SolidColor(255, 0, 0);
-        outer = new SolidColor(255, 0, 0);
+        super(null, new TransformFunction[]{radius}, new TransformFunction[]{inverseRadius}, new Value(0, 0, 0));
+        inner = ColorRegistry.toID(Red.class);
+        outer = ColorRegistry.toID(Red.class);
     }
 
     public UserBase(DataStorage storage){
-        super(new TransformFunction[]{radius}, new TransformFunction[]{inverseRadius}, new Value(0, 0, storage.getFloat(0)));
-        this.inner = ColorRegistry.fromID(storage.get(1), storage.getSubStorage(0));
-        this.outer = ColorRegistry.fromID(storage.get(2), storage.getSubStorage(1));
+        super(storage.getSubStorage(0), new TransformFunction[]{radius}, new TransformFunction[]{inverseRadius}, new Value(0, 0));
+        this.inner = storage.get(0);
+        this.outer = storage.get(1);
+    }
+
+    @Override
+    public void save(DataStorage storage) {
+        super.save(storage.getSubStorage(0));
+        storage.set(0, inner).set(1, outer);
     }
 
     public DynamicColor getInner() {
-        return (DynamicColor) inner.clone();
+        return ColorRegistry.fromID(inner);
     }
 
     public DynamicColor getOuter() {
-        return (DynamicColor) outer.clone();
+        return ColorRegistry.fromID(outer);
     }
 }

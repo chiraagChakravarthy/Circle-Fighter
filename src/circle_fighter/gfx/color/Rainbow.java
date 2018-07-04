@@ -15,7 +15,7 @@ public class Rainbow extends DynamicColor {
     }
 
     public Rainbow(){
-        super();
+        this(1, 1);
     }
 
     @Override
@@ -65,10 +65,5 @@ public class Rainbow extends DynamicColor {
 
     public int getStage() {
         return stage;
-    }
-
-    @Override
-    public void save(DataStorage storage) {
-        storage.setFloat(0, rate);
     }
 }

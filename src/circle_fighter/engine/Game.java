@@ -55,39 +55,44 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     }
 
     public void run() {
-        long lastTime = System.nanoTime();
-        long timer = System.currentTimeMillis();
-        int ticks = 60;
-        double ns = 1000000000 / ticks;
-        double delta = 0;
-        int updates = 0, frames = 0;
-        //Allows for the logging of the ticks and frames each second
-        //Game Loop\\
-        while (running){
-        //Boolean which controls the running of the circle_fighter.game loop. Were it to equal false, the circle_fighter.game would simply freeze.
-            /////////////////////////////
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-            while (delta > 1) {
-                tick();
-                updates++;
-                delta--;
+        try {
+            long lastTime = System.nanoTime();
+            long timer = System.currentTimeMillis();
+            int ticks = 60;
+            double ns = 1000000000 / ticks;
+            double delta = 0;
+            int updates = 0, frames = 0;
+            //Allows for the logging of the ticks and frames each second
+            //Game Loop\\
+            while (running) {
+                //Boolean which controls the running of the circle_fighter.game loop. Were it to equal false, the circle_fighter.game would simply freeze.
+                /////////////////////////////
+                long now = System.nanoTime();
+                delta += (now - lastTime) / ns;
+                lastTime = now;
+                while (delta > 1) {
+                    tick();
+                    updates++;
+                    delta--;
+                }
+                frames++;
+                render();
+                /////////////////////////////
+                //A tick is the circle_fighter.game's equivalent of an instant. The code above allows time to be constant in a loop that varies
+                //in the length of each iteration
+                if (System.currentTimeMillis() - timer >= 1000) {
+                    System.out.println("FPS: " + frames + ", Ticks: " + updates);
+                    updates = 0;
+                    frames = 0;
+                    timer += 1000;
+                }
             }
-            frames++;
-            render();
-            /////////////////////////////
-            //A tick is the circle_fighter.game's equivalent of an instant. The code above allows time to be constant in a loop that varies
-            //in the length of each iteration
-            if (System.currentTimeMillis() - timer >= 1000) {
-                System.out.println("FPS: " + frames + ", Ticks: " + updates);
-                updates = 0;
-                frames = 0;
-                timer += 1000;
-            }
+            //Game Loop\\
+            stop();
         }
-        //Game Loop\\
-        stop();
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void stop() {

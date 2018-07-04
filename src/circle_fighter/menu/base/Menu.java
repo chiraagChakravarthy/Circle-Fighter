@@ -47,7 +47,6 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
             onOpen(selectedOption);
             selectedOption = -1;
         }
-
         for(MenuComponent component : menuComponents){
             component.setScrollingOffset((int) scrollingOffset);
             component.tick();

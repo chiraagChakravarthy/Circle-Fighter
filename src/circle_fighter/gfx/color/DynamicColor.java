@@ -1,10 +1,8 @@
 package circle_fighter.gfx.color;
 
-import circle_fighter.functionaliy.Savable;
-
 import java.awt.*;
 
-public abstract class DynamicColor implements Savable {
+public abstract class DynamicColor {
     protected float r, g, b;
     private float brightness, o;
     public DynamicColor(float r, float g, float b, float o, float brightness) {
@@ -45,15 +43,5 @@ public abstract class DynamicColor implements Savable {
 
     public void setBrightness(float brightness) {
         this.brightness = brightness;
-    }
-
-    @Override
-    public Object clone() {
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

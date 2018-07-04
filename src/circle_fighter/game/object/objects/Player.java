@@ -1,5 +1,6 @@
 package circle_fighter.game.object.objects;
 
+import circle_fighter.engine.Game;
 import circle_fighter.engine.KeyBindManager;
 import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Savable;
@@ -12,7 +13,7 @@ import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.RenderableObject;
-import circle_fighter.game.object.position.OnPositionChanged;
+import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.position.movement.VelAngAccMovement;
@@ -31,7 +32,7 @@ import java.awt.event.MouseWheelEvent;
 @CharacterObject
 @DamageableObject
 @RenderableObject
-public class Player extends GameObject implements UserInputListener, Damageable, Savable {
+public class Player extends GameObject implements UserInputListener, Damageable {
     private static final float RADIUS = 25;
     private Health health;
     private TurretManager turrets;
@@ -43,7 +44,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
         super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), 0.1f, 3, (float)Math.toRadians(.05), (float)Math.toRadians(3)), 0);
         this.keyBinds = plane.getKeyBinds();
         health = new Health(5, position, 50, 10, -50, 1, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
-        turrets = new TurretManager(new BasicTurret(this));
+        turrets = new TurretManager(this, new BasicTurret(this));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0));
     }
 
@@ -72,6 +73,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
         health.tick();
         turrets.tick();
         base.tick();
+        turrets.setTarget(new Position(Game.getInstance().mouseLocation()).absPosition());
         if(health.get()<=0)
             despawn();
         super.tick();
@@ -140,11 +142,5 @@ public class Player extends GameObject implements UserInputListener, Damageable,
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void save(DataStorage storage) {
-        super.save(storage.getSubStorage(0));
-        health.save(storage.getSubStorage(1));
     }
 }

@@ -1,18 +1,16 @@
 package circle_fighter.game.object.wrapper;
 
-import circle_fighter.gfx.color.DynamicColor;
-import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Renderable;
-import circle_fighter.functionaliy.Savable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.ui.ProgressBar;
+import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.user.element.UserHealth;
 
 import java.awt.*;
 
-public class Health implements Renderable, Updatable, Savable {
+public class Health implements Renderable, Updatable {
     private float maxHealth, invulnerabilityMultiplier;
     private int verticalOffset;
 
@@ -71,11 +69,5 @@ public class Health implements Renderable, Updatable, Savable {
 
     public void set(float health) {
         this.health = health;
-    }
-
-    @Override
-    public void save(DataStorage storage) {
-        storage.setFloat(0, maxHealth).setFloat(1, invulnerabilityMultiplier).set(2, verticalOffset);
-        healthBar.save(storage.getSubStorage(0));
     }
 }

@@ -1,15 +1,12 @@
 package circle_fighter.game.ui;
 
-import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.Savable;
-import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
-import circle_fighter.gfx.color.ColorRegistry;
+import circle_fighter.gfx.color.DynamicColor;
 
 import java.awt.*;
 
-public class ProgressBar implements Renderable, Updatable, Savable {
+public class ProgressBar implements Renderable, Updatable {
     private static final float BORDER_PROPORTION = 0.1f;
     private float progress, x, y, width, height, barX, barWidth, barY, barHeight;
     private DynamicColor borderColor, barColor;
@@ -23,18 +20,6 @@ public class ProgressBar implements Renderable, Updatable, Savable {
         barHeight = height-width*BORDER_PROPORTION;
         setX(x);
         setY(y);
-    }
-
-    public ProgressBar(DataStorage storage){
-        this.width = storage.getFloat(0);
-        this.height = storage.getFloat(1);
-        progress = 1;
-        borderColor = ColorRegistry.fromID(storage.get(2), storage.getSubStorage(0));
-        barColor = ColorRegistry.fromID(storage.get(3), storage.getSubStorage(1));
-        barWidth = width*(1- BORDER_PROPORTION);
-        barHeight = height-width*BORDER_PROPORTION;
-        setX(storage.getFloat(4));
-        setY(storage.getFloat(5));
     }
 
     @Override
@@ -91,12 +76,5 @@ public class ProgressBar implements Renderable, Updatable, Savable {
 
     public float getHeight() {
         return height;
-    }
-
-    @Override
-    public void save(DataStorage storage) {
-        storage.setFloat(0, width).setFloat(1, height).set(2, ColorRegistry.toID(borderColor.getClass())).set(3, ColorRegistry.toID(barColor.getClass())).setFloat(4, x).setFloat(5, y);
-        borderColor.save(storage.getSubStorage(0));
-        barColor.save(storage.getSubStorage(1));
     }
 }

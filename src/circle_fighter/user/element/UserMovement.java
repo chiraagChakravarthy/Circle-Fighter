@@ -6,7 +6,10 @@ import circle_fighter.user.UserManager;
 import java.util.ArrayList;
 
 public class UserMovement extends UserElement {
-    public static final int ACC = 0, VEL = ACC+1, ACC_ANG = VEL+1, VEL_ANG = ACC_ANG+1;
+    public static final int ACC = 0,
+            VEL = ACC+1,
+            ACC_ANG = VEL+1,
+            VEL_ANG = ACC_ANG+1;
 
     private static TransformFunction[] functions, inverses;
 
@@ -21,16 +24,13 @@ public class UserMovement extends UserElement {
     }
 
     public UserMovement(DataStorage storage){
-        this();
-        for (int i = 0; i < values.length; i++) {
-            values[i].set(storage.getFloat(i));
-        }
-    }
-
-    public UserMovement(){
-        super(functions, inverses, new Value(0, 5, 0),
+        super(storage, functions, inverses, new Value(0, 5, 0),
                 new Value(0, 10, 0),
                 new Value(0, 5, 0),
                 new Value(0, 10, 0));
+    }
+
+    public UserMovement(){
+        this(null);
     }
 }

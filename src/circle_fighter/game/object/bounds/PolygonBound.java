@@ -105,20 +105,15 @@ public class PolygonBound extends Bound implements OnPositionChanged {
     //TODO optimize finding odd/even intersects between horizontal line from point and edge of polygon
     protected void update(){
         float maxX=0, maxY=0, minX=0, minY=0;
-        System.out.println(relative);
         for (int i = 0; i < relative.length; i++) {
-            System.out.println(0);
             Position absolute = new Position(position).move(relative[i], true);
-            System.out.println(1);
             this.absolute[i] = absolute;
-            System.out.println(2);
             if(i==0){
                 maxX = absolute.getX();
                 minX = absolute.getX();
                 maxY = absolute.getY();
                 minY = absolute.getY();
             }
-            System.out.println(3);
             maxX = Math.max(maxX, absolute.getX());
             maxY = Math.max(maxY, absolute.getY());
             minX = Math.min(minX, absolute.getX());

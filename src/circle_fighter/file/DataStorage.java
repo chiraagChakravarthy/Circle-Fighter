@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DataStorage {
     private ArrayList<Integer> data;
     private ArrayList<DataStorage> subStorages;
-
+    //TODO 5 bits allocated to each value to determine bit length of value (max 32 bits per value)
     public DataStorage() {
         data = new ArrayList<>();
         subStorages = new ArrayList<>();

@@ -72,7 +72,8 @@ public abstract class PlayerPlane extends Plane {
     @Override
     public void reset() {
         super.reset();
-        player = new Player(new UpdatingPosition(0, 0), this);
+        User user = new User("Test");
+        player = new Player(initialPlayerPosition.clone(), this, user);
     }
 
     public KeyBindManager getKeyBinds() {

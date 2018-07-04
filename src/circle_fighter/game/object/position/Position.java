@@ -109,8 +109,12 @@ public class Position {
         return this;
     }
 
+    public Position absPosition(){
+        return new Position(x+xOffset-Game.getInstance().getGameWidth()/2, y+yOffset-Game.getInstance().getGameHeight()/2, rotation);
+    }
+
     public Position scrPosition(){
-        return new Position(getScrX(), getScrY());
+        return new Position(getScrX(), getScrY(), rotation);
     }
 
     public float getX() {
@@ -158,5 +162,18 @@ public class Position {
     @Override
     public String toString() {
         return "X: " + x + ", Y: " + y;
+    }
+
+    public Position transform(float x, float y, float rotation) {
+        this.x += x;
+        this.y +=y;
+        this.rotation += rotation;
+        return this;
+    }
+
+    public Position translate(float x, float y) {
+        this.x += x;
+        this.y += y;
+        return this;
     }
 }

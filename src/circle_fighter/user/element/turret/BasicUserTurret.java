@@ -1,25 +1,38 @@
 package circle_fighter.user.element.turret;
 
 import circle_fighter.file.DataStorage;
+import circle_fighter.game.object.GameObject;
+import circle_fighter.game.object.turret.BasicTurret;
+import circle_fighter.game.object.turret.Turret;
+import circle_fighter.gfx.color.Blue;
 import circle_fighter.gfx.color.ColorRegistry;
 import circle_fighter.gfx.color.DynamicColor;
-import circle_fighter.gfx.color.SolidColor;
-import circle_fighter.user.element.TransformFunction;
 
 public class BasicUserTurret extends UserTurret {
-    private DynamicColor color;
+    private int color;
 
     public BasicUserTurret(){
-        super(1, new TransformFunction[0], new TransformFunction[0]);
-        color = new SolidColor(0, 0, 255);
+        super(1);
+        color = ColorRegistry.toID(Blue.class);
     }
 
     public BasicUserTurret(DataStorage storage){
-        super(storage.getSubStorage(0), 1, new TransformFunction[0], new TransformFunction[0]);
-        color = ColorRegistry.fromID(storage.get(0), storage.getSubStorage(1));
+        super(storage.getSubStorage(0), 1);
+        color = storage.get(0);
     }
 
     public DynamicColor getColor() {
-        return color;
+        return ColorRegistry.fromID(color);
+    }
+
+    @Override
+    public Turret newTurret(GameObject object) {
+        return new BasicTurret(this, object);
+    }
+
+    @Override
+    public void save(DataStorage storage) {
+        super.save(storage.getSubStorage(0));
+        storage.set(0, color);
     }
 }

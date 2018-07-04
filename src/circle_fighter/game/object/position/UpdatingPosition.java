@@ -114,4 +114,17 @@ public class UpdatingPosition extends Position {
     public UpdatingPosition clone() {
         return new UpdatingPosition(this);
     }
+
+    @Override
+    public UpdatingPosition transform(float x, float y, float rotation) {
+        super.transform(x, y, rotation);
+        update();
+        return this;
+    }
+
+    public UpdatingPosition translate(float x, float y){
+        super.translate(x, y);
+        update();
+        return this;
+    }
 }

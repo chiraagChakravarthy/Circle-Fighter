@@ -1,21 +1,15 @@
 package circle_fighter.game.object;
 
-import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Renderable;
-import circle_fighter.functionaliy.Savable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.functionality.Bounded;
 import circle_fighter.game.object.functionality.Polarized;
 import circle_fighter.game.object.position.UpdatingPosition;
-import circle_fighter.game.object.position.movement.MovementRegistry;
-import circle_fighter.game.object.position.movement.MovementVector;
-import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.Vector;
-import circle_fighter.game.object.position.movement.VelAngAccMovement;
+import circle_fighter.game.object.position.movement.MovementVector;
 import circle_fighter.game.plane.Plane;
-import circle_fighter.user.element.UserMovement;
 
-public abstract class GameObject implements Renderable, Updatable, Bounded, Polarized, Savable {
+public abstract class GameObject implements Renderable, Updatable, Bounded, Polarized {
     protected UpdatingPosition position;
     protected Vector vector;
     protected MovementVector movement;
@@ -76,11 +70,5 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
     public enum BoundExitAction {
         BOUND,
         DESPAWN;
-    }
-
-    @Override
-    public void save(DataStorage storage) {
-        storage.set(0, MovementRegistry.toID(movement.getClass()));
-        movement.save(storage.getSubStorage(0));
     }
 }
