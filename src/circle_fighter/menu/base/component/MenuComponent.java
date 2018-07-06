@@ -12,36 +12,39 @@ public abstract class MenuComponent {
 
     protected int transitionOffset, scrollingOffset;
 
-    private MenuProgression state;
+    private MenuProgression progression;
 
     public MenuComponent(){
-        state = MenuProgression.EXITING;
+        progression = MenuProgression.EXITING;
         transitionOffset = TRANSITION_DISTANCE;
         scrollingOffset = 0;
     }
 
     public void tick() {
-        if(state.equals(MenuProgression.ENTERING)){
+        if(progression.equals(MenuProgression.ENTERING)){
             transitionOffset += TRANSITION_VELOCITY;
-            if(transitionOffset>=0) advanceState();
+            if(transitionOffset>=0){
+                transitionOffset = 0;
+                advanceState();
+            }
         }
-        else if(state.equals(MenuProgression.EXITING)){
+        else if(progression.equals(MenuProgression.EXITING)){
             if(transitionOffset < TRANSITION_DISTANCE)transitionOffset += TRANSITION_VELOCITY;
             else transitionOffset = TRANSITION_DISTANCE;
         }
     }
 
     public void advanceState(){
-        switch (state){
+        switch (progression){
             case ENTERING:
-                state = MenuProgression.DEFAULT;
+                progression = MenuProgression.DEFAULT;
                 transitionOffset = 0;
                 break;
             case DEFAULT:
-                state = MenuProgression.EXITING;
+                progression = MenuProgression.EXITING;
                 break;
             case EXITING:
-                state = MenuProgression.ENTERING;
+                progression = MenuProgression.ENTERING;
                 transitionOffset = -TRANSITION_DISTANCE;
                 break;
         }
@@ -50,15 +53,15 @@ public abstract class MenuComponent {
     public abstract void render(Graphics2D g);
 
     public boolean isFinishedEntering(){
-        return state.equals(MenuProgression.DEFAULT);
+        return progression.equals(MenuProgression.DEFAULT);
     }
 
     public boolean isFinishedExiting(){
-        return state.equals(MenuProgression.EXITING) && transitionOffset >= TRANSITION_DISTANCE;
+        return progression.equals(MenuProgression.EXITING) && transitionOffset >= TRANSITION_DISTANCE;
     }
 
-    public MenuProgression getState() {
-        return state;
+    public MenuProgression getProgression() {
+        return progression;
     }
 
     public abstract Rectangle getArea(boolean onScreen);

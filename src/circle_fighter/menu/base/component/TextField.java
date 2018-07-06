@@ -69,7 +69,7 @@ public class TextField extends MenuComponent implements UserInputListener{
             shift=false;
     }
 
-    public String getText(){
+    public String get(){
         return text.getText();
     }
 

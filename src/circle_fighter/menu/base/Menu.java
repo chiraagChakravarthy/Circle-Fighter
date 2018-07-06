@@ -7,6 +7,7 @@ import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
 import circle_fighter.menu.base.component.MenuComponent;
+import circle_fighter.menu.base.component.ListOption;
 import circle_fighter.menu.base.component.Option;
 import circle_fighter.menu.base.component.TextBox;
 
@@ -15,6 +16,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+
 //TODO make all menus return to previous screen on esc by setting selected option to that which will return it to such on exit
 public abstract class Menu implements Updatable, Renderable, UserInputListener{
     private ArrayList<MenuComponent> menuComponents;
@@ -27,22 +30,17 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     private float activeOption;
     private float scrollingOffset;
     protected MenuProgression progression;
+    private boolean reconstructOnOpen, constructed;
 
-    private TextBox title;
-
-    public Menu(String title, KeyBindManager keyBinds){
-        this.title = new TextBox(title, 50, (int) (Game.getInstance().getGameWidth()*2.0/3), new SolidColor(255, 255, 255));
+    public Menu(KeyBindManager keyBinds, boolean reconstructOnOpen){
         this.keyBinds = keyBinds;
-        menuComponents = new ArrayList<>();
-        options = new ArrayList<>();
-        addComponent(this.title);
-        selectedOption = -1;
-        activeOption = 0;
+        this.reconstructOnOpen = reconstructOnOpen;
+        constructed = false;
         progression = MenuProgression.EXITING;
     }
 
     public void tick(){
-        if(menuComponents.get(menuComponents.size()-1).isFinishedExiting()&&progression.equals(MenuProgression.EXITING)){
+        if(menuComponents==null||menuComponents.get(menuComponents.size()-1).isFinishedExiting()&&progression.equals(MenuProgression.EXITING)){
             progression = MenuProgression.ENTERING;
             onOpen(selectedOption);
             selectedOption = -1;
@@ -54,7 +52,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
         if(progression.equals(MenuProgression.ENTERING)){
             if(activeOption < menuComponents.size()){
                 MenuComponent menuComponent = menuComponents.get((int)activeOption);
-                if(menuComponent.getState().equals(MenuProgression.EXITING)) menuComponent.advanceState();
+                if(menuComponent.getProgression().equals(MenuProgression.EXITING)) menuComponent.advanceState();
                 activeOption+=TRANSITION_RATE;
             }
             else if(menuComponents.get(menuComponents.size()-1).isFinishedEntering()){
@@ -66,7 +64,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
             if (selectedOption >= 0 && selectedOption < options.size()) options.get(selectedOption).select();
             Point mouse = Game.getInstance().mouseLocation();
             for (int i = 0; i < options.size(); i++) {
-                if(options.get(i).getArea(true).contains(mouse)){
+                if(((MenuComponent)options.get(i)).getArea(true).contains(mouse)){
                     selectedOption = i;
                     return;
                 }
@@ -76,7 +74,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
         else if(progression.equals(MenuProgression.EXITING)){
             if(activeOption < menuComponents.size()){
                 MenuComponent menuComponent = menuComponents.get((int)activeOption);
-                if(menuComponent.getState().equals(MenuProgression.DEFAULT)) menuComponent.advanceState();
+                if(menuComponent.getProgression().equals(MenuProgression.DEFAULT)) menuComponent.advanceState();
                 activeOption+=TRANSITION_RATE;
             }
             else if(menuComponents.get(menuComponents.size()-1).isFinishedExiting()){
@@ -87,14 +85,26 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
     }
 
     public void render(Graphics2D g){
-        for(MenuComponent menuComponent : menuComponents){
-            menuComponent.render(g);
+        if(menuComponents != null) {
+            for (MenuComponent menuComponent : menuComponents) {
+                menuComponent.render(g);
+            }
         }
     }
 
     protected abstract void onSelect(int selectedOption);
     protected abstract void onExit(int selectedOption);
-    protected abstract void onOpen(int selectedOption);
+    protected void onOpen(int selectedOption){
+        if(reconstructOnOpen||!constructed){
+            menuComponents = new ArrayList<>();
+            options = new ArrayList<>();
+            String title = getTitle();
+            addComponent(new TextBox(title, 50, (int) (Game.getInstance().getGameWidth()*2.0/3), new SolidColor(255, 255, 255)));
+            constructMenu();
+            constructed = true;
+            activeOption = 0;
+        }
+    }
 
     public void keyPressed(int k){
         if(k==KeyEvent.VK_UP){
@@ -133,7 +143,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
         progression = MenuProgression.EXITING;
     }
 
-    public void addOption(Option option){
+    public void addOption(ListOption option){
         options.add(option);
     }
 
@@ -169,7 +179,7 @@ public abstract class Menu implements Updatable, Renderable, UserInputListener{
         return options;
     }
 
-    public TextBox getTitle() {
-        return title;
-    }
+    protected abstract void constructMenu();
+
+    protected abstract String getTitle();
 }

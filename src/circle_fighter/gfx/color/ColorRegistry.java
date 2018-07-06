@@ -1,7 +1,5 @@
 package circle_fighter.gfx.color;
 
-import circle_fighter.file.DataStorage;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;

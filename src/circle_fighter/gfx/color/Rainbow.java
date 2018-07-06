@@ -63,6 +63,11 @@ public class Rainbow extends DynamicColor {
         stage = 0;
     }
 
+    @Override
+    public DynamicColor clone() {
+        return new Rainbow();
+    }
+
     public int getStage() {
         return stage;
     }

@@ -3,18 +3,15 @@ package circle_fighter.level.menu;
 import circle_fighter.gameState.LevelState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.MenuProgression;
-import circle_fighter.menu.base.component.Option;
+import circle_fighter.menu.base.component.ListOption;
 
 import java.awt.event.KeyEvent;
 
 public class PauseMenu extends Menu {
     private LevelState state;
     public PauseMenu(LevelState state) {
-        super("Paused", state.getKeyBinds());
+        super(state.getKeyBinds(), false);
         this.state = state;
-        addComponent(new Option("Continue", getLowestY()+Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Reset Level", getLowestY()+Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Exit to Level Select", getLowestY()+Menu.COMPONENT_SPACING, this));
     }
 
     @Override
@@ -50,7 +47,19 @@ public class PauseMenu extends Menu {
     }
 
     @Override
-    protected void onOpen(int selectedOption) {
+    protected void constructMenu() {
+        addComponent(new ListOption("Continue", getLowestY()+Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Reset Level", getLowestY()+Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Exit to Level Select", getLowestY()+Menu.COMPONENT_SPACING, this));
+    }
 
+    @Override
+    protected String getTitle() {
+        return "Paused";
+    }
+
+    @Override
+    protected void onOpen(int selectedOption) {
+        super.onOpen(selectedOption);
     }
 }

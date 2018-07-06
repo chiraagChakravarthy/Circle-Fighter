@@ -20,6 +20,7 @@ public class MenuState extends GameState {
     private int menu;
     private List<Menu> menus;
     private Background background;
+    private boolean changed;
 
     public MenuState(GameStateManager gsm, KeyBindManager keyBinds) {
         super(gsm, keyBinds);
@@ -30,6 +31,7 @@ public class MenuState extends GameState {
         menus.add(new UserMenu(this));//3
         menus.add(new UserNameMenu(this));//4
         background = new Background.PlainBackground(new Rainbow(0.5f, 10));
+        changed = true;
     }
 
     @Override

@@ -41,7 +41,10 @@ public abstract class DynamicColor {
         return brightness;
     }
 
-    public void setBrightness(float brightness) {
+    public DynamicColor setBrightness(float brightness) {
         this.brightness = brightness;
+        return this;
     }
+
+    public abstract DynamicColor clone();
 }

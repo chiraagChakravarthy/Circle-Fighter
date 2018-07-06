@@ -2,20 +2,14 @@ package circle_fighter.menu;
 
 
 import circle_fighter.engine.Game;
-import circle_fighter.gameState.GameStateManager;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.StateMenu;
-import circle_fighter.menu.base.component.MenuComponent;
-import circle_fighter.menu.base.component.Option;
+import circle_fighter.menu.base.component.ListOption;
 
 public class MainMenu extends StateMenu {
     public MainMenu(MenuState state){
-        super(state, Game.getInstance().TITLE);
-        addComponent(new Option("Play", getLowestY() + Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Options", getLowestY() + Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Credits", getLowestY() + Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Quit", getLowestY() + Menu.COMPONENT_SPACING, this));
+        super(state, false);
     }
 
     @Override
@@ -27,8 +21,7 @@ public class MainMenu extends StateMenu {
     protected void onExit(int selectedOption) {
         switch (selectedOption){
             case 0:
-                //state.setMenu(3);
-                state.getGsm().setGameState(GameStateManager.PLAY_STATE);
+                state.setMenu(3);
                 break;
             case 1:
                 state.setMenu(1);
@@ -50,6 +43,19 @@ public class MainMenu extends StateMenu {
 
     @Override
     public void onOpen(int selectedOption) {
+        super.onOpen(selectedOption);
+    }
 
+    @Override
+    protected void constructMenu() {
+        addComponent(new ListOption("Play", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Options", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Credits", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Quit", getLowestY() + Menu.COMPONENT_SPACING, this));
+    }
+
+    @Override
+    protected String getTitle() {
+        return Game.getInstance().TITLE;
     }
 }

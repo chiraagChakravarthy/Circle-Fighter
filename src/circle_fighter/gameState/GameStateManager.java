@@ -4,6 +4,7 @@ import circle_fighter.engine.KeyBindManager;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
+import circle_fighter.user.UserManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -14,8 +15,10 @@ public class GameStateManager implements Renderable, Updatable, UserInputListene
     public static final int MENU_STATE = 0, PLAY_STATE = 1;
     private ArrayList<GameState> states;
     private int gameState;
+    private UserManager users;
     public GameStateManager(KeyBindManager keyBinds) {
         gameState = MENU_STATE;
+        users = new UserManager();
         states = new ArrayList<>();
         registerStates(keyBinds);
     }
@@ -56,8 +59,13 @@ public class GameStateManager implements Renderable, Updatable, UserInputListene
             System.out.println("GameState " + gameState + " does not exist.");
     }
 
+    public UserManager getUsers() {
+        return users;
+    }
+
     private void registerStates(KeyBindManager keyBinds) {
         states.add(new MenuState(this, keyBinds));
         states.add(new LevelState(this, keyBinds));
+        states.add(new UserLobbyState(this, keyBinds));
     }
 }

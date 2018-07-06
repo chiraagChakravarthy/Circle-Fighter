@@ -3,14 +3,11 @@ package circle_fighter.menu.options;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.StateMenu;
-import circle_fighter.menu.base.component.Option;
+import circle_fighter.menu.base.component.ListOption;
 
 public class OptionsMenu extends StateMenu {
     public OptionsMenu(MenuState state) {
-        super(state, "Options");
-        addComponent(new Option("Controls",  getLowestY() + Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Help", getLowestY() + Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Back", getLowestY() + Menu.COMPONENT_SPACING, this));
+        super(state, false);
     }
 
     @Override
@@ -33,6 +30,18 @@ public class OptionsMenu extends StateMenu {
 
     @Override
     public void onOpen(int selectedOption) {
+        super.onOpen(selectedOption);
+    }
 
+    @Override
+    protected void constructMenu() {
+        addComponent(new ListOption("Controls",  getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Help", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Back", getLowestY() + Menu.COMPONENT_SPACING, this));
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Options";
     }
 }

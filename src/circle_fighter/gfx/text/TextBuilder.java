@@ -21,7 +21,7 @@ public class TextBuilder {
         font = new Font("Arial", Font.PLAIN, 30);
         color = new SolidColor(255, 255, 255);
         showBorder = true;
-        minimizeWidth = true;
+        minimizeWidth = false;
         center = true;
         textAlign = Text.Alignment.CENTER;
     }

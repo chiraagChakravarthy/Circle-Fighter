@@ -42,7 +42,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         if(TEST)
             test = new Test();
         else {
-            UserManager.init();
             keybinds = new KeyBindManager();
             gsm = new GameStateManager(keybinds);
         }

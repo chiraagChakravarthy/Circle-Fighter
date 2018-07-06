@@ -11,14 +11,12 @@ import java.util.ArrayList;
 
 public class Text implements Updatable, Renderable {
     private static final double PADDING_PROPORTION = 0.4;
-    private int x;
-    private int y;
+    private int x, y, width, height;
     private ArrayList<Line> lines;
     private Font font;
     private DynamicColor color;
     private boolean showBorder, minimizeWidth, center;
     private RoundRectangle2D border;
-    private int width, height;
     private Alignment alignment;
     private String text;
     //TODO fix glitch where height becomes 0 when text contains only spaces
@@ -47,9 +45,7 @@ public class Text implements Updatable, Renderable {
         if(showBorder)
             g.draw(border);
         g.setFont(font);
-        for (Line line : lines) {
-            g.drawString(line.getText(), line.getX() + x, line.getY() + y);
-        }
+        lines.forEach(line -> g.drawString(line.getText(), line.getX() + x, line.getY() + y));
     }
 
     public void setX(int x) {

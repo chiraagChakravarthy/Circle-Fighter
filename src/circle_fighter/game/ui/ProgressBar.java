@@ -33,6 +33,8 @@ public class ProgressBar implements Renderable, Updatable {
         g.setColor(borderColor.get());
         g.fillRect((int)x, (int)y, (int)width, (int)height);
         g.setColor(barColor.get());
+        g.setStroke(new BasicStroke(height/30.0f));
+        g.drawRect((int)barX, (int)barY, ((int)barWidth), (int)barHeight);
         g.fillRect((int)barX, (int)barY, (int)(barWidth*progress), (int)barHeight);
     }
 

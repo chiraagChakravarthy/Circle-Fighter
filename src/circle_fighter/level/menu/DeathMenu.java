@@ -2,14 +2,12 @@ package circle_fighter.level.menu;
 
 import circle_fighter.gameState.LevelState;
 import circle_fighter.menu.base.Menu;
-import circle_fighter.menu.base.component.Option;
+import circle_fighter.menu.base.component.ListOption;
 
 public class DeathMenu extends Menu {
     private LevelState state;
     public DeathMenu(LevelState state) {
-        super("You Died!", state.getKeyBinds());
-        addComponent(new Option("Retry Level", getLowestY()+Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Exit to Level Select", getLowestY()+Menu.COMPONENT_SPACING, this));
+        super(state.getKeyBinds(), false);
         this.state = state;
     }
 
@@ -33,6 +31,17 @@ public class DeathMenu extends Menu {
 
     @Override
     protected void onOpen(int selectedOption) {
+        super.onOpen(selectedOption);
+    }
 
+    @Override
+    protected void constructMenu() {
+        addComponent(new ListOption("Retry Level", getLowestY()+Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Exit to Level Select", getLowestY()+Menu.COMPONENT_SPACING, this));
+    }
+
+    @Override
+    protected String getTitle() {
+        return "You Died!";
     }
 }

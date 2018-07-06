@@ -10,7 +10,7 @@ import circle_fighter.user.element.UserElement;
 import circle_fighter.user.element.Value;
 
 import java.util.ArrayList;
-
+//TODO IMMEDIATLY begin work on shop system
 public abstract class UserTurret extends UserElement {
     private static TransformFunction[] functions, inverses;
     public static final int MAX_ANG = 0, RELOAD_RATE = MAX_ANG+1;

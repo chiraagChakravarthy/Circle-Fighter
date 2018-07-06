@@ -65,4 +65,12 @@ public class UserElement implements Savable{
     public TransformFunction[] getInverses() {
         return inverses;
     }
+
+    public boolean set(int index, float val) {
+        return values[index].set(val);
+    }
+
+    public Value getValue(int index) {
+        return values[index];
+    }
 }

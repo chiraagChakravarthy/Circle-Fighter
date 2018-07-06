@@ -23,4 +23,20 @@ public class Value {
         }
         return false;
     }
+
+    public boolean maxed() {
+        return val >= max;
+    }
+
+    public boolean minned(){
+        return val <= min;
+    }
+
+    public float getMax() {
+        return max;
+    }
+
+    public float getMin() {
+        return min;
+    }
 }

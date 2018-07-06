@@ -16,7 +16,7 @@ public class Stage4 extends TutorialStage {
         super(tutorial);
         hintList = new ArrayList<>();
         hintList.add(new TextHint("Congratulations! You have completed the tutorial!", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
-        hintList.add(new TextHint("If you want more of a challenge, try out some of the other levels.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
+        hintList.add(new TextHint("If you want more of a challenge, try out some of the other levelDisplay.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         hintList.add(new TextHint("Keep in mind, they'll actually chase after you.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         hintList.add(new TextHint("I won't hold you in place next time. Promise.", new Font("Arial", Font.PLAIN, 38), 5000, new SolidColor(255, 255, 255), 100));
         reset();

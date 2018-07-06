@@ -14,4 +14,9 @@ public class SolidColor extends DynamicColor {
     public void reset() {
         //ignored
     }
+
+    @Override
+    public DynamicColor clone() {
+        return new SolidColor(r, g, b);
+    }
 }

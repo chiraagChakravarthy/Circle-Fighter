@@ -2,16 +2,13 @@ package circle_fighter.level.menu;
 
 import circle_fighter.gameState.LevelState;
 import circle_fighter.menu.base.Menu;
-import circle_fighter.menu.base.component.Option;
+import circle_fighter.menu.base.component.ListOption;
 
 public class WinMenu extends Menu {
     private LevelState state;
     public WinMenu(LevelState state) {
-        super("You Win!", state.getKeyBinds());
+        super(state.getKeyBinds(), false);
         this.state = state;
-        addComponent(new Option("Retry Level", getLowestY() + Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Next Level", getLowestY() + Menu.COMPONENT_SPACING, this));
-        addComponent(new Option("Exit to Level Select", getLowestY() + Menu.COMPONENT_SPACING, this));
     }
 
     @Override
@@ -37,6 +34,18 @@ public class WinMenu extends Menu {
 
     @Override
     protected void onOpen(int selectedOption) {
+        super.onOpen(selectedOption);
+    }
 
+    @Override
+    protected void constructMenu() {
+        addComponent(new ListOption("Retry Level", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Next Level", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Exit to Level Select", getLowestY() + Menu.COMPONENT_SPACING, this));
+    }
+
+    @Override
+    protected String getTitle() {
+        return "You Win!";
     }
 }

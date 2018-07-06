@@ -20,7 +20,7 @@ public class UserHealth extends UserElement {
     }
 
     public UserHealth(DataStorage storage){
-        super(storage, functions, inverses, new Value(0, 30, 1),
+        super(storage, functions, inverses, new Value(0, 30, 0),
                 new Value(0, 30, 0),
                 new Value(0, 30, 0));
     }
