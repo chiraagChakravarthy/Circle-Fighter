@@ -1,5 +1,6 @@
 package circle_fighter.game.object.objects.bots;
 
+import circle_fighter.game.object.functionality.DirectlyDamaging;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.GameObject;
@@ -23,7 +24,7 @@ import java.awt.*;
 @DamagingObject
 @RenderableObject
 @CharacterObject
-public class BotM3 extends GameObject implements Damaging, Damageable{
+public class BotM3 extends GameObject implements DirectlyDamaging, Damageable{
     private static final float RADIUS = 15;
 
     private PlayerPlane plane;
@@ -65,9 +66,13 @@ public class BotM3 extends GameObject implements Damaging, Damageable{
     }
 
     @Override
-    public boolean damage(Damaging damagingObject) {
+    public boolean damage(DirectlyDamaging damagingObject) {
         if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.set(health.get()-damagingObject.damage());
+            if(health.get()<=0) {
+                despawn();
+                damagingObject.onKill(this);
+            }
             return true;
         }
         return false;

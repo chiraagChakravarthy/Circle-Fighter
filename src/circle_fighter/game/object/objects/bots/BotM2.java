@@ -5,6 +5,7 @@ import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.bounds.render_base.CircularBase;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
+import circle_fighter.game.object.functionality.DirectlyDamaging;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.DamagingObject;
@@ -22,7 +23,7 @@ import java.awt.*;
 @DamagingObject
 @RenderableObject
 @CharacterObject
-public class BotM2 extends GameObject implements Damaging, Damageable{
+public class BotM2 extends GameObject implements DirectlyDamaging, Damageable{
     private static final float RADIUS = 12;
 
     private PlayerPlane plane;
@@ -59,9 +60,13 @@ public class BotM2 extends GameObject implements Damaging, Damageable{
     }
 
     @Override
-    public boolean damage(Damaging damagingObject) {
+    public boolean damage(DirectlyDamaging damagingObject) {
         if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.set(health.get()-damagingObject.damage());
+            if(health.get()<=0) {
+                despawn();
+                damagingObject.onKill(this);
+            }
             return true;
         }
         return false;

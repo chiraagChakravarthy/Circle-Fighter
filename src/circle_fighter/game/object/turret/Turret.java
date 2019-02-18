@@ -3,11 +3,13 @@ package circle_fighter.game.object.turret;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.game.object.GameObject;
+import circle_fighter.game.object.functionality.Damageable;
+import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.user.element.turret.UserTurret;
 
-public abstract class Turret implements Updatable, Renderable {
+public abstract class Turret implements Updatable, Renderable, Damaging {
     //TODO refactor all instances of shoot rate to reload rate
     protected GameObject object;
     private final float maximumAng, reloadRate;
@@ -15,7 +17,7 @@ public abstract class Turret implements Updatable, Renderable {
     private float delta;
     private boolean reloading;
     private UpdatingPosition turretPosition;
-    public Turret(UserTurret turret, GameObject object){
+    public <T extends GameObject & Damaging> Turret(UserTurret turret, T object){
         this.object = object;
         turretPosition = new UpdatingPosition(object.getPosition());
         maximumAng = turret.getFunctions()[UserTurret.MAX_ANG].perform(turret.get(UserTurret.MAX_ANG));
@@ -24,7 +26,7 @@ public abstract class Turret implements Updatable, Renderable {
         delta = 0;
     }
 
-    public Turret(GameObject object, float maximumAng, float reloadRate){
+    public <T extends GameObject & Damaging> Turret(T object, float maximumAng, float reloadRate){
         this.object = object;
         turretPosition = new UpdatingPosition(object.getPosition());
         this.maximumAng = maximumAng;
@@ -97,5 +99,11 @@ public abstract class Turret implements Updatable, Renderable {
 
     public UpdatingPosition getTurretPosition() {
         return turretPosition;
+    }
+
+    @Override
+    public void onKill(Damageable damageable) {
+        System.out.println("1");
+        ((Damaging)object).onKill(damageable);
     }
 }

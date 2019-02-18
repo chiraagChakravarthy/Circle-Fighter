@@ -1,5 +1,6 @@
 package circle_fighter.game.object.objects.bots;
 
+import circle_fighter.game.object.functionality.DirectlyDamaging;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.position.movement.MotionlessMovement;
@@ -52,7 +53,7 @@ public class TutorialBot extends GameObject implements Damageable {
     }
 
     @Override
-    public boolean damage(Damaging damagingObject) {
+    public boolean damage(DirectlyDamaging damagingObject) {
         if(damagingObject.getBound().intersects(base)){
             health.set(health.get()-damagingObject.damage());
             return true;

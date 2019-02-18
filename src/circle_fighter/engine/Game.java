@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseWheelListener {
     private static Game instance;
-    public static final boolean DEBUG = false, TEST = false;
+    public static final boolean DEBUG = true, TEST = false;
 
     public final String TITLE = "Circle Fighter";
     private final Window window;

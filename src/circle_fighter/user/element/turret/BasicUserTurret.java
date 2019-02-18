@@ -2,6 +2,7 @@ package circle_fighter.user.element.turret;
 
 import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.GameObject;
+import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.turret.BasicTurret;
 import circle_fighter.game.object.turret.Turret;
 import circle_fighter.gfx.color.Blue;
@@ -26,7 +27,7 @@ public class BasicUserTurret extends UserTurret {
     }
 
     @Override
-    public Turret newTurret(GameObject object) {
+    public <T extends GameObject & Damaging> Turret newTurret(T object) {
         return new BasicTurret(this, object);
     }
 

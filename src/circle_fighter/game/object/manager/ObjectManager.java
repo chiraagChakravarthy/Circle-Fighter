@@ -6,6 +6,7 @@ import circle_fighter.game.object.AtomicList;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
+import circle_fighter.game.object.functionality.DirectlyDamaging;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.DamagingObject;
 import circle_fighter.game.object.implementations.CharacterObject;
@@ -29,7 +30,7 @@ public class ObjectManager implements Updatable, Renderable{
         objects.put(CharacterObject.class, new AtomicList<GameObject>());
 
         put(RenderableObject.class, new AtomicList<Renderable>(), Renderable.class);
-        put(DamagingObject.class, new AtomicList<Damaging>(), Damaging.class);
+        put(DamagingObject.class, new AtomicList<DirectlyDamaging>(), DirectlyDamaging.class);
         put(DamageableObject.class, new AtomicList<Damageable>(), Damageable.class);
     }
 
@@ -51,7 +52,7 @@ public class ObjectManager implements Updatable, Renderable{
             object.tick();
         }
         for(Damageable damageable : (List<Damageable>)objectTypes.get(Damageable.class).get()){
-            for(Damaging damaging : (List<Damaging>)objectTypes.get(Damaging.class).get()){
+            for(DirectlyDamaging damaging : (List<DirectlyDamaging>)objectTypes.get(DirectlyDamaging.class).get()){
                 damageable.damage(damaging);
             }
         }

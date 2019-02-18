@@ -10,6 +10,7 @@ import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.bounds.render_base.CircularBase;
 import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
+import circle_fighter.game.object.functionality.DirectlyDamaging;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.RenderableObject;
@@ -32,7 +33,7 @@ import java.awt.event.MouseWheelEvent;
 @CharacterObject
 @DamageableObject
 @RenderableObject
-public class Player extends GameObject implements UserInputListener, Damageable {
+public class Player extends GameObject implements UserInputListener, Damageable, Damaging {
     private Health health;
     private TurretManager turrets;
     private CircularBase base;
@@ -125,7 +126,7 @@ public class Player extends GameObject implements UserInputListener, Damageable 
     }
 
     @Override
-    public boolean damage(Damaging damagingObject) {
+    public boolean damage(DirectlyDamaging damagingObject) {
         if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.damage(damagingObject.damage(), damagingObject.invulnerabilityTime());
             if(health.get()<=0){
@@ -143,4 +144,8 @@ public class Player extends GameObject implements UserInputListener, Damageable 
     }
 
 
+    @Override
+    public void onKill(Damageable damageable) {
+        System.out.println("I killed a man");
+    }
 }

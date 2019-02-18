@@ -1,5 +1,6 @@
 package circle_fighter.game.object.objects.turret;
 
+import circle_fighter.game.object.functionality.DirectlyDamaging;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.turret.BasicTurret;
@@ -24,7 +25,7 @@ import java.awt.*;
 @RenderableObject
 @DamageableObject
 @CharacterObject
-public class TurretBotM1 extends GameObject implements Damageable {
+public class TurretBotM1 extends GameObject implements Damageable, Damaging {
     private static final float RADIUS = 15;
 
     private TurretManager turrets;
@@ -87,7 +88,7 @@ public class TurretBotM1 extends GameObject implements Damageable {
     }
 
     @Override
-    public boolean damage(Damaging damagingObject) {
+    public boolean damage(DirectlyDamaging damagingObject) {
         if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.set(health.get()-damagingObject.damage());
             return true;
@@ -98,5 +99,10 @@ public class TurretBotM1 extends GameObject implements Damageable {
     @Override
     public float expOnDeath() {
         return 5;
+    }
+
+    @Override
+    public void onKill(Damageable damageable) {
+
     }
 }

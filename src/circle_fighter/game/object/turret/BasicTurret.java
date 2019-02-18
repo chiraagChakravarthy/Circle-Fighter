@@ -2,6 +2,7 @@ package circle_fighter.game.object.turret;
 
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.render_base.PolygonBase;
+import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.objects.Bullet;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.gfx.color.DynamicColor;
@@ -20,13 +21,13 @@ public class BasicTurret extends Turret {
     private DynamicColor color;
     private PolygonBase base;
 
-    public BasicTurret(BasicUserTurret turret, GameObject object) {
+    public <T extends GameObject & Damaging> BasicTurret(BasicUserTurret turret, T object) {
         super(turret, object);
         color = turret.getColor();
         base = new PolygonBase(color, getTurretPosition(), baseTemplate);
     }
 
-    public BasicTurret(GameObject object){
+    public <T extends GameObject & Damaging> BasicTurret(T object){
         super(object, (float) Math.PI, 1);
         color = new SolidColor(0, 0, 255);
         base = new PolygonBase(color, getTurretPosition(), baseTemplate);
@@ -41,11 +42,16 @@ public class BasicTurret extends Turret {
     @Override
     protected void onReload() {
         float angle = getRelativeAng()+object.getPosition().getRotation();
-        new Bullet(getTurretPosition().clone().setRotation(angle).move(new Position(LENGTH, 0), true), object.getPlane(), 10, 2, object.getTeam());
+        new Bullet(getTurretPosition().clone().setRotation(angle).move(new Position(LENGTH, 0), true), object.getPlane(), 10, 2, object.getTeam(), this);
     }
 
     @Override
     public void render(Graphics2D g) {
         base.render(g);
+    }
+
+    @Override
+    public int getTeam() {
+        return object.getTeam();
     }
 }

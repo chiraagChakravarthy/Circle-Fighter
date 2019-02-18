@@ -1,7 +1,9 @@
 package circle_fighter.user.element.turret;
 
+import circle_fighter.engine.Game;
 import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.GameObject;
+import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.turret.Turret;
 import circle_fighter.gfx.color.DynamicColor;
 import circle_fighter.user.User;
@@ -41,7 +43,7 @@ public abstract class UserTurret extends UserElement {
                 values, new Value(0, 50), new Value(0, 60));
     }
 
-    public abstract Turret newTurret(GameObject object);
+    public abstract <T extends GameObject & Damaging> Turret newTurret(T object);
 
     @Override
     public void save(DataStorage storage) {
