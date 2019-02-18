@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class User {
-
     private String name;
     private UserTurretManager turrets;
     private UserHealth health;
@@ -25,7 +24,7 @@ public class User {
         health = new UserHealth(storage.getSubStorage(1));
         movement = new UserMovement(storage.getSubStorage(2));
         base = new UserBase(storage.getSubStorage(3));
-        level = new UserLevel(storage.getSubStorage(4));
+        level = new UserLevel(storage.getSubStorage(4), this);
     }
 
     public User(String name){
@@ -34,7 +33,7 @@ public class User {
         health = new UserHealth();
         movement = new UserMovement();
         base = new UserBase();
-        level = new UserLevel();
+        level = new UserLevel(this);
         upgradePoints = 0;
         parts = 0;
     }
