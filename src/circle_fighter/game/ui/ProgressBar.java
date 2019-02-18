@@ -31,11 +31,11 @@ public class ProgressBar implements Renderable, Updatable {
     @Override
     public void render(Graphics2D g) {
         g.setColor(borderColor.get());
-        g.fillRect((int)x, (int)y, (int)width, (int)height);
+        g.fillRoundRect((int)x, (int)y, (int)width, (int)height, (int)height/5, (int)height/5);
         g.setColor(barColor.get());
         g.setStroke(new BasicStroke(height/30.0f));
-        g.drawRect((int)barX, (int)barY, ((int)barWidth), (int)barHeight);
-        g.fillRect((int)barX, (int)barY, (int)(barWidth*progress), (int)barHeight);
+        g.drawRoundRect((int)barX, (int)barY, ((int)barWidth), (int)barHeight, (int)barHeight/5, (int)barHeight/5);
+        g.fillRoundRect((int)barX, (int)barY, (int)(barWidth*progress), (int)barHeight, (int)barHeight/5, (int)barHeight/5);
     }
 
     public float getProgress() {

@@ -8,6 +8,7 @@ import circle_fighter.game.object.objects.Player;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.plane.bounds.PlaneBounds;
 import circle_fighter.user.User;
+import circle_fighter.user.UserLevelManager;
 import circle_fighter.user.UserManager;
 
 import java.awt.*;
@@ -19,12 +20,14 @@ import java.util.Collections;
 
 public abstract class PlayerPlane extends Plane {
     private Player player;
+    private UserLevelManager levelManager;
     private UpdatingPosition initialPlayerPosition;
     private KeyBindManager keyBinds;
-    public PlayerPlane(UpdatingPosition initialPlayerPosition, PlaneBounds bounds, KeyBindManager keyBinds){
+    public PlayerPlane(UpdatingPosition initialPlayerPosition, PlaneBounds bounds, KeyBindManager keyBinds, UserManager users){
         super(bounds);
         this.keyBinds = keyBinds;
         this.initialPlayerPosition = initialPlayerPosition;
+        this.levelManager = new UserLevelManager(users, this);
     }
 
     @Override

@@ -50,13 +50,11 @@ public class UserNameMenu extends StateMenu {
 
     @Override
     protected void onExit(int selectedOption) {
+        state.setMenu(3);
         switch (selectedOption){
-            case 0:
-                break;
             case 1:
                 users.addUser(text.get());
                 users.setCurrentUser(users.amount()-1);
-                state.setMenu(3);
                 text.reset();
                 break;
         }

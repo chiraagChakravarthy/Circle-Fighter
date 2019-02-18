@@ -66,8 +66,9 @@ public class TurretBotM1 extends GameObject implements Damageable {
         else {
             movement.setRight(true).setLeft(false);
         }
-
+        turrets.trigger();
         turrets.tick();
+        turrets.stop();
         health.tick();
         if(health.get()<=0)
             despawn();
@@ -92,5 +93,10 @@ public class TurretBotM1 extends GameObject implements Damageable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public float expOnDeath() {
+        return 5;
     }
 }

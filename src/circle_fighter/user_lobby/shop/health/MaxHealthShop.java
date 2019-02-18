@@ -1,15 +1,15 @@
-package circle_fighter.user_lobby.movement;
+package circle_fighter.user_lobby.shop.health;
 
 import circle_fighter.gameState.UserLobbyState;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.user.User;
-import circle_fighter.user.element.UserMovement;
-import circle_fighter.user_lobby.UpgradeMenu;
+import circle_fighter.user.element.UserHealth;
+import circle_fighter.user_lobby.shop.UpgradeMenu;
 
-public class VelocityShop extends UpgradeMenu {
-    private static final int INDEX = UserMovement.VEL;
-    public VelocityShop(UserLobbyState state) {
-        super(state, "Velocity", new SolidColor(0, 255, 255));
+public class MaxHealthShop extends UpgradeMenu {
+    private static final int INDEX = UserHealth.MAX_HEALTH;
+    public MaxHealthShop(UserLobbyState state) {
+        super(state, "Max Health", new SolidColor(255, 0, 0));
     }
 
     @Override
@@ -20,7 +20,7 @@ public class VelocityShop extends UpgradeMenu {
     @Override
     protected void onUpgrade() {
         User user = gameState.getUser();
-        user.getMovement().set(INDEX, user.getMovement().get(INDEX)+1);
+        user.getHealth().set(INDEX, user.getHealth().get(INDEX)+1);
         user.setUpgradePoints(user.getUpgradePoints()-1);
     }
 
@@ -32,11 +32,11 @@ public class VelocityShop extends UpgradeMenu {
 
     @Override
     public int levels() {
-        return Math.round(gameState.getUser().getMovement().get(INDEX));
+        return Math.round(gameState.getUser().getHealth().get(INDEX));
     }
 
     @Override
     protected void onExit(int selectedOption) {
-        gameState.setMenu(2);
+        gameState.setMenu(7);
     }
 }

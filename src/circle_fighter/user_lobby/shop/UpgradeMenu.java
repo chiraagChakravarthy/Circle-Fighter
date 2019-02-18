@@ -1,4 +1,4 @@
-package circle_fighter.user_lobby;
+package circle_fighter.user_lobby.shop;
 
 import circle_fighter.engine.Game;
 import circle_fighter.gameState.UserLobbyState;
@@ -29,7 +29,6 @@ public abstract class UpgradeMenu extends Menu{
 
     @Override
     protected void onSelect(int selectedOption) {
-        System.out.println(selectedOption);
         switch (selectedOption){
             case 0:
                 if(transactionState == INCOMPLETE) {

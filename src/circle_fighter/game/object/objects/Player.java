@@ -33,20 +33,10 @@ import java.awt.event.MouseWheelEvent;
 @DamageableObject
 @RenderableObject
 public class Player extends GameObject implements UserInputListener, Damageable {
-    private static final float RADIUS = 25;
     private Health health;
     private TurretManager turrets;
     private CircularBase base;
     private KeyBindManager keyBinds;
-
-
-    public Player(UpdatingPosition position, PlayerPlane plane) {
-        super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), 0.1f, 3, (float)Math.toRadians(.05), (float)Math.toRadians(3)), 0);
-        this.keyBinds = plane.getKeyBinds();
-        health = new Health(5, position, 50, 10, -50, 1, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
-        turrets = new TurretManager(this, new BasicTurret(this));
-        base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 0, 0));
-    }
 
     public Player(UpdatingPosition position, PlayerPlane plane, User user){
         super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), user.getMovement()), 0);
@@ -95,28 +85,27 @@ public class Player extends GameObject implements UserInputListener, Damageable 
             movement.setLeft(true);
         }
         else if(k==keyBinds.get(KeyBindManager.SHOOT)){
-
+            turrets.trigger();
         }
     }
 
     @Override
     public void keyReleased(int k) {
         VelAngAccMovement movement = (VelAngAccMovement)this.movement;
-        switch (k){
-            case KeyEvent.VK_W:
-                movement.setFront(false);
-                break;
-            case KeyEvent.VK_S:
-                movement.setBack(false);
-                break;
-            case KeyEvent.VK_A:
-                movement.setLeft(false);
-                break;
-            case KeyEvent.VK_D:
-                movement.setRight(false);
-                break;
-            case KeyEvent.VK_SPACE:
-
+        if(k==keyBinds.get(KeyBindManager.PLAYER_FORWARD)){
+            movement.setFront(false);
+        }
+        else if(k==keyBinds.get(KeyBindManager.PLAYER_BACKWARD)){
+            movement.setBack(false);
+        }
+        else if(k==keyBinds.get(KeyBindManager.ROTATE_CLOCKWISE)){
+            movement.setRight(false);
+        }
+        else if(k==keyBinds.get(KeyBindManager.ROTATE_COUNTER_CLOCKWISE)){
+            movement.setLeft(false);
+        }
+        else if(k==keyBinds.get(KeyBindManager.SHOOT)){
+            turrets.stop();
         }
     }
 
@@ -139,8 +128,19 @@ public class Player extends GameObject implements UserInputListener, Damageable 
     public boolean damage(Damaging damagingObject) {
         if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.damage(damagingObject.damage(), damagingObject.invulnerabilityTime());
+            if(health.get()<=0){
+                despawn();
+                damagingObject.onKill(this);
+            }
             return true;
         }
         return false;
     }
+
+    @Override
+    public float expOnDeath() {
+        return 0;
+    }
+
+
 }

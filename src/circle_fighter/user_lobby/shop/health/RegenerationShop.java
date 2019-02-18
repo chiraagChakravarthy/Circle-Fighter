@@ -1,15 +1,15 @@
-package circle_fighter.user_lobby.health;
+package circle_fighter.user_lobby.shop.health;
 
 import circle_fighter.gameState.UserLobbyState;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.user.User;
 import circle_fighter.user.element.UserHealth;
-import circle_fighter.user_lobby.UpgradeMenu;
+import circle_fighter.user_lobby.shop.UpgradeMenu;
 
-public class InvulnerabilityShop extends UpgradeMenu {
-    private static final int INDEX = UserHealth.INVULNERABILITY_MULTIPLIER;
-    public InvulnerabilityShop(UserLobbyState state) {
-        super(state, "Invulnerability", new SolidColor(255, 128, 128));
+public class RegenerationShop extends UpgradeMenu {
+    private static final int INDEX = UserHealth.REGENERATION_RATE;
+    public RegenerationShop(UserLobbyState state) {
+        super(state, "Regeneration", new SolidColor(255, 64, 64));
     }
 
     @Override

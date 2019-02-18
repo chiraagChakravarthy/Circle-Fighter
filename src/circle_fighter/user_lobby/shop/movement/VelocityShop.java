@@ -1,15 +1,15 @@
-package circle_fighter.user_lobby.movement;
+package circle_fighter.user_lobby.shop.movement;
 
 import circle_fighter.gameState.UserLobbyState;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.user.User;
 import circle_fighter.user.element.UserMovement;
-import circle_fighter.user_lobby.UpgradeMenu;
+import circle_fighter.user_lobby.shop.UpgradeMenu;
 
-public class AngularAccelerationShop extends UpgradeMenu {
-    private static final int INDEX = UserMovement.ACC_ANG;
-    public AngularAccelerationShop(UserLobbyState state) {
-        super(state, "Angular Acceleration", new SolidColor(0, 0, 128));
+public class VelocityShop extends UpgradeMenu {
+    private static final int INDEX = UserMovement.VEL;
+    public VelocityShop(UserLobbyState state) {
+        super(state, "Velocity", new SolidColor(0, 255, 255));
     }
 
     @Override

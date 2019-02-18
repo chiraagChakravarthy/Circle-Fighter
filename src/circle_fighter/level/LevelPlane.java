@@ -5,6 +5,7 @@ import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.plane.PlayerPlane;
 import circle_fighter.game.plane.bounds.BoundedBounds;
 import circle_fighter.gameState.LevelState;
+import circle_fighter.user.UserManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,7 +15,7 @@ public abstract class LevelPlane extends PlayerPlane {
     protected LevelState state;
     protected KeyBindManager keyBinds;
     public LevelPlane(int width, int height, LevelState state) {
-        super(new UpdatingPosition(0, 0), new BoundedBounds(-width/2, -height/2, width, height), state.getKeyBinds());
+        super(new UpdatingPosition(0, 0), new BoundedBounds(-width / 2, -height / 2, width, height), state.getKeyBinds(), state.getGsm().getUsers());
         keyBinds = state.getKeyBinds();
         this.state = state;
     }

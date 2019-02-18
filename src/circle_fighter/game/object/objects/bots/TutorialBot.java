@@ -60,6 +60,11 @@ public class TutorialBot extends GameObject implements Damageable {
         return false;
     }
 
+    @Override
+    public float expOnDeath() {
+        return 0;
+    }
+
     public Health getHealth() {
         return health;
     }

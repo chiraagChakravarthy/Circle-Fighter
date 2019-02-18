@@ -74,6 +74,11 @@ public class BotM4 extends GameObject implements Damaging, Damageable{
     }
 
     @Override
+    public float expOnDeath() {
+        return 20;
+    }
+
+    @Override
     public float damage() {
         return 2;
     }
@@ -81,5 +86,10 @@ public class BotM4 extends GameObject implements Damaging, Damageable{
     @Override
     public long invulnerabilityTime() {
         return 1000;
+    }
+
+    @Override
+    public void onKill(Damageable damageable) {
+        //ignored
     }
 }

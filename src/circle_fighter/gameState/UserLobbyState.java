@@ -1,19 +1,19 @@
 package circle_fighter.gameState;
 
 import circle_fighter.engine.KeyBindManager;
-import circle_fighter.game.ui.ProgressBar;
 import circle_fighter.gfx.background.Background;
 import circle_fighter.gfx.color.Rainbow;
-import circle_fighter.gfx.text.Text;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.user.User;
-import circle_fighter.user_lobby.LobbyMenu;
-import circle_fighter.user_lobby.MainShop;
-import circle_fighter.user_lobby.health.HealthShop;
-import circle_fighter.user_lobby.health.InvulnerabilityShop;
-import circle_fighter.user_lobby.health.MaxHealthShop;
-import circle_fighter.user_lobby.health.RegenerationShop;
-import circle_fighter.user_lobby.movement.*;
+import circle_fighter.user_lobby.GameModeMenu;
+import circle_fighter.user_lobby.SinglePlayerMenu;
+import circle_fighter.user_lobby.shop.LobbyMenu;
+import circle_fighter.user_lobby.shop.MainShop;
+import circle_fighter.user_lobby.shop.health.HealthShop;
+import circle_fighter.user_lobby.shop.health.InvulnerabilityShop;
+import circle_fighter.user_lobby.shop.health.MaxHealthShop;
+import circle_fighter.user_lobby.shop.health.RegenerationShop;
+import circle_fighter.user_lobby.shop.movement.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -38,7 +38,9 @@ public class UserLobbyState extends GameState {
                 new HealthShop(this),//7
                 new MaxHealthShop(this),//8
                 new RegenerationShop(this),//9
-                new InvulnerabilityShop(this)//10
+                new InvulnerabilityShop(this),//10
+                new GameModeMenu(this),//11
+                new SinglePlayerMenu(this)//12
         ));
         currentMenu = 0;
         background = new Background.PlainBackground(new Rainbow(0.5f, 1));

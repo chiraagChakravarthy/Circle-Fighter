@@ -4,14 +4,12 @@ import circle_fighter.engine.Game;
 import circle_fighter.functionaliy.Renderable;
 import circle_fighter.functionaliy.Updatable;
 import circle_fighter.functionaliy.UserInputListener;
-import circle_fighter.game.object.bounds.CircularBound;
 import circle_fighter.game.object.bounds.render_base.CircularBase;
 import circle_fighter.game.object.bounds.render_base.PolygonBase;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.gfx.color.Rainbow;
 import circle_fighter.gfx.color.SolidColor;
-import javafx.geometry.Pos;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

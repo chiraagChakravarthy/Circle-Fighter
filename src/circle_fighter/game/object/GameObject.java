@@ -69,6 +69,6 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
 
     public enum BoundExitAction {
         BOUND,
-        DESPAWN;
+        DESPAWN
     }
 }

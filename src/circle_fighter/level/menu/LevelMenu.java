@@ -30,7 +30,7 @@ public class LevelMenu extends Menu {
     @Override
     protected void onExit(int selectedOption) {
         if(selectedOption==levels+1){
-            state.getGsm().setGameState(0);
+            state.getGsm().setGameState(2);
         }
         else {
             state.setState(LevelState.SubState.LEVEL);

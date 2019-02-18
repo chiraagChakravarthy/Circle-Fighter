@@ -60,9 +60,18 @@ public class BotM1 extends GameObject implements Damaging, Damageable{
     public boolean damage(Damaging damagingObject) {
         if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
             health.set(health.get()-damagingObject.damage());
+            if(health.get()<=0) {
+                despawn();
+                damagingObject.onKill(this);
+            }
             return true;
         }
         return false;
+    }
+
+    @Override
+    public float expOnDeath() {
+        return 1;
     }
 
     @Override
@@ -73,5 +82,10 @@ public class BotM1 extends GameObject implements Damaging, Damageable{
     @Override
     public long invulnerabilityTime() {
         return 1000;
+    }
+
+    @Override
+    public void onKill(Damageable damageable) {
+        //ignored in bots for now
     }
 }

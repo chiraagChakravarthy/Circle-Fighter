@@ -1,19 +1,10 @@
 package circle_fighter.user;
 
 import circle_fighter.file.DataStorage;
-import circle_fighter.file.FileManager;
-import circle_fighter.game.object.objects.Player;
-import circle_fighter.game.object.position.UpdatingPosition;
-import circle_fighter.game.plane.PlayerPlane;
-import circle_fighter.user.element.UserBase;
-import circle_fighter.user.element.UserHealth;
-import circle_fighter.user.element.UserMovement;
-import circle_fighter.user.element.UserTurretManager;
+import circle_fighter.user.element.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-//TODO make all saved numerical parameters level based, and have a key (level - actual parameter) saved to the resources folder
-//TODO make player constructor with user, and have player directly access parameters from user
 
 public class User {
 
@@ -22,18 +13,19 @@ public class User {
     private UserHealth health;
     private UserMovement movement;
     private UserBase base;
-    private int playerLevel, upgradePoints, parts;
+    private UserLevel level;
+    private int upgradePoints, parts;
 
     public User(String name, String user){
         this.name = name;
         DataStorage storage = new DataStorage().fromString(user);
         parts = storage.get(0);
         upgradePoints = storage.get(1);
-        playerLevel = storage.get(2);
         turrets = new UserTurretManager(storage.getSubStorage(0));
         health = new UserHealth(storage.getSubStorage(1));
         movement = new UserMovement(storage.getSubStorage(2));
         base = new UserBase(storage.getSubStorage(3));
+        level = new UserLevel(storage.getSubStorage(4));
     }
 
     public User(String name){
@@ -42,18 +34,18 @@ public class User {
         health = new UserHealth();
         movement = new UserMovement();
         base = new UserBase();
-        playerLevel = 0;
+        level = new UserLevel();
         upgradePoints = 0;
         parts = 0;
     }
 
-    public ArrayList<String > save() {
+    public ArrayList<String> save() {
         DataStorage storage = new DataStorage();
-        storage.set(0, parts).set(1, upgradePoints).set(2, playerLevel);
         turrets.save(storage.getSubStorage(0));
         health.save(storage.getSubStorage(1));
         movement.save(storage.getSubStorage(2));
         base.save(storage.getSubStorage(3));
+        level.save(storage.getSubStorage(4));
         return new ArrayList<>(Arrays.asList(name, storage.toString()));
     }
 
@@ -89,8 +81,8 @@ public class User {
         this.upgradePoints = upgradePoints;
     }
 
-    public int getPlayerLevel() {
-        return playerLevel;
+    public UserLevel getLevel() {
+        return level;
     }
 
     public String getName() {

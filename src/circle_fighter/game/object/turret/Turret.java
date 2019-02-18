@@ -12,7 +12,6 @@ public abstract class Turret implements Updatable, Renderable {
     protected GameObject object;
     private final float maximumAng, reloadRate;
     private float relativeAng;
-    private long lastTime;
     private float delta;
     private boolean reloading;
     private UpdatingPosition turretPosition;
@@ -22,7 +21,7 @@ public abstract class Turret implements Updatable, Renderable {
         maximumAng = turret.getFunctions()[UserTurret.MAX_ANG].perform(turret.get(UserTurret.MAX_ANG));
         reloadRate = turret.getFunctions()[UserTurret.RELOAD_RATE].perform(turret.get(UserTurret.RELOAD_RATE));
         reloading = false;
-        delta = 1;
+        delta = 0;
     }
 
     public Turret(GameObject object, float maximumAng, float reloadRate){
@@ -31,7 +30,7 @@ public abstract class Turret implements Updatable, Renderable {
         this.maximumAng = maximumAng;
         this.reloadRate = reloadRate;
         reloading = false;
-        delta = 1;
+        delta = 0;
     }
 
     public float getRelativeAng() {
@@ -56,14 +55,18 @@ public abstract class Turret implements Updatable, Renderable {
         turretPosition.move(new Position(25, 0), true);
         turretPosition.setRotation(turretPosition.getRotation()+relativeAng);
         if(reloading) {
-            long now = System.currentTimeMillis();
-            delta += (now-lastTime)*reloadRate;
-            lastTime = now;
-            while (delta>=1){
-                onReload();
-                delta--;
+            if(delta >= 1) {
+                while (delta >= 1) {
+                    onReload();
+                    delta--;
+                }
+                reloading = false;
             }
         }
+        else {
+            delta = Math.min(delta, 1);
+        }
+        delta += reloadRate/60;
     }
 
     protected abstract void onReload();
@@ -78,6 +81,10 @@ public abstract class Turret implements Updatable, Renderable {
 
     public boolean isReloading() {
         return reloading;
+    }
+
+    public void stop(){
+        reloading = false;
     }
 
     protected float angle(){

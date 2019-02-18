@@ -3,6 +3,7 @@ package circle_fighter.game.object.objects;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.bounds.PointBound;
+import circle_fighter.game.object.functionality.Damageable;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.implementations.DamagingObject;
@@ -60,5 +61,10 @@ public class Bullet extends GameObject implements Damaging{
     @Override
     public long invulnerabilityTime() {
         return 100;
+    }
+
+    @Override
+    public void onKill(Damageable damageable) {
+        
     }
 }
