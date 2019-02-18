@@ -28,7 +28,7 @@ public class TutorialBot extends GameObject implements Damageable {
 
     public TutorialBot(UpdatingPosition position, Plane plane, int team) {
         super(plane, BoundExitAction.BOUND, new MotionlessMovement(position, new Vector(0, 0, 0)), team);
-        health = new Health(1, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
+        health = new Health(1, 0, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(0, 0, 0), new SolidColor(0, 0, 0));
     }
 

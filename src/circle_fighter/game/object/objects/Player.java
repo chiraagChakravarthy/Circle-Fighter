@@ -68,6 +68,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
         turrets.setTarget(new Position(Game.getInstance().mouseLocation()).absPosition());
         if(health.get()<=0)
             despawn();
+        System.out.println(health.get());
         super.tick();
     }
 

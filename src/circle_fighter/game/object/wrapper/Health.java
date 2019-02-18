@@ -11,7 +11,7 @@ import circle_fighter.user.element.UserHealth;
 import java.awt.*;
 
 public class Health implements Renderable, Updatable {
-    private float maxHealth, invulnerabilityMultiplier;
+    private final float maxHealth, invulnerabilityMultiplier, regenerationRate;
     private int verticalOffset;
 
     private Position position;
@@ -21,8 +21,9 @@ public class Health implements Renderable, Updatable {
     private float health;
     private boolean visible;
 
-    public Health(float maxHealth, Position position, int width, int height, int verticalOffset, float invulnerabilityMultiplier, DynamicColor borderColor, DynamicColor barColor){
+    public Health(float maxHealth, float regenerationRate, Position position, int width, int height, int verticalOffset, float invulnerabilityMultiplier, DynamicColor borderColor, DynamicColor barColor){
         this.maxHealth = maxHealth;
+        this.regenerationRate = regenerationRate;
         health = maxHealth;
         this.position = position;
         healthBar = new ProgressBar(0, 0, width, height, borderColor, barColor);
@@ -36,12 +37,14 @@ public class Health implements Renderable, Updatable {
         this.position = position;
         maxHealth = health.getFunctions()[UserHealth.MAX_HEALTH].perform(health.get(UserHealth.MAX_HEALTH));
         invulnerabilityMultiplier = health.getFunctions()[UserHealth.INVULNERABILITY_MULTIPLIER].perform(health.get(UserHealth.INVULNERABILITY_MULTIPLIER));
+        regenerationRate = health.getFunctions()[UserHealth.REGENERATION_RATE].perform(health.get(UserHealth.REGENERATION_RATE));
         verticalOffset = -50;
         this.health = maxHealth;
         healthBar = new ProgressBar(0, 0, 50, 10, new SolidColor(0, 128, 0), new SolidColor(0, 255, 0));
     }
 
     public void tick(){
+        health = Math.min(maxHealth, health+regenerationRate/60);
         healthBar.setProgress(health/ maxHealth);
         healthBar.tick();
         healthBar.setX(position.getScrX()-healthBar.getWidth()/2);

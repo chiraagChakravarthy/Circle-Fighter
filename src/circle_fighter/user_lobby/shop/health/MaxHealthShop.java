@@ -14,7 +14,7 @@ public class MaxHealthShop extends UpgradeMenu {
 
     @Override
     protected int getTransactionState() {
-        return gameState.getUser().getUpgradePoints()<=0?INSUFFICIENT:gameState.getUser().getMovement().getValue(INDEX).maxed()?MAXED:INCOMPLETE;
+        return gameState.getUser().getUpgradePoints()<=0?INSUFFICIENT:gameState.getUser().getHealth().getValue(INDEX).maxed()?MAXED:INCOMPLETE;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class MaxHealthShop extends UpgradeMenu {
     @Override
     public float progress() {
         User user = gameState.getUser();
-        return user.getMovement().get(INDEX)/user.getMovement().getValue(INDEX).getMax();
+        return user.getHealth().get(INDEX)/user.getHealth().getValue(INDEX).getMax();
     }
 
     @Override

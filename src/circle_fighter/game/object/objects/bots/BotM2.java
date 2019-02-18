@@ -33,7 +33,7 @@ public class BotM2 extends GameObject implements DirectlyDamaging, Damageable{
     public BotM2(UpdatingPosition position, PlayerPlane plane, int team) {
         super(plane, BoundExitAction.BOUND, new OmniDirectionalMovement(position, new Vector(0, 0, 0), 0.1f, 1.5f), team);
         ((OmniDirectionalMovement)movement).setFront(true);
-        health = new Health(2, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
+        health = new Health(2, 0, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(128, 0, 0));
         this.plane = plane;
     }

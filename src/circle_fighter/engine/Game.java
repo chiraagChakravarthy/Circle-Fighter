@@ -1,5 +1,6 @@
 package circle_fighter.engine;
 
+import circle_fighter.engine.notification.NotificationManager;
 import circle_fighter.engine.test.Test;
 import circle_fighter.file.FileManager;
 import circle_fighter.gameState.GameStateManager;
@@ -31,6 +32,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     private Game() {
         service = Executors.newCachedThreadPool();
         window = new Window(TITLE, 2, this);
+        NotificationManager.init();
         addKeyListener(this);
         addMouseListener(this);
         addMouseWheelListener(this);
@@ -103,8 +105,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
     public void tick() {
         if(TEST)
             test.tick();
-        else
+        else {
             gsm.tick();
+            NotificationManager.tick();
+        }
         runningTime++;
     }
 
@@ -121,8 +125,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         if(TEST)
             test.render(g);
-        else
+        else {
             gsm.render(g);
+            NotificationManager.render(g);
+        }
 
         g.dispose();
         bs.show();

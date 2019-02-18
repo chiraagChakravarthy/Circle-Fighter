@@ -35,7 +35,7 @@ public class BotM3 extends GameObject implements DirectlyDamaging, Damageable{
     public BotM3(UpdatingPosition position, PlayerPlane plane, int team) {
         super(plane, BoundExitAction.BOUND, new MultiDirectionalMovement(position, new Vector(0, 0, 0), .01f, .05f, 100, 4), team);
         movement = (MultiDirectionalMovement)super.movement;
-        health = new Health(4, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
+        health = new Health(4, 0, position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(0, 0, 128), new SolidColor(0, 0, 0));
         this.plane = plane;
     }

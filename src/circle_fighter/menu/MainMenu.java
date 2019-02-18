@@ -2,6 +2,8 @@ package circle_fighter.menu;
 
 
 import circle_fighter.engine.Game;
+import circle_fighter.engine.notification.Notification;
+import circle_fighter.engine.notification.NotificationManager;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.StateMenu;

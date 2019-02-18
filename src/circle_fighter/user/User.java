@@ -34,7 +34,7 @@ public class User {
         movement = new UserMovement();
         base = new UserBase();
         level = new UserLevel(this);
-        upgradePoints = 0;
+        upgradePoints = 1000;
         parts = 0;
     }
 
