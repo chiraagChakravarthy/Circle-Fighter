@@ -2,8 +2,7 @@ package circle_fighter.game.object.objects;
 
 import circle_fighter.engine.Game;
 import circle_fighter.engine.KeyBindManager;
-import circle_fighter.file.DataStorage;
-import circle_fighter.functionaliy.Savable;
+import circle_fighter.engine.notification.NotificationManager;
 import circle_fighter.functionaliy.UserInputListener;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
@@ -18,15 +17,12 @@ import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
 import circle_fighter.game.object.position.movement.VelAngAccMovement;
-import circle_fighter.game.object.turret.BasicTurret;
 import circle_fighter.game.object.turret.TurretManager;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
-import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.user.User;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
@@ -68,7 +64,6 @@ public class Player extends GameObject implements UserInputListener, Damageable,
         turrets.setTarget(new Position(Game.getInstance().mouseLocation()).absPosition());
         if(health.get()<=0)
             despawn();
-        System.out.println(health.get());
         super.tick();
     }
 
@@ -148,6 +143,8 @@ public class Player extends GameObject implements UserInputListener, Damageable,
 
     @Override
     public void onKill(Damageable damageable) {
-        user.getLevel().addExp(damageable.expOnDeath());
+        if(user.getLevel().addExp(damageable.expOnDeath())){
+            NotificationManager.addNotification("Level Up to " + user.getLevel().getLevel() + "! +1 Upgrade Point.");
+        }
     }
 }

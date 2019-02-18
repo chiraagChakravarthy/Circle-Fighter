@@ -38,7 +38,7 @@ public class UserLevel implements Savable{
         if (leveledUp){
             user.setUpgradePoints(user.getUpgradePoints()+1);
         }
-        return level < getLevel();
+        return leveledUp;
     }
 
     @Override

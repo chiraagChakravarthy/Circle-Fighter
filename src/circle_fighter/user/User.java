@@ -1,5 +1,6 @@
 package circle_fighter.user;
 
+import circle_fighter.engine.Game;
 import circle_fighter.file.DataStorage;
 import circle_fighter.user.element.*;
 
@@ -34,7 +35,7 @@ public class User {
         movement = new UserMovement();
         base = new UserBase();
         level = new UserLevel(this);
-        upgradePoints = 1000;
+        upgradePoints = Game.DEBUG?1000:0;
         parts = 0;
     }
 

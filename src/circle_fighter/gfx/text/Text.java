@@ -95,7 +95,7 @@ public class Text implements Updatable, Renderable {
             }
 
             int appendedLineWidth = (int) metrics.getStringBounds(line+word, null).getWidth();
-            if(nextLine||appendedLineWidth>=textWidth){
+            if(nextLine||appendedLineWidth>textWidth){
                 addLine(line.toString(), lineWidth, textWidth, padding, alignment);
                 line = new StringBuilder(word);
             }
@@ -107,7 +107,7 @@ public class Text implements Updatable, Renderable {
         if(line.length()!=0)
             addLine(line.toString(), lineWidth, textWidth, padding, alignment);
         height = lines.size() * (font.getSize() + 2 * padding);
-        if(lines.size()==1&& minimizeWidth) {
+        if(lines.size()==1&&minimizeWidth) {
             width = lineWidth + padding * 2;
         }
         if(center){

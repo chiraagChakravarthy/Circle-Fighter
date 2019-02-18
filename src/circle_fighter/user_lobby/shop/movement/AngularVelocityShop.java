@@ -20,6 +20,7 @@ public class AngularVelocityShop extends UpgradeMenu {
     @Override
     protected void onUpgrade() {
         User user = gameState.getUser();
+        System.out.println(user.getUpgradePoints());
         user.getMovement().set(INDEX, user.getMovement().get(INDEX)+1);
         user.setUpgradePoints(user.getUpgradePoints()-1);
     }

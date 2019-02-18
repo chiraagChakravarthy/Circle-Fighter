@@ -19,9 +19,12 @@ public abstract class UpgradeMenu extends Menu{
     private String title;
     private ListOption buyButton;
     private int transactionState;
+    private TextBox upgradePointDisplay;
+    private UserLobbyState state;
 
     public UpgradeMenu(UserLobbyState gameState, String title, DynamicColor baseColor){
         super(gameState.getKeyBinds(), true);
+        this.state = gameState;
         this.gameState = gameState;
         this.baseColor = baseColor;
         this.title = title;
@@ -38,6 +41,7 @@ public abstract class UpgradeMenu extends Menu{
                     buyButton.setEnabled(transactionState !=MAXED);
                     buyButton.setColor(transactionState == INSUFFICIENT?new SolidColor(255, 0, 0):new SolidColor(255, 255, 255));
                     levelDisplay.setMessage("Level: " + levels());
+                    upgradePointDisplay.setMessage("Upgrade Points: " + state.getUser().getUpgradePoints());
                 }
                 break;
             case 1:
@@ -65,6 +69,8 @@ public abstract class UpgradeMenu extends Menu{
 
     @Override
     protected void constructMenu() {
+        upgradePointDisplay = new TextBox("Upgrade Points: " + state.getUser().getUpgradePoints(), getLowestY()+Menu.COMPONENT_SPACING, Game.getInstance().getGameWidth()/3, new SolidColor(255, 255, 255));
+        addComponent(upgradePointDisplay);
         levelDisplay = new TextBox("Level: " + levels(), getLowestY()+Menu.COMPONENT_SPACING, 300, new SolidColor(255, 255, 255), true, false);
         addComponent(levelDisplay);
         levels = new ProgressBarComponent(getLowestY()+Menu.COMPONENT_SPACING, Game.getInstance().getGameWidth()/4, Game.getInstance().getGameWidth()/16, baseColor.clone(), baseColor.clone().setBrightness(0.5f));
