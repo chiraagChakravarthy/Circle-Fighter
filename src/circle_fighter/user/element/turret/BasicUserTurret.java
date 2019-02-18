@@ -13,7 +13,7 @@ public class BasicUserTurret extends UserTurret {
     private int color;
 
     public BasicUserTurret(){
-        super(4);
+        super(400);
         color = ColorRegistry.toID(Blue.class);
     }
 

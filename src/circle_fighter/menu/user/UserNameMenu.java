@@ -54,7 +54,6 @@ public class UserNameMenu extends StateMenu {
         switch (selectedOption){
             case 1:
                 users.addUser(text.get());
-                users.setCurrentUser(users.amount()-1);
                 text.reset();
                 break;
         }

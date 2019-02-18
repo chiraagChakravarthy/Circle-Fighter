@@ -43,6 +43,7 @@ public class BasicTurret extends Turret {
     protected void onReload() {
         float angle = getRelativeAng()+object.getPosition().getRotation();
         new Bullet(getTurretPosition().clone().setRotation(angle).move(new Position(LENGTH, 0), true), object.getPlane(), 10, 2, object.getTeam(), this);
+        reload();
     }
 
     @Override

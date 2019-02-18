@@ -15,7 +15,7 @@ public class UserLevel implements Savable{
     }
 
     public int getLevel(){
-        float exp = (float) 50;
+        float exp = this.exp;
         int level = 0;
         while (exp > 0){
             exp -= Math.pow(level, 1.5)*50;

@@ -67,13 +67,15 @@ public class BotM4 extends GameObject implements DirectlyDamaging, Damageable{
 
     @Override
     public boolean damage(DirectlyDamaging damagingObject) {
-        if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
-            health.set(health.get()-damagingObject.damage());
-            if(health.get()<=0) {
-                despawn();
-                damagingObject.onKill(this);
+        if(health.get()>0) {
+            if (damagingObject.getBound().intersects(base) && damagingObject.getTeam() != getTeam()) {
+                health.set(health.get() - damagingObject.damage());
+                if (health.get() <= 0) {
+                    despawn();
+                    damagingObject.onKill(this);
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }

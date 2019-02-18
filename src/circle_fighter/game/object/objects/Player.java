@@ -38,13 +38,14 @@ public class Player extends GameObject implements UserInputListener, Damageable,
     private TurretManager turrets;
     private CircularBase base;
     private KeyBindManager keyBinds;
-
+    private User user;
     public Player(UpdatingPosition position, PlayerPlane plane, User user){
         super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), user.getMovement()), 0);
         keyBinds = plane.getKeyBinds();
         health = new Health(this.position, user.getHealth());
         turrets = new TurretManager(user.getTurrets(), this);
         base = new CircularBase(this.position, user.getBase());
+        this.user = user;
     }
 
     @Override
@@ -146,6 +147,6 @@ public class Player extends GameObject implements UserInputListener, Damageable,
 
     @Override
     public void onKill(Damageable damageable) {
-        System.out.println("I killed a man");
+        user.getLevel().addExp(damageable.expOnDeath());
     }
 }

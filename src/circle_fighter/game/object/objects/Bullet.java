@@ -69,7 +69,6 @@ public class Bullet extends GameObject implements DirectlyDamaging{
 
     @Override
     public void onKill(Damageable damageable) {
-        System.out.println("1");
         turret.onKill(damageable);
     }
 }

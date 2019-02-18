@@ -23,6 +23,6 @@ public class L1 extends LevelPlane {
     @Override
     public void reset() {
         super.reset();
-        objectManager.add(new BotM1(new UpdatingPosition(400, 400), this, 1));
+        new BotM1(new UpdatingPosition(400, 400), this, 1);
     }
 }

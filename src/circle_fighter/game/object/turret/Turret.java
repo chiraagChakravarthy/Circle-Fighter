@@ -58,11 +58,11 @@ public abstract class Turret implements Updatable, Renderable, Damaging {
         turretPosition.setRotation(turretPosition.getRotation()+relativeAng);
         if(reloading) {
             if(delta >= 1) {
+                reloading = false;
                 while (delta >= 1) {
                     onReload();
                     delta--;
                 }
-                reloading = false;
             }
         }
         else {
@@ -103,7 +103,6 @@ public abstract class Turret implements Updatable, Renderable, Damaging {
 
     @Override
     public void onKill(Damageable damageable) {
-        System.out.println("1");
         ((Damaging)object).onKill(damageable);
     }
 }

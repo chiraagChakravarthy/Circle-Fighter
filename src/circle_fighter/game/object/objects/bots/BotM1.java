@@ -1,21 +1,20 @@
 package circle_fighter.game.object.objects.bots;
 
-import circle_fighter.game.object.functionality.DirectlyDamaging;
-import circle_fighter.game.object.position.UpdatingPosition;
-import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.bounds.Bound;
 import circle_fighter.game.object.bounds.render_base.CircularBase;
 import circle_fighter.game.object.functionality.Damageable;
-import circle_fighter.game.object.functionality.Damaging;
+import circle_fighter.game.object.functionality.DirectlyDamaging;
 import circle_fighter.game.object.implementations.CharacterObject;
 import circle_fighter.game.object.implementations.DamageableObject;
 import circle_fighter.game.object.implementations.DamagingObject;
 import circle_fighter.game.object.implementations.RenderableObject;
-import circle_fighter.game.object.position.movement.OmniDirectionalMovement;
+import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.object.position.Vector;
+import circle_fighter.game.object.position.movement.OmniDirectionalMovement;
 import circle_fighter.game.object.wrapper.Health;
 import circle_fighter.game.plane.PlayerPlane;
+import circle_fighter.gfx.color.SolidColor;
 
 import java.awt.*;
 @DamageableObject
@@ -59,13 +58,15 @@ public class BotM1 extends GameObject implements DirectlyDamaging, Damageable{
 
     @Override
     public boolean damage(DirectlyDamaging damagingObject) {
-        if(damagingObject.getBound().intersects(base)&&damagingObject.getTeam()!=getTeam()){
-            health.set(health.get()-damagingObject.damage());
-            if(health.get()<=0) {
-                despawn();
-                damagingObject.onKill(this);
+        if(health.get()>0) {
+            if (damagingObject.getBound().intersects(base) && damagingObject.getTeam() != getTeam()) {
+                health.set(health.get() - damagingObject.damage());
+                if (health.get() <= 0) {
+                    despawn();
+                    damagingObject.onKill(this);
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }

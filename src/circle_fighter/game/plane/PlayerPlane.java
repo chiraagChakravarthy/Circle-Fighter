@@ -1,33 +1,26 @@
 package circle_fighter.game.plane;
 
 import circle_fighter.engine.KeyBindManager;
-import circle_fighter.file.DataStorage;
-import circle_fighter.file.FileManager;
-import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.objects.Player;
+import circle_fighter.game.object.position.Position;
 import circle_fighter.game.object.position.UpdatingPosition;
 import circle_fighter.game.plane.bounds.PlaneBounds;
-import circle_fighter.user.User;
-import circle_fighter.user.UserLevelManager;
 import circle_fighter.user.UserManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public abstract class PlayerPlane extends Plane {
     private Player player;
-    private UserLevelManager levelManager;
     private UpdatingPosition initialPlayerPosition;
     private KeyBindManager keyBinds;
+    private UserManager users;
     public PlayerPlane(UpdatingPosition initialPlayerPosition, PlaneBounds bounds, KeyBindManager keyBinds, UserManager users){
         super(bounds);
         this.keyBinds = keyBinds;
         this.initialPlayerPosition = initialPlayerPosition;
-        this.levelManager = new UserLevelManager(users, this);
+        this.users = users;
     }
 
     @Override
@@ -75,8 +68,7 @@ public abstract class PlayerPlane extends Plane {
     @Override
     public void reset() {
         super.reset();
-        User user = new User("Test");
-        player = new Player(initialPlayerPosition.clone(), this, user);
+        player = new Player(initialPlayerPosition.clone(), this, users.getCurrentUser());
     }
 
     public KeyBindManager getKeyBinds() {
