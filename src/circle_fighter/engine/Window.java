@@ -40,6 +40,24 @@ public class Window {
         frame.setVisible(true);
     }
 
+    public Window(String title, Game game) {
+        String osName = System.getProperty("os.name").toLowerCase();
+        if(osName.startsWith("windows")){
+            fsm = 2;
+        }
+        else if(osName.startsWith("max os x")){
+            fsm = 3;
+        }
+        else {
+            fsm = 1;
+        }
+        frame = new JFrame(title);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(game);
+        setFullScreen();
+    }
+
     private void setFullScreen() {
         switch (fsm) {
             case 1:

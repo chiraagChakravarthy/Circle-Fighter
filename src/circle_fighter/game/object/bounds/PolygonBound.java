@@ -24,7 +24,6 @@ public class PolygonBound extends Bound implements OnPositionChanged {
         position.addListener(this);
     }
 
-    //TODO finish this method
     @Override
     public boolean intersects(CircularBound bound) {
         if(changed)

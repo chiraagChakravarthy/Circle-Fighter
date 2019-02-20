@@ -25,7 +25,7 @@ public abstract class UserTurret extends UserElement {
     }
 
     public UserTurret(DataStorage storage, float reloadRateMultiplier){
-        super(storage.getSubStorage(0), merge(UserTurret.functions, new TransformFunction[]{vals -> (vals[0]*0.15f+1)*reloadRateMultiplier}),
+        super(storage==null?null:storage.getSubStorage(0), merge(UserTurret.functions, new TransformFunction[]{vals -> (vals[0]*0.15f+1)*reloadRateMultiplier}),
                 merge(UserTurret.inverses, new TransformFunction[]{vals -> (vals[0]/reloadRateMultiplier-1)/0.15f}),
                 new Value(0, 50, 0), new Value(0, 60, 0));
     }

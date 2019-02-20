@@ -36,7 +36,7 @@ public class Text implements Updatable, Renderable {
     private void addLine(String text, int lineWidth, int textWidth, int padding, Alignment alignment){
         lines.add(new Line(text,
                             alignment.equals(Alignment.LEFT)?padding:alignment.equals(Alignment.CENTER)?(textWidth-lineWidth)/2+padding:textWidth-lineWidth+padding,
-                            (lines.size())*(font.getSize()+padding*2)+padding+font.getSize()));
+                            (lines.size())*(font.getSize()+padding*2)+padding+font.getSize(), lineWidth));
     }
 
     @Override
@@ -45,7 +45,9 @@ public class Text implements Updatable, Renderable {
         if(showBorder)
             g.draw(border);
         g.setFont(font);
-        lines.forEach(line -> g.drawString(line.getText(), line.getX() + x, line.getY() + y));
+        lines.forEach(line -> {
+            g.drawString(line.getText(), line.getX() + x, line.getY() + y);
+        });
     }
 
     public void setX(int x) {
@@ -86,6 +88,7 @@ public class Text implements Updatable, Renderable {
         FontMetrics metrics = new FontMetrics(font) {};
         StringBuilder line = new StringBuilder();
         String[] words = text.split(" ");
+
         for (int i = 0; i < words.length; i++) {
             String word = words[i] + " ";
             boolean nextLine = false;
@@ -95,9 +98,11 @@ public class Text implements Updatable, Renderable {
             }
 
             int appendedLineWidth = (int) metrics.getStringBounds(line+word, null).getWidth();
+
             if(nextLine||appendedLineWidth>textWidth){
                 addLine(line.toString(), lineWidth, textWidth, padding, alignment);
                 line = new StringBuilder(word);
+                lineWidth = (int) metrics.getStringBounds(line+word, null).getWidth();
             }
             else {
                 line.append(word);
@@ -109,11 +114,15 @@ public class Text implements Updatable, Renderable {
         height = lines.size() * (font.getSize() + 2 * padding);
         if(lines.size()==1&&minimizeWidth) {
             width = lineWidth + padding * 2;
+            textWidth=width-padding*2;
         }
         if(center){
             x = (Game.getInstance().getGameWidth()-width)/2;
-            if(minimizeWidth)
-                lines.get(0).setX(padding);
+            if(minimizeWidth) {
+                for(Line builtLine : lines) {
+                    builtLine.setX(padding+(textWidth-builtLine.getLineWidth())/2);
+                }
+            }
         }
         border = new RoundRectangle2D.Double(x, y, width, height, font.getSize(), font.getSize());
         this.text = text;
