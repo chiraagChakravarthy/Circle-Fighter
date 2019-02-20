@@ -4,7 +4,6 @@ import circle_fighter.file.DataStorage;
 import circle_fighter.file.FileManager;
 
 import java.awt.event.KeyEvent;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class KeyBindManager {
@@ -19,13 +18,18 @@ public class KeyBindManager {
 
     public KeyBindManager(){
         keybinds = new int[6];
-        ArrayList<String> lines = FileManager.readFromFile("files/keybinds.txt");
+        ArrayList<String> lines = FileManager.readFromFile("keybinds.txt");
         if(lines.isEmpty()){
-            lines = FileManager.readFromFile("res/keybind_default.txt");
+            lines = FileManager.readFromFile("keybind_default.txt");
         }
-        DataStorage storage = new DataStorage().fromString(lines.get(0));
-        for (int i = 0; i < keybinds.length; i++) {
-            keybinds[i] = storage.get(i);
+        if(lines.isEmpty()){
+            generateDefaults();
+        }
+        else {
+            DataStorage storage = new DataStorage().fromString(lines.get(0));
+            for (int i = 0; i < keybinds.length; i++) {
+                keybinds[i] = storage.get(i);
+            }
         }
     }
 

@@ -9,7 +9,7 @@ public class UserManager {
     private int currentUser;
     public UserManager(){
         users = new ArrayList<>();
-        ArrayList<String> lines = FileManager.readFromFile("files/users.txt");
+        ArrayList<String> lines = FileManager.readFromFile("users.txt");
         for(int i = 0; i < lines.size(); i+= 2){
             users.add(new User(lines.get(i), lines.get(i+1)));
         }
@@ -21,7 +21,7 @@ public class UserManager {
         for (int i = 0; i < users.size(); i++) {
             lines.addAll(users.get(i).save());
         }
-        FileManager.writeToFile("files/users.txt", lines);
+        FileManager.writeToFile("users.txt", lines);
     }
 
     public User getUser(int user){
@@ -44,7 +44,13 @@ public class UserManager {
         return currentUser<0?null:users.get(currentUser);
     }
 
-    public void clearCurrentUser(){
+    public void clearCurrentUser() {
         currentUser = -1;
+    }
+
+    public void removeCurrentUser() {
+        users.remove(currentUser);
+        clearCurrentUser();
+        saveUsers();
     }
 }

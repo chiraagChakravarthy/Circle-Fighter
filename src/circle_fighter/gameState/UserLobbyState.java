@@ -5,6 +5,7 @@ import circle_fighter.gfx.background.Background;
 import circle_fighter.gfx.color.Rainbow;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.user.User;
+import circle_fighter.user_lobby.DeleteUserMenu;
 import circle_fighter.user_lobby.GameModeMenu;
 import circle_fighter.user_lobby.SinglePlayerMenu;
 import circle_fighter.user_lobby.shop.LobbyMenu;
@@ -46,7 +47,8 @@ public class UserLobbyState extends GameState {
                 new SinglePlayerMenu(this),//12
                 new TurretShop(this),//13
                 new ReloadRateShop(this),//14
-                new SwivelAngleShop(this)//15
+                new SwivelAngleShop(this),//15
+                new DeleteUserMenu(this)//16
         ));
         currentMenu = 0;
         background = new Background.PlainBackground(new Rainbow(0.5f, 1));

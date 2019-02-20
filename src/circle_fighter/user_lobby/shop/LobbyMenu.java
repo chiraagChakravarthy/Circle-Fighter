@@ -42,6 +42,8 @@ public class LobbyMenu extends Menu {
                 state.getGsm().getUsers().clearCurrentUser();
                 state.getGsm().setGameState(0);
                 break;
+            case 4:
+                state.setMenu(16);
         }
     }
 
@@ -54,6 +56,7 @@ public class LobbyMenu extends Menu {
         addComponent(new ListOption("Shop", getLowestY()+Menu.COMPONENT_SPACING, this));
         addComponent(new ListOption("Save", getLowestY()+Menu.COMPONENT_SPACING, this));
         addComponent(new ListOption("Exit", getLowestY()+Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Delete User", getLowestY()+Menu.COMPONENT_SPACING, this));
     }
 
     @Override

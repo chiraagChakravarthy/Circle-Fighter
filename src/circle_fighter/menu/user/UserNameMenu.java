@@ -1,5 +1,6 @@
 package circle_fighter.menu.user;
 
+import circle_fighter.engine.notification.NotificationManager;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.MenuProgression;
@@ -55,6 +56,8 @@ public class UserNameMenu extends StateMenu {
             case 1:
                 users.addUser(text.get());
                 text.reset();
+                NotificationManager.addNotification("User Created");
+                users.saveUsers();
                 break;
         }
     }

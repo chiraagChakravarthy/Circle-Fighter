@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener, MouseWheelListener {
     private static Game instance;
-    public static final boolean DEBUG = false, TEST = true;
+    public static final boolean DEBUG = false, TEST = false;
 
     public final String TITLE = "Circle Fighter";
     private final Window window;
@@ -98,7 +98,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public void stop() {
         running = false;
-        FileManager.writeToFile("files/keybinds.txt", new ArrayList<>(Collections.singletonList(keybinds.save())));
+        FileManager.writeToFile("keybinds.txt", new ArrayList<>(Collections.singletonList(keybinds.save())));
         service.shutdown();
     }
 
