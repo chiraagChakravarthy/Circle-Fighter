@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class FileManager {
     public static void writeToFile(String filePath, ArrayList<String> text){
         checkGameDirectory();
-        File file = new File(System.getenv("APPDATA") + "/Circle Fighter/" + filePath);
+        File file = new File(getHomeDir() + "/" + filePath);
         try {
             PrintWriter writer = new PrintWriter(file);
             for(String line : text){
@@ -22,7 +22,7 @@ public class FileManager {
 
     public static ArrayList<String> readFromFile(String filePath){
         checkGameDirectory();
-        File file = new File(System.getenv("APPDATA") + "/Circle Fighter/" + filePath);
+        File file = new File(getHomeDir() + "/" + filePath);
         ArrayList<String> data = new ArrayList<>();
         try {
             Scanner input = new Scanner(new FileInputStream(file));
@@ -36,9 +36,18 @@ public class FileManager {
     }
 
     private static void checkGameDirectory(){
-        File gameDir = new File(System.getenv("APPDATA") + "/Circle Fighter");
+        File gameDir = new File(getHomeDir());
         if(!gameDir.exists()) {
             gameDir.mkdir();
         }
+    }
+
+    private static String getHomeDir(){
+        String homeDir = System.getenv("APPDATA");
+        if(homeDir==null){
+            homeDir = System.getProperty("user.home");
+            return homeDir + "/Library/Application Support/Circle Fighter";
+        }
+        return homeDir + "/Circle Fighter";
     }
 }
