@@ -22,8 +22,9 @@ public class UserTurretManager extends UserElement {
         turrets = new ArrayList<>();
         DataStorage turretStorage = storage.getSubStorage(0), slotStorage = storage.getSubStorage(1);
         for (int i = 0; i < turretStorage.size(); i++) {
-            turrets.add(UserTurretRegistry.fromID(storage.get(i), storage.getSubStorage(i)));
+            turrets.add(UserTurretRegistry.fromID(turretStorage.get(i), turretStorage.getSubStorage(i)));
         }
+
         turretSlots = new int[slotStorage.size()];
         for (int i = 0; i < slotStorage.size(); i++) {
             turretSlots[i] = slotStorage.get(i);
@@ -37,6 +38,7 @@ public class UserTurretManager extends UserElement {
             turretStorage.set(i, UserTurretRegistry.toID(turrets.get(i).getClass()));
             turrets.get(i).save(turretStorage.getSubStorage(i));
         }
+
         for (int i = 0; i < turretSlots.length; i++) {
             slotStorage.set(i, turretSlots[i]);
         }

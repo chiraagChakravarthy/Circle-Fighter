@@ -39,7 +39,7 @@ public class Player extends GameObject implements UserInputListener, Damageable,
         super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), user.getMovement()), 0);
         keyBinds = plane.getKeyBinds();
         health = new Health(this.position, user.getHealth());
-        turrets = new TurretManager(user.getTurrets(), this);
+        turrets = new TurretManager(user.getTurrets(), this, 25);
         base = new CircularBase(this.position, user.getBase());
         this.user = user;
     }

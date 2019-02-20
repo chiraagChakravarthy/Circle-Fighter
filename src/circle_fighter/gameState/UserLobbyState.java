@@ -14,6 +14,9 @@ import circle_fighter.user_lobby.shop.health.InvulnerabilityShop;
 import circle_fighter.user_lobby.shop.health.MaxHealthShop;
 import circle_fighter.user_lobby.shop.health.RegenerationShop;
 import circle_fighter.user_lobby.shop.movement.*;
+import circle_fighter.user_lobby.shop.turret.ReloadRateShop;
+import circle_fighter.user_lobby.shop.turret.SwivelAngleShop;
+import circle_fighter.user_lobby.shop.turret.TurretShop;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -40,7 +43,10 @@ public class UserLobbyState extends GameState {
                 new RegenerationShop(this),//9
                 new InvulnerabilityShop(this),//10
                 new GameModeMenu(this),//11
-                new SinglePlayerMenu(this)//12
+                new SinglePlayerMenu(this),//12
+                new TurretShop(this),//13
+                new ReloadRateShop(this),//14
+                new SwivelAngleShop(this)//15
         ));
         currentMenu = 0;
         background = new Background.PlainBackground(new Rainbow(0.5f, 1));

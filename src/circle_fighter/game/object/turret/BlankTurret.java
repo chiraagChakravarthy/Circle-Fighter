@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class BlankTurret extends Turret {
 
-    public <T extends GameObject & Damaging> BlankTurret(UserTurret turret, T object) {
-        super(turret, object);
+    public <T extends GameObject & Damaging> BlankTurret(UserTurret turret, T object, float radius) {
+        super(turret, object, radius);
     }
 
     @Override

@@ -66,6 +66,7 @@ public class LevelState extends GameState {
 
     @Override
     public void tick() {
+        highestLevel = gsm.getUsers().getCurrentUser().getLevelUnlocked();
         switch (state){
             case MENU:
                 menus.get(menu).tick();
@@ -151,7 +152,12 @@ public class LevelState extends GameState {
     }
 
     public void setHighestLevel(int highestLevel) {
+        this.highestLevel = highestLevel;
+    }
+
+    public void advanceHighestLevel(int highestLevel){
         this.highestLevel = Math.max(this.highestLevel, highestLevel);
+        gsm.getUsers().getCurrentUser().setLevelUnlocked(highestLevel);
     }
 
     public SubState getState() {

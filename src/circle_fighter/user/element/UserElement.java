@@ -2,6 +2,7 @@ package circle_fighter.user.element;
 
 import circle_fighter.file.DataStorage;
 import circle_fighter.functionaliy.Savable;
+import circle_fighter.user.element.turret.UserTurret;
 
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Type;
@@ -33,8 +34,8 @@ public class UserElement implements Savable{
         System.arraycopy(valuesList, 0, this.values, 0, valuesList.length);
         System.arraycopy(values, 0, this.values, valuesList.length, values.length);
         if(storage != null){
-            for (int i = 0; i < values.length; i++) {
-                values[i].set(storage.getFloat(i));
+            for (int i = 0; i < this.values.length; i++) {
+                this.values[i].set(storage.getFloat(i));
             }
         }
     }

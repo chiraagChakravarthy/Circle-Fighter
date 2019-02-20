@@ -13,11 +13,11 @@ public class TurretManager implements Updatable, Renderable {
     private final Turret[] turrets;
     private final GameObject object;
     private boolean triggered;
-    public <T extends GameObject & Damaging> TurretManager(UserTurretManager manager, T object){
+    public <T extends GameObject & Damaging> TurretManager(UserTurretManager manager, T object, float radius){
         this.object = object;
         turrets = new Turret[manager.getSlotAmount()];
         for (int i = 0; i < turrets.length; i++) {
-            turrets[i] = manager.getTurretAt(i).newTurret(object);
+            turrets[i] = manager.getTurretAt(i).newTurret(object, radius);
         }
         triggered = false;
     }

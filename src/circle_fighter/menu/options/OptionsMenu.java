@@ -19,7 +19,6 @@ public class OptionsMenu extends StateMenu {
     protected void onExit(int selectedOption) {
         switch (selectedOption){
             case 0:
-                state.setMenu(3);
                 break;
             case 1:
                 break;

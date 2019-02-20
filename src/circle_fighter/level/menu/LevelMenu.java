@@ -43,11 +43,11 @@ public class LevelMenu extends Menu {
         super.onOpen(selectedOption);
         ArrayList<Option> options = getOptions();
         for (int i = 0; i < options.size(); i++) {
-            if(i<state.getHighestLevel()) {
+            if(i<state.getHighestLevel()+1) {
                 options.get(i).setEnabled(true);
                 ((ListOption)options.get(i)).setColor(new SolidColor(255, 255, 255));
             }
-            else if(i==state.getHighestLevel()){
+            else if(i==state.getHighestLevel()+1){
                 options.get(i).setEnabled(true);
                 ((ListOption)options.get(i)).setColor(new SolidColor(255, 0, 0));
             }

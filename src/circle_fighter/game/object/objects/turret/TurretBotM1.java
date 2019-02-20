@@ -36,7 +36,7 @@ public class TurretBotM1 extends GameObject implements Damageable, Damaging {
     public TurretBotM1(UpdatingPosition position, PlayerPlane plane, int team) {
         super(plane, BoundExitAction.BOUND, new VelAngAccMovement(position, new Vector(0, 0, 0), .05f, 1, (float)Math.toRadians(.01), (float)Math.toRadians(1)), team);
         this.plane = plane;
-        turrets = new TurretManager(this, new BasicTurret(this));
+        turrets = new TurretManager(this, new BasicTurret(this, 15));
         health = new Health(4, 0, this.position, 50, 10, 50, 0, new SolidColor(128, 0, 0), new SolidColor(255, 0, 0));
         base = new CircularBase(position, RADIUS, new SolidColor(255, 0, 0), new SolidColor(255, 140, 0));
     }

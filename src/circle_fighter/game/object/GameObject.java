@@ -39,6 +39,10 @@ public abstract class GameObject implements Renderable, Updatable, Bounded, Pola
             case BOUND:
                 position.setX(position.getX()-right-left);
                 position.setY(position.getY()-top-bottom);
+                if(right-left != 0)
+                    movement.getVector().setVelX(0);
+                if(top-bottom != 0)
+                    movement.getVector().setVelY(0);
                 break;
             case DESPAWN:
                 if(top!=0||bottom!=0||left!=0||right!=0)

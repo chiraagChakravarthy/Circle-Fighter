@@ -21,14 +21,14 @@ public class BasicTurret extends Turret {
     private DynamicColor color;
     private PolygonBase base;
 
-    public <T extends GameObject & Damaging> BasicTurret(BasicUserTurret turret, T object) {
-        super(turret, object);
+    public <T extends GameObject & Damaging> BasicTurret(BasicUserTurret turret, T object, float radius) {
+        super(turret, object, radius);
         color = turret.getColor();
         base = new PolygonBase(color, getTurretPosition(), baseTemplate);
     }
 
-    public <T extends GameObject & Damaging> BasicTurret(T object){
-        super(object, (float) Math.PI, 1);
+    public <T extends GameObject & Damaging> BasicTurret(T object, float radius){
+        super(object, (float) Math.PI, 1, radius);
         color = new SolidColor(0, 0, 255);
         base = new PolygonBase(color, getTurretPosition(), baseTemplate);
     }
@@ -36,7 +36,7 @@ public class BasicTurret extends Turret {
     @Override
     public void tick() {
         super.tick();
-        color.tick();
+        base.tick();
     }
 
     @Override

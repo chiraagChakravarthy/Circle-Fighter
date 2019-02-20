@@ -1,6 +1,8 @@
 package circle_fighter.user_lobby.shop;
 
 import circle_fighter.engine.Game;
+import circle_fighter.engine.notification.NotificationManager;
+import circle_fighter.file.FileManager;
 import circle_fighter.gameState.UserLobbyState;
 import circle_fighter.gfx.color.SolidColor;
 import circle_fighter.menu.base.Menu;
@@ -18,7 +20,13 @@ public class LobbyMenu extends Menu {
 
     @Override
     protected void onSelect(int selectedOption) {
-        exit();
+        if(selectedOption==2){
+            state.getGsm().getUsers().saveUsers();
+            NotificationManager.addNotification("User Saved");
+        }
+        else {
+            exit();
+        }
     }
 
     @Override
@@ -30,7 +38,7 @@ public class LobbyMenu extends Menu {
             case 1:
                 state.setMenu(1);
                 break;
-            case 2:
+            case 3:
                 state.getGsm().getUsers().clearCurrentUser();
                 state.getGsm().setGameState(0);
                 break;
@@ -44,6 +52,7 @@ public class LobbyMenu extends Menu {
         addComponent(levelDisplay);
         addComponent(new ListOption("Play", getLowestY()+Menu.COMPONENT_SPACING, this));
         addComponent(new ListOption("Shop", getLowestY()+Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Save", getLowestY()+Menu.COMPONENT_SPACING, this));
         addComponent(new ListOption("Exit", getLowestY()+Menu.COMPONENT_SPACING, this));
     }
 

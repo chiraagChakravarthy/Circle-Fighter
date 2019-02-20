@@ -14,13 +14,14 @@ public class User {
     private UserMovement movement;
     private UserBase base;
     private UserLevel level;
-    private int upgradePoints, parts;
+    private int upgradePoints, parts, levelUnlocked;
 
     public User(String name, String user){
         this.name = name;
         DataStorage storage = new DataStorage().fromString(user);
         parts = storage.get(0);
         upgradePoints = storage.get(1);
+        levelUnlocked = storage.get(2);
         turrets = new UserTurretManager(storage.getSubStorage(0));
         health = new UserHealth(storage.getSubStorage(1));
         movement = new UserMovement(storage.getSubStorage(2));
@@ -41,6 +42,9 @@ public class User {
 
     public ArrayList<String> save() {
         DataStorage storage = new DataStorage();
+        storage.set(0, parts);
+        storage.set(1, upgradePoints);
+        storage.set(2, levelUnlocked);
         turrets.save(storage.getSubStorage(0));
         health.save(storage.getSubStorage(1));
         movement.save(storage.getSubStorage(2));
@@ -79,6 +83,14 @@ public class User {
 
     public void setUpgradePoints(int upgradePoints) {
         this.upgradePoints = upgradePoints;
+    }
+
+    public int getLevelUnlocked() {
+        return levelUnlocked;
+    }
+
+    public void setLevelUnlocked(int levelUnlocked) {
+        this.levelUnlocked = levelUnlocked;
     }
 
     public UserLevel getLevel() {

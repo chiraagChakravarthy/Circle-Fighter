@@ -18,7 +18,7 @@ public class BasicUserTurret extends UserTurret {
     }
 
     public BasicUserTurret(DataStorage storage){
-        super(storage.getSubStorage(0), 1);
+        super(storage.getSubStorage(0), 4);
         color = storage.get(0);
     }
 
@@ -27,8 +27,8 @@ public class BasicUserTurret extends UserTurret {
     }
 
     @Override
-    public <T extends GameObject & Damaging> Turret newTurret(T object) {
-        return new BasicTurret(this, object);
+    public <T extends GameObject & Damaging> Turret newTurret(T object, float radius) {
+        return new BasicTurret(this, object, radius);
     }
 
     @Override

@@ -13,26 +13,27 @@ public abstract class Turret implements Updatable, Renderable, Damaging {
     //TODO refactor all instances of shoot rate to reload rate
     protected GameObject object;
     private final float maximumAng, reloadRate;
-    private float relativeAng;
-    private float delta;
+    private float relativeAng, delta, radius;
     private boolean reloading;
     private UpdatingPosition turretPosition;
-    public <T extends GameObject & Damaging> Turret(UserTurret turret, T object){
+    public <T extends GameObject & Damaging> Turret(UserTurret turret, T object, float radius){
         this.object = object;
         turretPosition = new UpdatingPosition(object.getPosition());
         maximumAng = turret.getFunctions()[UserTurret.MAX_ANG].perform(turret.get(UserTurret.MAX_ANG));
         reloadRate = turret.getFunctions()[UserTurret.RELOAD_RATE].perform(turret.get(UserTurret.RELOAD_RATE));
         reloading = false;
         delta = 0;
+        this.radius = radius;
     }
 
-    public <T extends GameObject & Damaging> Turret(T object, float maximumAng, float reloadRate){
+    public <T extends GameObject & Damaging> Turret(T object, float maximumAng, float reloadRate, float radius){
         this.object = object;
         turretPosition = new UpdatingPosition(object.getPosition());
         this.maximumAng = maximumAng;
         this.reloadRate = reloadRate;
         reloading = false;
         delta = 0;
+        this.radius = radius;
     }
 
     public float getRelativeAng() {
@@ -54,7 +55,7 @@ public abstract class Turret implements Updatable, Renderable, Damaging {
         turretPosition.setX(object.getPosition().getX());
         turretPosition.setY(object.getPosition().getY());
         turretPosition.setRotation(object.getPosition().getRotation());
-        turretPosition.move(new Position(25, 0), true);
+        turretPosition.move(new Position(radius, 0), true);
         turretPosition.setRotation(turretPosition.getRotation()+relativeAng);
         if(reloading) {
             if(delta >= 1) {

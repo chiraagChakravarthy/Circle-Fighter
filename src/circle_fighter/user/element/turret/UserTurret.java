@@ -1,12 +1,9 @@
 package circle_fighter.user.element.turret;
 
-import circle_fighter.engine.Game;
 import circle_fighter.file.DataStorage;
 import circle_fighter.game.object.GameObject;
 import circle_fighter.game.object.functionality.Damaging;
 import circle_fighter.game.object.turret.Turret;
-import circle_fighter.gfx.color.DynamicColor;
-import circle_fighter.user.User;
 import circle_fighter.user.element.TransformFunction;
 import circle_fighter.user.element.UserElement;
 import circle_fighter.user.element.Value;
@@ -28,7 +25,7 @@ public abstract class UserTurret extends UserElement {
     }
 
     public UserTurret(DataStorage storage, float reloadRateMultiplier){
-        super(storage, merge(UserTurret.functions, new TransformFunction[]{vals -> (vals[0]*0.15f+1)*reloadRateMultiplier}),
+        super(storage.getSubStorage(0), merge(UserTurret.functions, new TransformFunction[]{vals -> (vals[0]*0.15f+1)*reloadRateMultiplier}),
                 merge(UserTurret.inverses, new TransformFunction[]{vals -> (vals[0]/reloadRateMultiplier-1)/0.15f}),
                 new Value(0, 50, 0), new Value(0, 60, 0));
     }
@@ -43,7 +40,7 @@ public abstract class UserTurret extends UserElement {
                 values, new Value(0, 50), new Value(0, 60));
     }
 
-    public abstract <T extends GameObject & Damaging> Turret newTurret(T object);
+    public abstract <T extends GameObject & Damaging> Turret newTurret(T object, float radius);
 
     @Override
     public void save(DataStorage storage) {

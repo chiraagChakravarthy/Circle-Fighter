@@ -57,7 +57,7 @@ public abstract class LevelPlane extends PlayerPlane {
     protected void win() {
         state.setState(LevelState.SubState.MENU);
         state.setMenu(2);
-        state.setHighestLevel(state.getLevel()+1);
+        state.advanceHighestLevel(state.getLevel());
     }
 
     protected void loose(){
