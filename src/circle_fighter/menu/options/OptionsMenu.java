@@ -1,5 +1,7 @@
 package circle_fighter.menu.options;
 
+import circle_fighter.engine.Game;
+import circle_fighter.engine.Window;
 import circle_fighter.gameState.MenuState;
 import circle_fighter.menu.base.Menu;
 import circle_fighter.menu.base.StateMenu;
@@ -12,7 +14,13 @@ public class OptionsMenu extends StateMenu {
 
     @Override
     protected void onSelect(int selectedOption) {
-        exit();
+        if(selectedOption==2){
+            Window window = Game.getInstance().getWindow();
+            window.setFullScreen(!window.isFullScreen());
+        }
+        else {
+            exit();
+        }
     }
 
     @Override
@@ -22,7 +30,7 @@ public class OptionsMenu extends StateMenu {
                 break;
             case 1:
                 break;
-            case 2:
+            case 3:
                 state.setMenu(0);
         }
     }
@@ -36,6 +44,7 @@ public class OptionsMenu extends StateMenu {
     protected void constructMenu() {
         addComponent(new ListOption("Controls",  getLowestY() + Menu.COMPONENT_SPACING, this));
         addComponent(new ListOption("Help", getLowestY() + Menu.COMPONENT_SPACING, this));
+        addComponent(new ListOption("Toggle Fullscreen", getLowestY() + Menu.COMPONENT_SPACING, this));
         addComponent(new ListOption("Back", getLowestY() + Menu.COMPONENT_SPACING, this));
     }
 

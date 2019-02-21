@@ -122,16 +122,21 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             //iteration.
             return;
         }
-        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        if(TEST)
-            test.render(g);
-        else {
-            gsm.render(g);
-            NotificationManager.render(g);
+        Graphics2D g = null;
+        try {
+            g = (Graphics2D) bs.getDrawGraphics();
+            if (TEST)
+                test.render(g);
+            else {
+                gsm.render(g);
+                NotificationManager.render(g);
+            }
+            g.dispose();
+            bs.show();
         }
+        catch (IllegalStateException ignored){
 
-        g.dispose();
-        bs.show();
+        }
     }
 
     public void keyTyped(KeyEvent e) {
@@ -202,6 +207,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
     public int getGameHeight() {
         return window.getHeight();
+    }
+
+    public Window getWindow() {
+        return window;
     }
 
     public Point mouseLocation(){

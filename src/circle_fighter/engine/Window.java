@@ -6,51 +6,25 @@ import java.awt.*;
 public class Window {
     //Window was a custom made class that adds more functionality to a basic JFrame. Specifically the ability to easily create a fullscreen
     //window.
-    private int fsm = 0;
+    private final int fullScreenMode;
+
+    private int windowMode = 0;
     private JFrame frame;
     //Main window the rest of the functionality runs on
     private GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-    public Window(String title, int fsm, Game game) {
-        //This constructor takes advantage of the fullscreen functionality of the class
-        this.fsm = fsm;
-        frame = new JFrame(title);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(game);
-        setFullScreen();
-    }
-
-    public Window(String title, int width, int height, Game game) {
-        //Allows for a custom sized window.
-        frame = new JFrame(title);
-        frame.setTitle(title);
-        /////////////////////////////////////////////////
-        frame.setMinimumSize(new Dimension(width, height));
-        frame.setPreferredSize(new Dimension(width, height));
-        frame.setMaximumSize(new Dimension(width, height));
-        /////////////////////////////////////////////////
-        //Makes the window unable to be drag-resized by the user
-        frame.setLocationRelativeTo(null);
-        //Sets window in the middle of screen
-        frame.setUndecorated(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(game);
-        //Adds the circle_fighter.game to the window, allowing whatever being drawn on Game to reflect onto the it
-        frame.setVisible(true);
-    }
-
     public Window(String title, Game game) {
         String osName = System.getProperty("os.name").toLowerCase();
         if(osName.startsWith("windows")){
-            fsm = 2;
+            fullScreenMode = 2;
         }
-        else if(osName.startsWith("max os x")){
-            fsm = 3;
+        else if(osName.startsWith("mac os x")){
+            fullScreenMode = 3;
         }
         else {
-            fsm = 1;
+            fullScreenMode = 1;
         }
+        windowMode = fullScreenMode;
         frame = new JFrame(title);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -59,16 +33,18 @@ public class Window {
     }
 
     private void setFullScreen() {
-        switch (fsm) {
+        switch (windowMode) {
             case 1:
+                device.setFullScreenWindow(null);
                 frame.dispose();
                 frame.setSize(new Dimension(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight()));
                 frame.setResizable(true);
                 frame.setUndecorated(false);
                 frame.setVisible(true);
                 break;
-            //Creates a resizable non-fullScreen window the size of the display
+            //Creates a resizable non-fullScreenMode window the size of the display
             case 2:
+                device.setFullScreenWindow(null);
                 frame.dispose();
                 frame.setMinimumSize(new Dimension(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight()));
                 frame.setPreferredSize(new Dimension(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight()));
@@ -85,19 +61,28 @@ public class Window {
                 if (device.isFullScreenSupported())
                     device.setFullScreenWindow(frame);
                 else
-                    System.out.println("FullScreen mode is not supported.");
+                    System.out.println("FullScreen windowMode is not supported.");
                 break;
 
             default:
-                System.out.println("FullScreen mode not supported.");
-                setFullScreen(1);
+                System.out.println("FullScreen windowMode not supported.");
+                setWindowMode(1);
                 //Creates a window which covers the entire display. Cannot be swiped away from. Creates best gaming experience.
         }
     }
 
-    public void setFullScreen(int fsm) {
-        this.fsm = fsm;
+    public void setWindowMode(int windowMode) {
+        this.windowMode = windowMode;
         setFullScreen();
+    }
+
+    public void setFullScreen(boolean fullScreen){
+        System.out.println(getHeight());
+        setWindowMode(fullScreen?fullScreenMode:1);
+    }
+
+    public boolean isFullScreen(){
+        return windowMode==fullScreenMode;
     }
 
 
