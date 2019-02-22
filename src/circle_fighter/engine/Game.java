@@ -122,9 +122,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
             //iteration.
             return;
         }
-        Graphics2D g = null;
+
         try {
-            g = (Graphics2D) bs.getDrawGraphics();
+            Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             if (TEST)
                 test.render(g);
             else {
